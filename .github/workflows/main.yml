@@ -14,7 +14,12 @@ jobs:
     - uses: azure/login@v1
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-
+    - name: List accounts
+      uses: azure/CLI@v1
+      with:
+        azcliversion: 2.0.71
+        inlineScript: |
+            az storage account list
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
