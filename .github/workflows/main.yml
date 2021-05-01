@@ -20,7 +20,7 @@ jobs:
       with:
         azcliversion: 2.0.72
         inlineScript: |
-            az storage blob upload-batch --account-name grants4al -d '$web' -s .
+            az storage blob upload-batch --account-name grants4all -d '$web' -s .
     #- name: Purge CDN endpoint
     #  uses: azure/CLI@v1
     #  with:
