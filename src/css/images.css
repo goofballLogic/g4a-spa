@@ -1,0 +1,16 @@
+.splash {
+    background-image: url(https://grants4all.blob.core.windows.net/user-flows/organised.jpg);
+    background-size: cover;
+}
+
+.tile {
+    background-size: cover;
+}
+
+.tile.grant-admin {
+    background-image: url("../img/grant-admin.jpg");
+}
+
+.tile.create {
+    background-image: url("../img/create.jpg");
+}

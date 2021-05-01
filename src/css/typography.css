@@ -1,0 +1,15 @@
+html, body {
+    font-family: Arial;
+    font-size: 10pt;
+}
+
+header * {
+    font-size: 1em;
+    font-weight: normal;
+}
+
+.splash h1 {
+    font-size: 6em;
+    text-shadow: var(--yellow-green) 2px 2px;
+    text-align: center;
+}

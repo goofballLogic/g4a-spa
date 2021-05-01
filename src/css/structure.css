@@ -1,0 +1,111 @@
+html, body {
+    margin: 0;
+    height: 100vh;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+header aside {
+    flex: 1;
+    text-align: right;
+}
+
+header aside {
+    padding: 10px;
+}
+
+a {
+    margin: 0 10px;
+}
+
+button, input {
+    padding: 10px 20px;
+    border-radius: 3px;
+    min-width: 150px;
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+main>* {
+    flex: 2;
+}
+
+main>.splash {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+main:not(.home)>nav {
+    flex: 0 0 100px;
+}
+
+header h1 {
+    display: flex;
+    align-items: center;
+}
+
+header h1 img {
+    margin: -1px 2px 0px 1px;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    text-align: right;
+    width: 100vw;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+a.tile {
+    display: flex;
+    width: 200px;
+    height: 200px;
+    border: solid 1px silver;
+    align-items: flex-end;
+    justify-content: center;
+}
+
+a.tile .text {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    text-align: center;
+}
+
+main>* {
+    padding: 20px;
+}
+
+main.home>* {
+    padding: 40px;
+}
+
+main:not(.home)>nav a {
+    width: 100px;
+    padding: 10px 20px;
+    margin: 0;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+h2 {
+    margin-top: 10px;
+    border-bottom: solid 0.1px silver;
+}

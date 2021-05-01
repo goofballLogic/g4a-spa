@@ -1,0 +1,43 @@
+html {
+    --davys-grey: #605f5eff;
+    --white: #fcfcfcff;
+    --yellow-green: #98ce00ff;
+    --may-green: #60993eff;
+    --fire-opal: #e3655bff;
+}
+
+html, body {
+    background-color: var(--white);
+}
+
+header {
+    background-color: var(--davys-grey);
+    color: white;
+}
+
+h1 {
+    color: white;
+}
+
+button {
+    background-color: var(--fire-opal);
+    border: solid 1px var(--fire-opal);
+    color: white;
+}
+
+a {
+    color: var(--may-green) !important;
+}
+
+.splash h1 {
+    color: var(--white);
+}
+
+a.tile .text {
+    background-color: rgba(255, 255, 255, 0.9);
+}
+
+main:not(.home)>nav a {
+    background-color: var(--may-green);
+    color: white !important;
+}

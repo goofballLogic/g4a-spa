@@ -3,9 +3,13 @@
 
 <head>
     <title>Grants 4 all</title>
-
+    <link rel="stylesheet" href="./css/colour.css">
+    <link rel="stylesheet" href="./css/images.css">
+    <link rel="stylesheet" href="./css/state.css">
+    <link rel="stylesheet" href="./css/typography.css">
+    <link rel="stylesheet" href="./css/structure.css">
     <script>
-        
+
         document.addEventListener("login", e => {
 
             const bodyClassList = document.body.classList;
@@ -18,11 +22,12 @@
                 bodyClassList.add("login-error");
                 alert(err);
             } else {
-                console.log(account);
                 let accountName = "";
                 if (account) {
                     bodyClassList.add("logged-in");
                     accountName = account.givenName ? `${account.givenName} ${account.familyName}` : account.username
+                } else {
+                    bodyClassList.add("logged-out");
                 }
                 for (let element of accountNameElements) {
                     element.textContent = accountName;
@@ -32,106 +37,21 @@
         });
     </script>
     <script type="module">
-        import { signIn, signOut } from "../js/auth.js";
+        import { signIn, signOut } from "./js/auth.js";
+        import { render } from "./js/render.js";
         document.querySelector("#signIn").addEventListener("click", signIn);
         document.querySelector("#signOut").addEventListener("click", signOut);
-
+        const main = document.querySelector("main");
+        document.addEventListener("DOMContentLoaded", () => render(main));
     </script>
-
-    <style colour>
-        html {
-            --davys-grey: #605f5eff;
-            --white: #fcfcfcff;
-            --yellow-green: #98ce00ff;
-            --may-green: #60993eff;
-            --fire-opal: #e3655bff;
-        }
-
-        html,
-        body {
-            background-color: var(--white);
-        }
-
-        header {
-            background-color: var(--davys-grey);
-            color: white;
-            border-bottom: solid 5px var(--may-green);
-        }
-
-        h1 {
-            color: white;
-            text-shadow: var(--yellow-green) 1px 1px;
-        }
-
-        button {
-            background-color: var(--fire-opal);
-            border: solid 1px var(--fire-opal);
-            color: white;
-        }
-
-        a {
-            color: var(--may-green) !important;
-        }
-    </style>
-
-    <style class="text">
-        html,
-        body {
-            font-family: Arial;
-            font-size: 10pt;
-        }
-
-        header * {
-            font-size: 1em;
-            font-weight: normal;
-        }
-    </style>
-    <style>
-        html,
-        body {
-            margin: 0;
-        }
-
-        body:not(.logged-in) #signOut,
-        body:not(.logged-in) .account-welcome {
-            display: none;
-        }
-
-        body.logged-in #signIn {
-            display: none;
-        }
-
-        header {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-        }
-
-        header h1 {
-            flex: 1;
-        }
-
-        header aside {
-            padding: 10px;
-        }
-
-        a {
-            margin: 0 10px;
-        }
-
-        button,
-        input {
-            padding: 10px 20px;
-            border-radius: 3px;
-            min-width: 150px;
-        }
-    </style>
 </head>
 
 <body>
     <header>
         <h1>
-            Grants 4 All
+            Grants
+            <img src="favicon/android-chrome-192x192.png" alt="Grants 4 All" height="20">
+            All
         </h1>
         <aside class="account-welcome">Welcome <span class="account-name"></span></aside>
         <span>
@@ -142,6 +62,39 @@
     <main>
 
     </main>
+    <footer>Copyright 2021 Tangent Vision</footer>
+
+    <template id="home">
+        <aside class="splash">
+            <h1>Grants 4 All</h1>
+        </aside>
+        <article id="please-sign-in">
+            <p>
+                Welcome to Grants 4 All. </p>
+            <p>In order to administer or apply for grant funding, please register or login by clicking the Sign-in
+                button above.</p>
+        </article>
+        <nav>
+            <a class="tile grant-admin" href="?_=/grant_admin">
+                <span class="text">Administer grants</span>
+            </a>
+        </nav>
+    </template>
+
+    <template id="grant_admin">
+        <nav>
+            <a href="?">Home</a>
+        </nav>
+        <section>
+            <h2>Your grants</h2>
+            <p>
+                You don't have any grants yet.
+            </p>
+            <a href="?_=/create_grant" class="tile create">
+                <span class="text">Create a grant</span>
+            </a>
+        </section>
+    </template>
 </body>
 
 </html>

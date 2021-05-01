@@ -1,0 +1,23 @@
+body:not(.logged-in) #signOut {
+    display: none;
+}
+
+body:not(.logged-in) .account-welcome {
+    visibility: hidden;
+}
+
+body:not(.logged-in) .home nav {
+    display: none;
+}
+
+body.logged-in #signIn {
+    display: none;
+}
+
+body:not(.logged-out) #please-sign-in {
+    display: none;
+}
+
+a.tile:hover {
+    box-shadow: var(--yellow-green) 0 0 2px 0px;
+}
