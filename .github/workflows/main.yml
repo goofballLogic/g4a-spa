@@ -14,18 +14,12 @@ jobs:
     - uses: azure/login@v1
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
-    - name: List accounts
-      uses: azure/CLI@v1
-      with:
-        azcliversion: 2.0.71
-        inlineScript: |
-            az storage account list
     - name: Upload to blob storage
       uses: azure/CLI@v1
       with:
-        azcliversion: 2.0.72
+        azcliversion: 2.22.0
         inlineScript: |
-            az storage blob upload-batch --account-name grants4all -d '$web' -s .
+            az storage blob upload-batch --account-name grants4all -d '$web' -s src/.
     #- name: Purge CDN endpoint
     #  uses: azure/CLI@v1
     #  with:
