@@ -39,6 +39,8 @@
     <script type="module">
         import { signIn, signOut } from "./js/auth.js";
         import { render } from "./js/render.js";
+        import { decorateHeaders } from "./js/auth-api.js";
+
         document.querySelector("#signIn").addEventListener("click", signIn);
         document.querySelector("#signOut").addEventListener("click", signOut);
         const main = document.querySelector("main");
@@ -48,11 +50,13 @@
 
 <body>
     <header>
-        <h1>
-            Grants
-            <img src="favicon/android-chrome-192x192.png" alt="Grants 4 All" height="20">
-            All
-        </h1>
+        <a href="?_=" class="logo">
+            <h1>
+                Grants
+                <img src="favicon/android-chrome-192x192.png" alt="Grants 4 All" height="20">
+                All
+            </h1>
+        </a>
         <aside class="account-welcome">Welcome <span class="account-name"></span></aside>
         <span>
             <button type="button" id="signIn">Sign-in</button>
@@ -60,7 +64,7 @@
         </span>
     </header>
     <main>
-
+        &nbsp;
     </main>
     <footer>Copyright 2021 Tangent Vision</footer>
 
@@ -75,25 +79,54 @@
                 button above.</p>
         </article>
         <nav>
-            <a class="tile grant-admin" href="?_=/grant_admin">
+            <a class="tile grant-admin" href="?_=/grant-admin">
                 <span class="text">Administer grants</span>
             </a>
         </nav>
     </template>
 
-    <template id="grant_admin">
+    <template id="grant-admin">
         <nav>
-            <a href="?">Home</a>
         </nav>
         <section>
             <h2>Your grants</h2>
             <p>
                 You don't have any grants yet.
             </p>
-            <a href="?_=/create_grant" class="tile create">
+            <a href="?_=/create-grant" class="tile create">
                 <span class="text">Create a grant</span>
             </a>
         </section>
+    </template>
+
+    <template id="create-grant">
+        <nav>
+        </nav>
+        <section>
+            <h2>Create a grant</h2>
+            <form class="sleeper-service">
+                <input type="hidden" name="op" value="create-grant" />
+                <label>
+                    <span class="text">Name</span>
+                    <input type="text" name="name" required />
+                </label>
+                <label>
+                    <span class="text">Grant template</span>
+                    <input type="file" name="grant-template" required />
+                </label>
+                <div>
+                    <button>Create</button>
+                </div>
+            </form>
+        </section>
+    </template>
+
+    <template id="default_nav">
+        <nav>
+            <a href="?">Home</a>
+            <a href="?_=grant-admin">Administer grants</a>
+            <a href="?_=create-grant">Create a grant</a>
+        </nav>
     </template>
 </body>
 

@@ -41,3 +41,7 @@ main:not(.home)>nav a {
     background-color: var(--may-green);
     color: white !important;
 }
+
+main:not(.home)>nav a:hover {
+    background-color: var(--yellow-green);
+}

@@ -45,3 +45,7 @@ export const msalConfig = {
 export const loginRequest = {
     scopes: ["openid", "profile", clientId]
 };
+
+export const tokenRequest = {
+    scopes: ["profile", clientId]
+};

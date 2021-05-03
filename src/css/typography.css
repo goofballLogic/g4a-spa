@@ -13,3 +13,7 @@ header * {
     text-shadow: var(--yellow-green) 2px 2px;
     text-align: center;
 }
+
+a.logo {
+    text-decoration: none;
+}

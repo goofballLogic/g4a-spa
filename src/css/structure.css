@@ -52,7 +52,9 @@ main>.splash {
 }
 
 main:not(.home)>nav {
-    flex: 0 0 100px;
+    flex: 0 0 150px;
+    display: flex;
+    flex-direction: column;
 }
 
 header h1 {
@@ -98,14 +100,34 @@ main.home>* {
 }
 
 main:not(.home)>nav a {
-    width: 100px;
     padding: 10px 20px;
-    margin: 0;
+    margin: 0 0 10px 0;
     display: inline-block;
     border-radius: 4px;
+    text-decoration: none;
 }
 
 h2 {
     margin-top: 10px;
     border-bottom: solid 0.1px silver;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    min-width: 780px;
+}
+
+form label .text {
+    width: 150px;
+    display: inline-block;
+}
+
+form input[type=text] {
+    width: 300px;
+}
+
+form input[type=file] {
+    padding-left: 0;
+    width: 600px;
 }
