@@ -10,7 +10,6 @@ header * {
 
 .splash h1 {
     font-size: 6em;
-    text-shadow: var(--yellow-green) 2px 2px;
     text-align: center;
 }
 

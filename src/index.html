@@ -90,9 +90,17 @@
         </nav>
         <section>
             <h2>Your grants</h2>
-            <p>
-                You don't have any grants yet.
-            </p>
+            <section class="data-list administered-grants" data-query="grants">
+
+                <div class="output"></div>
+                <div class="loading-list">Loading...</div>
+                <div class="empty-list">You don't have any grants yet.</div>
+                <template>
+                    <a class="grant" data-href="?_=/view-grant/{id}">
+                        <h3 data-text-content="name"></h3>
+                    </a>
+                </template>
+            </section>
             <a href="?_=/create-grant" class="tile create">
                 <span class="text">Create a grant</span>
             </a>

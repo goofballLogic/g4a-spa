@@ -21,3 +21,24 @@ body:not(.logged-out) #please-sign-in {
 a.tile:hover {
     box-shadow: var(--yellow-green) 0 0 2px 0px;
 }
+
+section.data-list .loading-list {
+    animation: blink 1s infinite;
+}
+
+@keyframes blink {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0.2;
+    }
+}
+
+section.data-list.loaded .loading-list {
+    display: none;
+}
+
+section.data-list .empty-list {
+    display: none;
+}

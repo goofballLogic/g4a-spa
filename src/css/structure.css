@@ -23,12 +23,8 @@ header aside {
     padding: 10px;
 }
 
-a {
-    margin: 0 10px;
-}
-
 button, input {
-    padding: 10px 20px;
+    padding: 10px;
     border-radius: 3px;
     min-width: 150px;
 }
@@ -130,4 +126,44 @@ form input[type=text] {
 form input[type=file] {
     padding-left: 0;
     width: 600px;
+}
+
+div.message {
+    margin: 10px 0;
+    padding: 10px 20px;
+    border-left: solid 3px var(--davys-grey);
+}
+
+div.message.pending {
+    border-left-color: var(--yellow-green);
+}
+
+div.message.success {
+    border-left-color: var(--may-green);
+}
+
+div.message.failure {
+    border-left-color: var(--fire-opal);
+}
+
+button:disabled {
+    opacity: 0.5;
+}
+
+section.data-list {
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+section.data-list .output {
+    display: flex;
+    flex-direction: column;
+}
+
+a.grant h3 {
+    margin: 0;
+}
+
+a.grant {
+    margin-bottom: 10px;
 }

@@ -15,10 +15,6 @@ header {
     color: white;
 }
 
-h1 {
-    color: white;
-}
-
 button {
     background-color: var(--fire-opal);
     border: solid 1px var(--fire-opal);
@@ -29,8 +25,13 @@ a {
     color: var(--may-green) !important;
 }
 
+a.logo {
+    color: var(--white) !important;
+}
+
 .splash h1 {
     color: var(--white);
+    text-shadow: var(--davys-grey) 2px 2px;
 }
 
 a.tile .text {
