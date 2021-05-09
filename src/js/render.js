@@ -1,5 +1,5 @@
 import "../lib/azure-storage-blob.min.js";
-import { handleFormSubmission } from "./forms.js";
+import { handleFormMutations, handleFormSubmission } from "./forms.js";
 import { handleQueries } from "./queries.js";
 
 function placeholder(className) {
@@ -28,6 +28,7 @@ export function render(container) {
     if (className !== "home") injectNav(content);
     handleFormSubmission(content);
     handleQueries(content);
+    handleFormMutations(content);
 
     container.innerHTML = "";
     container.appendChild(content);

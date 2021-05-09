@@ -119,9 +119,26 @@
                     <input type="text" name="name" required />
                 </label>
                 <label>
-                    <span class="text">Grant template</span>
-                    <input type="file" name="grant-template" required />
+                    <input type="radio" name="mode" data-toggler value="file" />
+                    <span class="text">File-based</span>
                 </label>
+                <label>
+                    <input type="radio" name="mode" data-toggler value="form" checked />
+                    <span class="text">Online form</span>
+                </label>
+                <section class="mode-toggled file">
+                    <h4>File based template</h4>
+                    <label>
+                        <span class="text">Grant template</span>
+                        <input type="file" name="grant-template" />
+                    </label>
+                </section>
+                <section class="mode-toggled form">
+                    <h4>Online form</h4>
+                    <a href="../form-builder.html" target="blank">Create a form</a>
+                    <input name="grant-form-template" data-listener="g4a:form-builder-save" type="hidden" />
+                    <span data-listener="g4a:form-builder-save"></span>
+                </section>
                 <div>
                     <button>Create</button>
                 </div>

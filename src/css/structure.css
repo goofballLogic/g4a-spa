@@ -23,7 +23,7 @@ header aside {
     padding: 10px;
 }
 
-button, input {
+button, input[type=text] {
     padding: 10px;
     border-radius: 3px;
     min-width: 150px;
@@ -166,4 +166,26 @@ a.grant h3 {
 
 a.grant {
     margin-bottom: 10px;
+}
+
+fieldset>* {
+    display: block;
+}
+
+.show {
+    display: initial;
+}
+
+.hide {
+    display: none;
+}
+
+form section {
+    padding: 10px 0;
+    border-top: solid 0.1px silver;
+    margin-top: 10px;
+}
+
+form h4 {
+    margin: 0;
 }

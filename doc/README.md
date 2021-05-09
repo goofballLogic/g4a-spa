@@ -20,3 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 ```
+
+# g4a inbox
+This expects a CREATE-only Azure storage blob container into which uploaded files can be deposited, secured with SAS
