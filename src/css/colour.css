@@ -4,6 +4,8 @@ html {
     --yellow-green: #98ce00ff;
     --may-green: #60993eff;
     --fire-opal: #e3655bff;
+    --yellow-green-fade: #98ce0030;
+    --davys-grey-fade: #605f5e30;
 }
 
 html, body {
@@ -45,4 +47,12 @@ main:not(.home)>nav a {
 
 main:not(.home)>nav a:hover {
     background-color: var(--yellow-green);
+}
+
+form aside {
+    background-color: var(--yellow-green-fade);
+}
+
+input {
+    border-color: var(--davys-grey-fade);
 }

@@ -1,6 +1,7 @@
 html, body {
     margin: 0;
     height: 100vh;
+    min-width: 780px;
 }
 
 body {
@@ -108,26 +109,6 @@ h2 {
     border-bottom: solid 0.1px silver;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-    min-width: 780px;
-}
-
-form label .text {
-    width: 150px;
-    display: inline-block;
-}
-
-form input[type=text] {
-    width: 300px;
-}
-
-form input[type=file] {
-    padding-left: 0;
-    width: 600px;
-}
-
 div.message {
     margin: 10px 0;
     padding: 10px 20px;
@@ -172,13 +153,7 @@ fieldset>* {
     display: block;
 }
 
-.show {
-    display: initial;
-}
-
-.hide {
-    display: none;
-}
+/* Forms */
 
 form section {
     padding: 10px 0;
@@ -188,4 +163,36 @@ form section {
 
 form h4 {
     margin: 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+form label .text {
+    width: 150px;
+    display: inline-block;
+}
+
+form label .text.long {
+    width: initial;
+    display: block;
+    margin-bottom: 10px;
+}
+
+form input[type=text] {
+    width: 300px;
+}
+
+form input[type=file] {
+    padding-left: 0;
+    width: 600px;
+}
+
+form aside {
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 3px;
 }

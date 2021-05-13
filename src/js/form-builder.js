@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!result) throw new Error("Unable to communicate with the page which opened this form builder");
 
     const builder = await Formio.builder(document.querySelector("#editor"), formOptions, builderOptions);
-    builder.on("saveComponent", () => { localStorage.setItem("working-form-build", builder.schema) });
+    builder.on("saveComponent", () => { localStorage.setItem("working-form-build", JSON.stringify(builder.schema)) });
 
     document.querySelector("#controller button").addEventListener("click", async () => {
 

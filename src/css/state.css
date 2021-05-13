@@ -1,5 +1,5 @@
 body:not(.logged-in) #signOut {
-    display: none;
+    --display: none;
 }
 
 body:not(.logged-in) .account-welcome {
@@ -22,7 +22,7 @@ a.tile:hover {
     box-shadow: var(--yellow-green) 0 0 2px 0px;
 }
 
-section.data-list .loading-list {
+section.data-list .loading-list, section.data-item .loading-item {
     animation: blink 1s infinite;
 }
 
@@ -35,10 +35,30 @@ section.data-list .loading-list {
     }
 }
 
-section.data-list.loaded .loading-list {
+section.data-list.loaded .loading-list, section.data-item.loaded .loading-item {
     display: none;
 }
 
-section.data-list .empty-list {
+section.data-list .empty-list, section.data-item .not-found {
+    display: none;
+}
+
+section.data-list.empty .empty-list {
+    display: initial;
+}
+
+section.data-list .output, section.data-item .output {
+    display: none;
+}
+
+section.data-list.loaded .output, section.data-item.loaded .output {
+    display: initial;
+}
+
+.show {
+    display: initial;
+}
+
+.hide {
     display: none;
 }

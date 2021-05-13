@@ -4,7 +4,7 @@ import { msalConfig, loginRequest } from "./auth-config.js";
 const msalInstance = new msal.PublicClientApplication(msalConfig);
 
 function dispatchLoginEvent(detail) {
-    document.dispatchEvent(new CustomEvent("login", { detail }));
+    document.dispatchEvent(new CustomEvent("g4a.login", { detail }));
 }
 
 export function account() {

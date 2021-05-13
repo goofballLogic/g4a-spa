@@ -1,4 +1,4 @@
-import { inboxContainerURL, sleeperServiceURL } from "./storage-config.js";
+import { inboxContainerURL, sleeperServiceURL } from "./service-config.js";
 import { decorateHeaders } from "./auth-api.js";
 
 let formBuilderPort = null;
@@ -42,55 +42,133 @@ window.addEventListener("message", e => {
 });
 
 export function handleFormMutations(content) {
+
     for (let form of content.querySelectorAll("form")) {
+
         for (let toggler of form.querySelectorAll("input[data-toggler]")) {
+
             const { name, value } = toggler;
             const toggledClass = `.${name}-toggled`;
             const toggled = form.querySelectorAll(toggledClass);
             function updateToggleState() {
+
                 for (let t of toggled) {
+
                     if (toggler.checked && t.classList.contains(value)) {
+
                         t.classList.add("show");
                         t.classList.remove("hide");
+
                     } else {
+
                         t.classList.add("hide");
                         t.classList.remove("show");
+
                     }
+
                 }
+
             }
             updateToggleState();
             toggler.addEventListener("change", updateToggleState);
+
         }
+
     }
 
 }
 
 export function handleFormSubmission(content) {
+
     for (let form of content.querySelectorAll("form")) {
+
         form.addEventListener("submit", e => {
+
             if (e.target.classList.contains("sleeper-service")) {
+
                 e.preventDefault();
                 handleSleeperServiceFormSubmission(e.target);
+
+            }
+
+            if (e.target.classList.contains("doc-server")) {
+
+                e.preventDefault();
+                handleDocServerFormSubmission(e.target);
+
+            }
+
+            if (e.target.classList.contains("cog-initialize")) {
+
+                e.preventDefault();
+                handleCogInitialize(e.target);
             }
         });
+
     }
+
+}
+
+async function handleCogInitialize(form) {
+
+    const data = new FormData(form);
+    const userId = data.get("userId");
+    if (!userId) throw new Error("No user id");
+    const headers = new Headers();
+    await decorateHeaders(headers);
+
+    const url = new URL(sleeperServiceURL("initialize"));
+    url.searchParams.set("userId", userId);
+    await fetch(url, {
+        headers,
+        method: "POST",
+        contentType: "application/json",
+        body: JSON.stringify(data)
+    });
+
+}
+
+async function handleDocServerFormSubmission(form) {
+
+    await runFormSubmission(form, async () => {
+
+        const formData = new FormData(form);
+        const id = formData.get("id");
+        const tenantId = sessionStorage.getItem("g4a:tenant");
+        if (id) {
+
+            await patchToSleeperService(sleeperServiceURL(`documents/${tenantId}/${id}`), formData);
+
+        } else {
+
+            await postToSleeperService(sleeperServiceURL(`documents/${tenantId}`), formData);
+
+        }
+
+    });
+
 }
 
 async function handleSleeperServiceFormSubmission(form) {
-    const message = document.createElement("DIV");
-    message.className = "message pending";
-    message.textContent = "Saving... ";
-    for (let button of form.querySelectorAll("button"))
-        button.disabled = true;
-    form.appendChild(message);
-    form.style.position = "relative";
-    try {
+    await runFormSubmission(form, async () => {
         const formData = new FormData(form);
         const digest = {};
         for (let [key, val] of formData.entries()) {
             digest[key] = (val instanceof File) ? await upload(val) : val;
         }
         await postToSleeperService(digest);
+    });
+}
+
+async function runFormSubmission(form, strategy) {
+    const message = document.createElement("DIV");
+    message.className = "message pending";
+    message.textContent = "Saving... ";
+    for (let button of form.querySelectorAll("button"))
+        button.disabled = true;
+    form.appendChild(message);
+    try {
+        await strategy();
         message.textContent += "Complete";
         message.classList.add("success");
         console.log("Done");
@@ -105,15 +183,36 @@ async function handleSleeperServiceFormSubmission(form) {
     }
 }
 
-async function postToSleeperService(data) {
+async function postToSleeperService(url, data) {
+
+    const method = "POST";
+
     const headers = new Headers();
     await decorateHeaders(headers);
-    await fetch(sleeperServiceURL, {
-        headers,
-        method: "POST",
-        contentType: "application/json",
-        body: JSON.stringify(data)
-    });
+    const contentType = "application/json";
+    const body = JSON.stringify(
+        data instanceof FormData
+            ? Object.fromEntries(data.entries())
+            : data
+    );
+    const resp = await fetch(url, { headers, method, contentType, body });
+    if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
+    return {
+        status: resp.status,
+        body: await extractBody(resp)
+    };
+
+}
+
+async function extractBody(resp) {
+
+    const contentType = resp.headers.get("content-type");
+    return contentType?.startsWith("application/json")
+        ? await resp.json()
+        : contentType?.startsWith("text")
+            ? await resp.text()
+            : null;
+
 }
 
 async function upload(file) {

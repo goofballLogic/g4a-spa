@@ -2,16 +2,30 @@ import "https://alcdn.msauth.net/browser/2.14.1/js/msal-browser.min.js";
 import { msalConfig, tokenRequest } from "./auth-config.js";
 
 const msalInstance = new msal.PublicClientApplication(msalConfig);
+let tokenResponseCache = null;
 
 export async function decorateHeaders(headers) {
 
-    await msalInstance.handleRedirectPromise();
-    const [account] = msalInstance.getAllAccounts();
-    console.log(account);
-    const resp = await msalInstance.acquireTokenSilent({
-        ...tokenRequest,
-        account
-    });
-    headers.append("Authorization", `Bearer ${resp.accessToken}`);
+    const token = await ensureTokenAcquisition();
+    headers.append("Authorization", `Bearer ${token}`);
+
+}
+
+async function ensureTokenAcquisition() {
+
+    if (tokenResponseCache) {
+        if (tokenResponseCache.expiresOn <= new Date())
+            tokenResponseCache = null;
+    }
+    if (!tokenResponseCache) {
+        await msalInstance.handleRedirectPromise();
+        const [account] = msalInstance.getAllAccounts();
+        const resp = await msalInstance.acquireTokenSilent({
+            ...tokenRequest,
+            account
+        });
+        tokenResponseCache = resp;
+    }
+    return tokenResponseCache.accessToken;
 
 }

@@ -8,34 +8,7 @@
     <link rel="stylesheet" href="./css/state.css">
     <link rel="stylesheet" href="./css/typography.css">
     <link rel="stylesheet" href="./css/structure.css">
-    <script>
-
-        document.addEventListener("login", e => {
-
-            const bodyClassList = document.body.classList;
-            const accountNameElements = document.querySelectorAll(".account-name");
-            bodyClassList.remove("logged-in");
-            bodyClassList.remove("login-error")
-            const account = e.detail?.account;
-            const err = e.detail?.err;
-            if (err) {
-                bodyClassList.add("login-error");
-                alert(err);
-            } else {
-                let accountName = "";
-                if (account) {
-                    bodyClassList.add("logged-in");
-                    accountName = account.givenName ? `${account.givenName} ${account.familyName}` : account.username
-                } else {
-                    bodyClassList.add("logged-out");
-                }
-                for (let element of accountNameElements) {
-                    element.textContent = accountName;
-                }
-            }
-
-        });
-    </script>
+    <script type="module" src="./js/login.js"></script>
     <script type="module">
         import { signIn, signOut } from "./js/auth.js";
         import { render } from "./js/render.js";
@@ -86,6 +59,39 @@
     </template>
 
     <template id="grant-admin">
+
+        <nav>
+        </nav>
+        <section>
+
+            <h2>Your grants</h2>
+            <section class="data-list administered-grants" data-query="documents/{tenant}">
+
+                <div class="output"></div>
+                <div class="loading-list">Loading...</div>
+                <div class="empty-list">You don't have any grants yet.</div>
+                <template>
+
+                    <a class="grant" data-href="?_=/view-grant/{id}">
+
+                        <h3 data-text-content="name"></h3>
+
+                    </a>
+
+                </template>
+
+            </section>
+            <a href="?_=/create-grant" class="tile create">
+
+                <span class="text">Create a grant</span>
+
+            </a>
+
+        </section>
+
+    </template>
+
+    <template id="grant-admin-v1">
         <nav>
         </nav>
         <section>
@@ -107,7 +113,108 @@
         </section>
     </template>
 
+    <template id="view-grant" data-params="id">
+
+        <nav></nav>
+        <section class="data-item" data-item-query="documents/{tid}/{id}">
+
+            <div class="loading-item">Loading...</div>
+            <div class="output">
+
+                <form class="sleeper-service">
+
+                    <input type="hidden" name="op" value="create-grant" />
+                    <label>
+
+                        <span class="text">Name</span>
+                        <input type="text" name="name" required />
+
+                    </label>
+                    <label>
+
+                        <input type="radio" name="mode" data-toggler value="file" />
+                        <span class="text">File-based</span>
+
+                    </label>
+                    <label>
+
+                        <input type="radio" name="mode" data-toggler value="form" checked />
+                        <span class="text">Online form</span>
+
+                    </label>
+                    <section class="mode-toggled file">
+
+                        <h4>File based template</h4>
+                        <label>
+
+                            <span class="text">Grant template</span>
+                            <input type="file" name="grant-template" />
+
+                        </label>
+
+                    </section>
+                    <section class="mode-toggled form">
+
+                        <h4>Online form</h4>
+                        <a href="../form-builder.html" target="blank">Create a form</a>
+                        <input name="grant-form-template" data-listener="g4a:form-builder-save" type="hidden" />
+                        <span data-listener="g4a:form-builder-save"></span>
+
+                    </section>
+                    <div>
+
+                        <button>Create</button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </template>
+
     <template id="create-grant">
+
+        <nav></nav>
+        <section>
+
+            <h2>Create a grant</h2>
+            <form class="doc-server">
+
+                <label>
+
+                    <span class="text long">What name would you like to give your grant?</span>
+                    <input type="text" required name="name" />
+
+                </label>
+                <aside>The name of the grant is the primary means by which you will recognise the grant, and will
+                    also be shown to potential applicants who need to select a grant for which to apply.</aside>
+                <div>
+
+                    <button>Create</button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+    </template>
+
+    <template id="cog">
+
+        <form class="cog-initialize">
+            <input type="text" name="userId" placeholder="user oid" />
+            <div>
+                <button>Initialize</button>
+            </div>
+        </form>
+
+    </template>
+
+    <template id="create-grant_v1">
         <nav>
         </nav>
         <section>
