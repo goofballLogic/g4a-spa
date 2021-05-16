@@ -172,6 +172,9 @@ async function runFormSubmission(form, strategy) {
         message.textContent += "Complete";
         message.classList.add("success");
         console.log("Done");
+        if (form.dataset.submitNext) {
+            location.href = form.dataset.submitNext;
+        }
     } catch (err) {
         message.textContent += err.message || err;
         message.classList.add("failure");
