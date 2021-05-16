@@ -12,7 +12,6 @@ export function sleeperServiceURL(name) {
     if (name.startsWith("/")) name = name.substring(1);
     const slash = name.indexOf("/");
     const tln = (slash > -1) ? name.substring(0, slash) : name;
-    console.log(tln);
     const baseURL = localStorage.getItem(`g4a.sleeper-service-${tln}`) || `${sleeperServiceRoot}${tln}`;
     const url = (slash > -1) ? `${baseURL}${name.substring(slash)}` : baseURL;
     return new URL(url);

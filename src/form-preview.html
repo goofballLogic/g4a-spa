@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Grants 4 all - Form preview</title>
+    <style>
+        main {
+            padding: 20px;
+            max-width: 1200px;
+        }
+
+        #controller {
+            margin-top: 20px;
+            display: none;
+            align-items: flex-end;
+            flex-direction: column;
+        }
+
+        .loaded #controller {
+            display: flex;
+        }
+    </style>
+    <link rel="stylesheet" href="./lib/bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./lib/formiojs/4.13.1/formio.full.min.css">
+    <script type="module" src="./js/form-builder.js"></script>
+
+</head>
+
+<body>
+    <main>
+        <section id="preview">
+        </section>
+        <section id="controller">
+            <button class="btn btn-success">Back</button>
+        </section>
+    </main>
+</body>
+
+</html>

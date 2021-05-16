@@ -42,7 +42,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (schema.version && json.item?.version !== version)
                 throw new Error("Not implemented");
             Object.assign(formOptions, schema);
-            console.log(formOptions);
         }
 
     } catch (err) {
@@ -52,14 +51,39 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     }
 
+    const editor = document.querySelector("#editor");
+    const previewer = document.querySelector("#preview");
+
+    if (editor) await initEditor(editor, docId, headers);
+    if (previewer) await initPreview(previewer, docId, headers);
+
+    document.body.classList.add("loaded");
+
+});
+
+async function initPreview(editor, docId, headers) {
+
+    await Formio.createForm(editor, formOptions);
+    document.querySelector("#controller button").addEventListener("click", async () => {
+
+        history.back();
+
+    });
+
+}
+
+async function initEditor(editor, docId, headers) {
+
     const builder = await Formio.builder(
-        document.querySelector("#editor"),
+        editor,
         formOptions,
         builderOptions
     );
 
     builder.on("saveComponent", () => {
+
         localStorage.setItem("working-form-build", JSON.stringify(builder.schema));
+
     });
 
     document.querySelector("#controller button").addEventListener("click", async () => {
@@ -83,7 +107,4 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
 
     });
-
-    document.body.classList.add("loaded");
-
-});
+}

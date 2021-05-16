@@ -189,7 +189,6 @@ export async function buildSleeperServiceURL(href) {
     if (href.includes("{tenant}"))
         href = href.replace("{tenant}", sessionStorage.getItem("g4a:tenant"));
     const queryURL = new URL(href, location.href);
-    console.log(queryURL.pathname);
     const url = sleeperServiceURL(queryURL.pathname);
     url.search = queryURL.search;
     return url;
