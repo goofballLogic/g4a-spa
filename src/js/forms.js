@@ -133,6 +133,7 @@ async function handleDocServerFormSubmission(form) {
     await runFormSubmission(form, async () => {
 
         const formData = new FormData(form);
+        window.x = formData;
         const id = formData.get("id");
         const tenantId = sessionStorage.getItem("g4a:tenant");
         if (id) {
@@ -167,29 +168,43 @@ async function runFormSubmission(form, strategy) {
     for (let button of form.querySelectorAll("button"))
         button.disabled = true;
     form.appendChild(message);
+    let redirecting = false;
     try {
         await strategy();
         message.textContent += "Complete";
         message.classList.add("success");
-        console.log("Done");
-        if (form.dataset.submitNext) {
-            location.href = form.dataset.submitNext;
+        const { submitNext } = form.dataset;
+        if (submitNext) {
+            redirecting = location.href !== submitNext;
+            location.href = submitNext;
         }
+
     } catch (err) {
         message.textContent += err.message || err;
         message.classList.add("failure");
     } finally {
         message.classList.remove("pending");
         setTimeout(() => form.removeChild(message), 5000);
-        for (let button of form.querySelectorAll("button"))
-            button.disabled = false;
+        if (!redirecting) {
+            for (let button of form.querySelectorAll("button"))
+                button.disabled = false;
+        }
     }
+}
+
+async function patchToSleeperService(url, data) {
+
+    return await fetchToSleeperService(data, url, "PATCH");
+
 }
 
 async function postToSleeperService(url, data) {
 
-    const method = "POST";
+    return await fetchToSleeperService(data, url, "POST");
 
+}
+
+async function fetchToSleeperService(data, url, method) {
     const headers = new Headers();
     await decorateHeaders(headers);
     const contentType = "application/json";
@@ -199,12 +214,12 @@ async function postToSleeperService(url, data) {
             : data
     );
     const resp = await fetch(url, { headers, method, contentType, body });
-    if (!resp.ok) throw new Error(`${resp.status} ${resp.statusText}`);
+    if (!resp.ok)
+        throw new Error(`${resp.status} ${resp.statusText}`);
     return {
         status: resp.status,
         body: await extractBody(resp)
     };
-
 }
 
 async function extractBody(resp) {

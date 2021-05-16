@@ -33,4 +33,5 @@ time {
 .grant-status {
     text-transform: uppercase;
     letter-spacing: 0.07em;
+    text-align: center;
 }

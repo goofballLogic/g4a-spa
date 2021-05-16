@@ -6,7 +6,7 @@ body:not(.logged-in) .account-welcome {
     visibility: hidden;
 }
 
-body:not(.logged-in) .home nav {
+body:not(.logged-in) .home-area nav {
     display: none;
 }
 
@@ -61,11 +61,4 @@ section.data-list.loaded .output, section.data-item.loaded .output {
 
 .hide {
     display: none;
-}
-
-.grant-status.draft::before, .grant-status.undefined::before {
-    display: inline-block;
-    transform: scaleX(-1);
-    content: "\270e";
-    font-size: 1.1em;
 }

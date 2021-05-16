@@ -33,7 +33,7 @@ function emplaceFormInputs(content, item) {
 
     for (let input of content.querySelectorAll("input")) {
 
-        if (input.type === "text" && input.name in item)
+        if ((input.type === "text" || input.type === "hidden") && input.name in item)
             input.value = item[input.name];
         if (input.type === "radio" && input.name in item) {
 
@@ -131,6 +131,13 @@ function emplaceHrefs(content, item) {
         const hrefTemplate = hrefer.dataset.href;
         const expanded = urlTemplates.parse(hrefTemplate).expand(item);
         hrefer.setAttribute("href", expanded);
+
+    }
+    for (let submitNext of content.querySelectorAll("[data-submit-next]")) {
+
+        const hrefTemplate = submitNext.dataset.submitNext;
+        const expanded = urlTemplates.parse(hrefTemplate).expand(item);
+        submitNext.dataset.submitNext = expanded.toString();
 
     }
 

@@ -72,6 +72,12 @@
             <a class="tile grant-admin" href="?_=/grant-admin">
 
                 <span class="text">Administer grants</span>
+
+            </a>
+            <a href="?_=/create-grant" class="tile create">
+
+                <span class="text">Create a grant</span>
+
             </a>
 
         </nav>
@@ -101,11 +107,6 @@
                 </template>
 
             </section>
-            <a href="?_=/create-grant" class="tile create">
-
-                <span class="text">Create a grant</span>
-
-            </a>
 
         </section>
 
@@ -125,6 +126,7 @@
                     <span class="text" data-text-content="status" data-defaults='{"status": "draft"}'></span>
 
                 </div>
+
                 <p>
 
                     Created on <time data-value="created" data-text-date="created"></time> and last updated on <time
@@ -132,8 +134,9 @@
                     <br />
                     <a data-href="../form-builder.html?id={id}">Edit application template</a><br />
                     <br />
-                    <a data-href="../form-preview.html?id={id}">Test the application form</a>
-
+                    <a data-href="../form-preview.html?id={id}">Test the application form</a><br />
+                    <br />
+                    <a data-href="?_=grant-status/{id}">Update status</a>
                 </p>
 
             </div>
@@ -150,6 +153,57 @@
             <div class="output">
 
                 <h2 data-text-content="name"></h2>
+
+            </div>
+
+        </section>
+
+    </template>
+
+    <template id="grant-status" data-params="id">
+
+        <nav></nav>
+        <section class="data-item" data-item-query="documents/{tid}/{id}">
+
+            <div class="loading-item">Loading...</div>
+            <div class="output">
+
+                <h2 data-text-content="name"></h2>
+                <form class="doc-server" data-submit-next="?_=view-grant/{id}">
+
+                    <input type="hidden" name="id" data-value="id" />
+                    <label>
+
+                        <input type="radio" value="draft" name="status" />
+                        <span class="text">Draft</span>
+
+                    </label>
+                    <label>
+
+                        <input type="radio" value="live" name="status" />
+                        <span class="text">Open for applications</span>
+
+                    </label>
+                    <label>
+
+                        <input type="radio" value="closed" name="status" />
+                        <span class="text">Closed to applications</span>
+
+                    </label>
+                    <label>
+
+                        <input type="radio" value="archived" name="status" />
+                        <span class="text">Archive</span>
+
+                    </label>
+                    <br />
+                    <div>
+
+                        <button>Save</button>
+
+                    </div>
+
+                </form>
 
             </div>
 

@@ -6,6 +6,8 @@ html {
     --fire-opal: #e3655bff;
     --yellow-green-fade: #98ce0030;
     --davys-grey-fade: #605f5e30;
+    --fire-opal-fade: #e3655b30;
+    --may-green-fade: #60993e30;
 }
 
 html, body {
@@ -40,12 +42,12 @@ a.tile .text {
     background-color: rgba(255, 255, 255, 0.9);
 }
 
-main:not(.home)>nav a {
+main:not(.home-area)>nav a {
     background-color: var(--may-green);
     color: white !important;
 }
 
-main:not(.home)>nav a:hover {
+main:not(.home-area)>nav a:hover {
     background-color: var(--yellow-green);
 }
 
@@ -62,10 +64,21 @@ h3 {
 }
 
 .grant-status {
+    border-color: var(--white);
+    background-color: var(--may-green-fade);
+}
+
+.grant-status.archived {
     background-color: var(--davys-grey-fade);
+    border-color: var(--white);
+}
+
+.grant-status.closed {
+    background-color: var(--fire-opal-fade);
+    border-color: var(--fire-opal);
 }
 
 .grant-status.live {
-    background-color: var(--yellow-green);
-    color: var(--may-green);
+    background-color: var(--yellow-green-fade);
+    border-color: var(--yellow-green);
 }

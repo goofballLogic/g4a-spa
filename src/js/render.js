@@ -53,6 +53,6 @@ export function render(container) {
 
     container.innerHTML = "";
     container.appendChild(content);
-    container.className = className;
+    container.className = `${className}-area`;
 
 }
