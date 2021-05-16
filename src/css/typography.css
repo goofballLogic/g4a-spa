@@ -22,6 +22,10 @@ h3 {
     border-bottom-width: 0.1px;
 }
 
+a h3 {
+    border-bottom: none;
+}
+
 time {
     font-weight: bolder;
 }
