@@ -16,3 +16,17 @@ header * {
 a.logo {
     text-decoration: none;
 }
+
+h3 {
+    border-bottom-style: solid;
+    border-bottom-width: 0.1px;
+}
+
+time {
+    font-weight: bolder;
+}
+
+.grant-status {
+    text-transform: uppercase;
+    letter-spacing: 0.07em;
+}

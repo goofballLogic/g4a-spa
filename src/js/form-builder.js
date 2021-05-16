@@ -1,4 +1,6 @@
 import "../lib/formiojs/4.13.1/formio.full.min.js";
+import { decorateHeaders } from "./auth-api.js";
+import { buildSleeperServiceURL } from "./queries.js";
 
 const version = "0.0.1";
 
@@ -20,43 +22,66 @@ const builderOptions =
     }
 };
 
-const messages = [];
-
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-
-async function waitForMessage(name, timeout = Date.now() + 3000) {
-    while (!messages.includes(name)) {
-        if (Date.now() > timeout) return false;
-        console.log("Polling for", name);
-        await delay(300);
-    }
-    return true;
-}
-
 document.addEventListener("DOMContentLoaded", async () => {
 
-    const channel = new MessageChannel();
-    channel.port1.addEventListener("message", e => messages.push(e.data));
-    channel.port1.start();
-    window.opener.postMessage("g4a:form-builder-init", location.origin, [channel.port2]);
-    const result = await waitForMessage("g4a:form-builder-init-ack");
-    if (!result) throw new Error("Unable to communicate with the page which opened this form builder");
 
-    const builder = await Formio.builder(document.querySelector("#editor"), formOptions, builderOptions);
-    builder.on("saveComponent", () => { localStorage.setItem("working-form-build", JSON.stringify(builder.schema)) });
+    const docId = new URL(location.href).searchParams.get("id");
+    if (!docId) history.back();
+
+    const docURL = await buildSleeperServiceURL(`documents/{tenant}/${docId}?include=content`);
+
+    const headers = new Headers({ "content-type": "application/json" });
+    await decorateHeaders(headers);
+
+    try {
+
+        const resp = await fetch(docURL, { headers });
+        const json = await resp.json();
+        const schema = json.item?.content?.schema;
+        if (schema) {
+            if (schema.version && json.item?.version !== version)
+                throw new Error("Not implemented");
+            Object.assign(formOptions, schema);
+            console.log(formOptions);
+        }
+
+    } catch (err) {
+
+        alert(err.stack);
+        history.back();
+
+    }
+
+    const builder = await Formio.builder(
+        document.querySelector("#editor"),
+        formOptions,
+        builderOptions
+    );
+
+    builder.on("saveComponent", () => {
+        localStorage.setItem("working-form-build", JSON.stringify(builder.schema));
+    });
 
     document.querySelector("#controller button").addEventListener("click", async () => {
 
-        const data = JSON.parse(JSON.stringify({
-            type: "g4a:form-builder-save",
+        const data = JSON.stringify({
             version,
             schema: builder.schema
-        }));
-        while (messages.length) messages.pop();
-        channel.port1.postMessage(data);
-        const saveResult = await waitForMessage("g4a:form-builder-save-ack");
-        if (!saveResult) throw new Error("Failed to save");
-        window.close();
+        });
+        const contentURL = await buildSleeperServiceURL(`documents/{tenant}/${docId}/content`);
+
+        const resp = await fetch(contentURL, {
+            headers,
+            method: "PUT",
+            body: JSON.stringify(data)
+        });
+        if (resp.ok) {
+
+            localStorage.removeItem("working-form-build");
+            history.back();
+
+        }
+
     });
 
     document.body.classList.add("loaded");

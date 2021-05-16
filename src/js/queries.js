@@ -17,22 +17,34 @@ async function handleDataItemQuery(dataItem, params) {
     const { itemQuery } = dataItem.dataset;
     const itemQueryTemplate = urlTemplates.parse(itemQuery);
     const itemQueryUrl = itemQueryTemplate.expand(params);
-    const x = await querySleeperService(itemQueryUrl);
-    for (let input of dataItem.querySelectorAll("input")) {
+    const item = await querySleeperService(itemQueryUrl);
 
-        if (input.type === "text" && input.name in x)
-            input.value = x[input.name];
-        if (input.type === "radio" && input.name in x) {
+    emplaceTextContent(dataItem, item);
+    emplaceCSSClasses(dataItem, item);
+    emplaceDateContent(dataItem, item);
+    emplaceHrefs(dataItem, item);
+    emplaceFormInputs(dataItem, item);
 
-            const isChecked = x[input.name] === input.value;
+    dataItem.classList.add("loaded");
+
+}
+
+function emplaceFormInputs(content, item) {
+
+    for (let input of content.querySelectorAll("input")) {
+
+        if (input.type === "text" && input.name in item)
+            input.value = item[input.name];
+        if (input.type === "radio" && input.name in item) {
+
+            const isChecked = item[input.name] === input.value;
             input.checked = isChecked;
-            if (isChecked) input.dispatchEvent(new Event("change"));
+            if (isChecked)
+                input.dispatchEvent(new Event("change"));
 
         }
 
     }
-    dataItem.classList.add("loaded");
-    console.log(x);
 
 }
 
@@ -75,6 +87,43 @@ async function handleDataListQuery(dataList) {
 
 }
 
+const dtformat = new Intl.DateTimeFormat([], {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+});
+
+function emplaceCSSClasses(content, item) {
+
+    for (let csser of content.querySelectorAll("[data-add-class]")) {
+
+        csser.classList.add(item[csser.dataset.addClass]);
+
+    }
+
+}
+
+function emplaceDateContent(content, item) {
+
+    for (let dater of content.querySelectorAll("[data-text-date]")) {
+
+        const dateField = dater.dataset.textDate;
+        const dateValue = item[dateField];
+        if (!dateValue) continue;
+        try {
+
+            const parsed = new Date(dateValue);
+            dater.textContent = dtformat.format(parsed);
+
+        } catch (err) {
+            console.warn(err);
+        }
+
+    }
+
+}
+
 function emplaceHrefs(content, item) {
 
     for (let hrefer of content.querySelectorAll("[data-href]")) {
@@ -92,7 +141,26 @@ function emplaceTextContent(content, item) {
     for (let textContenter of content.querySelectorAll("[data-text-content]")) {
 
         const textContentKey = textContenter.dataset.textContent;
-        textContenter.textContent = item[textContentKey] || "";
+        const value = (textContentKey in item)
+            ? item[textContentKey] || ""
+            : defaultTextContentValue(textContenter, textContentKey)
+        textContenter.textContent = value;
+
+    }
+
+}
+
+function defaultTextContentValue(element, key) {
+
+    const { defaults } = element.dataset;
+    if (!defaults) return;
+    try {
+
+        return JSON.parse(defaults)[key];
+
+    } catch (err) {
+
+        console.warn(err);
 
     }
 
@@ -102,15 +170,7 @@ async function querySleeperService(query) {
 
     const headers = new Headers();
     await decorateHeaders(headers);
-    const bits = query.split("/");
-    const top = bits.shift();
-    const url = sleeperServiceURL(top);
-    for (let bit of bits) {
-
-        if (bit === "{tenant}") bit = sessionStorage.getItem("g4a:tenant");
-        url.pathname = `${url.pathname}/${bit}`;
-
-    }
+    const url = await buildSleeperServiceURL(query);
     const resp = await fetch(url, { headers });
     if (!resp.ok) {
 
@@ -121,5 +181,17 @@ async function querySleeperService(query) {
     }
     const { item, items } = await resp.json();
     return item || items;
+
+}
+
+export async function buildSleeperServiceURL(href) {
+
+    if (href.includes("{tenant}"))
+        href = href.replace("{tenant}", sessionStorage.getItem("g4a:tenant"));
+    const queryURL = new URL(href, location.href);
+    console.log(queryURL.pathname);
+    const url = sleeperServiceURL(queryURL.pathname);
+    url.search = queryURL.search;
+    return url;
 
 }

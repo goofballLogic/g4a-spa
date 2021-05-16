@@ -56,3 +56,23 @@ form aside {
 input {
     border-color: var(--davys-grey-fade);
 }
+
+h3 {
+    border-bottom-color: var(--davys-grey-fade);
+}
+
+.grant-status {
+    background-color: var(--davys-grey-fade);
+}
+
+.grant-status.draft::before, .grant-status.undefined::before {
+    content: "✎";
+    display: inline-block;
+    transform: scaleX(-1);
+    font-size: 1.1em;
+}
+
+.grant-status.live {
+    background-color: var(--yellow-green);
+    color: var(--may-green);
+}

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="./css/typography.css">
     <link rel="stylesheet" href="./css/structure.css">
     <script type="module" src="./js/login.js"></script>
+    <script type="module" src="./js/components/form-builder.js"></script>
     <script type="module">
         import { signIn, signOut } from "./js/auth.js";
         import { render } from "./js/render.js";
@@ -22,19 +23,26 @@
 </head>
 
 <body>
+
     <header>
+
         <a href="?_=" class="logo">
+
             <h1>
                 Grants
                 <img src="favicon/android-chrome-192x192.png" alt="Grants 4 All" height="20">
                 All
             </h1>
+
         </a>
         <aside class="account-welcome">Welcome <span class="account-name"></span></aside>
         <span>
+
             <button type="button" id="signIn">Sign-in</button>
             <button type="button" id="signOut">Sign-out</button>
+
         </span>
+
     </header>
     <main>
         &nbsp;
@@ -42,20 +50,29 @@
     <footer>Copyright 2021 Tangent Vision</footer>
 
     <template id="home">
+
         <aside class="splash">
+
             <h1>Grants 4 All</h1>
+
         </aside>
         <article id="please-sign-in">
+
             <p>
                 Welcome to Grants 4 All. </p>
             <p>In order to administer or apply for grant funding, please register or login by clicking the Sign-in
                 button above.</p>
+
         </article>
         <nav>
+
             <a class="tile grant-admin" href="?_=/grant-admin">
+
                 <span class="text">Administer grants</span>
             </a>
+
         </nav>
+
     </template>
 
     <template id="grant-admin">
@@ -91,28 +108,6 @@
 
     </template>
 
-    <template id="grant-admin-v1">
-        <nav>
-        </nav>
-        <section>
-            <h2>Your grants</h2>
-            <section class="data-list administered-grants" data-query="grants">
-
-                <div class="output"></div>
-                <div class="loading-list">Loading...</div>
-                <div class="empty-list">You don't have any grants yet.</div>
-                <template>
-                    <a class="grant" data-href="?_=/view-grant/{id}">
-                        <h3 data-text-content="name"></h3>
-                    </a>
-                </template>
-            </section>
-            <a href="?_=/create-grant" class="tile create">
-                <span class="text">Create a grant</span>
-            </a>
-        </section>
-    </template>
-
     <template id="view-grant" data-params="id">
 
         <nav></nav>
@@ -121,53 +116,19 @@
             <div class="loading-item">Loading...</div>
             <div class="output">
 
-                <form class="sleeper-service">
+                <h2 data-text-content="name"></h2>
+                <div data-add-class="status" class="grant-status">
 
-                    <input type="hidden" name="op" value="create-grant" />
-                    <label>
+                    <span class="text" data-text-content="status" data-defaults='{"status": "draft"}'></span>
 
-                        <span class="text">Name</span>
-                        <input type="text" name="name" required />
+                </div>
+                <p>
 
-                    </label>
-                    <label>
+                    Created on <time data-value="created" data-text-date="created"></time><br />
+                    <br />
+                    <a data-href="../form-builder.html?id={id}">Application template</a>
 
-                        <input type="radio" name="mode" data-toggler value="file" />
-                        <span class="text">File-based</span>
-
-                    </label>
-                    <label>
-
-                        <input type="radio" name="mode" data-toggler value="form" checked />
-                        <span class="text">Online form</span>
-
-                    </label>
-                    <section class="mode-toggled file">
-
-                        <h4>File based template</h4>
-                        <label>
-
-                            <span class="text">Grant template</span>
-                            <input type="file" name="grant-template" />
-
-                        </label>
-
-                    </section>
-                    <section class="mode-toggled form">
-
-                        <h4>Online form</h4>
-                        <a href="../form-builder.html" target="blank">Create a form</a>
-                        <input name="grant-form-template" data-listener="g4a:form-builder-save" type="hidden" />
-                        <span data-listener="g4a:form-builder-save"></span>
-
-                    </section>
-                    <div>
-
-                        <button>Create</button>
-
-                    </div>
-
-                </form>
+                </p>
 
             </div>
 
@@ -214,52 +175,18 @@
 
     </template>
 
-    <template id="create-grant_v1">
-        <nav>
-        </nav>
-        <section>
-            <h2>Create a grant</h2>
-            <form class="sleeper-service">
-                <input type="hidden" name="op" value="create-grant" />
-                <label>
-                    <span class="text">Name</span>
-                    <input type="text" name="name" required />
-                </label>
-                <label>
-                    <input type="radio" name="mode" data-toggler value="file" />
-                    <span class="text">File-based</span>
-                </label>
-                <label>
-                    <input type="radio" name="mode" data-toggler value="form" checked />
-                    <span class="text">Online form</span>
-                </label>
-                <section class="mode-toggled file">
-                    <h4>File based template</h4>
-                    <label>
-                        <span class="text">Grant template</span>
-                        <input type="file" name="grant-template" />
-                    </label>
-                </section>
-                <section class="mode-toggled form">
-                    <h4>Online form</h4>
-                    <a href="../form-builder.html" target="blank">Create a form</a>
-                    <input name="grant-form-template" data-listener="g4a:form-builder-save" type="hidden" />
-                    <span data-listener="g4a:form-builder-save"></span>
-                </section>
-                <div>
-                    <button>Create</button>
-                </div>
-            </form>
-        </section>
-    </template>
-
     <template id="default_nav">
+
         <nav>
+
             <a href="?">Home</a>
             <a href="?_=grant-admin">Administer grants</a>
             <a href="?_=create-grant">Create a grant</a>
+
         </nav>
+
     </template>
+
 </body>
 
 </html>

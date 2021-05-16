@@ -141,6 +141,10 @@ section.data-list .output {
     flex-direction: column;
 }
 
+h2 {
+    margin-top: 0;
+}
+
 a.grant h3 {
     margin: 0;
 }
@@ -195,4 +199,10 @@ form aside {
     margin: 10px 0;
     padding: 10px;
     border-radius: 3px;
+}
+
+.grant-status {
+    border-radius: 5px;
+    display: inline-block;
+    padding: 10px;
 }
