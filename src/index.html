@@ -178,21 +178,6 @@
 
     </template>
 
-    <template id="form-preview" data-params="id">
-
-        <section class="data-item" data-item-query="documents/{tid}/{id}?include=content">
-
-            <div class="loading-item">Loading...</div>
-            <div class="output">
-
-                <h2 data-text-content="name"></h2>
-
-            </div>
-
-        </section>
-
-    </template>
-
     <template id="grant-status" data-params="id">
 
         <nav></nav>
@@ -254,7 +239,7 @@
 
             <div class="output">
 
-                <form class="doc-server not-error" data-submit-next="?_=my-applications">
+                <form class="doc-server-for-user not-error" data-submit-next="?_=my-applications">
 
                     <p>
                         You are about to start a new application for the grant: <span data-text-content="name"></span>.
@@ -264,6 +249,10 @@
                         in a draft state. You can view the status of your applications in the <a
                             href="?_=my-applications">My Applications</a> area.
                     </p>
+
+                    <input type="hidden" name="clone-id" data-value="id" />
+                    <input type="hidden" name="clone-tenant" data-value="tenant" />
+                    <input type="hidden" name="disposition" value="application" />
 
                     <div class="controls">
                         <button>Start a new application</button>

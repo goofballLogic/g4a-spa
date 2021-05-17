@@ -50,8 +50,20 @@ function emplaceFormInputs(content, item) {
 
     for (let input of content.querySelectorAll("input")) {
 
-        if ((input.type === "text" || input.type === "hidden") && input.name in item)
-            input.value = item[input.name];
+        if ((input.type === "text" || input.type === "hidden")) {
+
+            const { value: valueKey } = input.dataset;
+            if (valueKey) {
+
+                if (valueKey in item) input.value = item[valueKey];
+
+            } else if (input.name in item) {
+
+                input.value = item[input.name];
+
+            }
+
+        }
         if (input.type === "radio" && input.name in item) {
 
             const isChecked = item[input.name] === input.value;

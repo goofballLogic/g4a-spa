@@ -1,46 +1,6 @@
 import { inboxContainerURL, sleeperServiceURL } from "./service-config.js";
 import { decorateHeaders } from "./auth-api.js";
 
-let formBuilderPort = null;
-
-async function formBuilderMessageHandler(e) {
-    const { data } = e;
-    switch (data.type) {
-        case "g4a:form-builder-save":
-            const { identifier } = await upload(JSON.stringify(data));
-            for (let listener of document.querySelectorAll("[data-listener]")) {
-                if (listener.dataset.listener === data.type) {
-                    if (listener.tagName === "INPUT")
-                        listener.value = identifier;
-                    else
-                        listener.textContent = identifier;
-                }
-            }
-            formBuilderPort.postMessage(`${data.type}-ack`);
-            break;
-        default:
-            console.warn("Unrecognised port message", e.data);
-    }
-}
-
-window.addEventListener("message", e => {
-    if (e.origin !== location.origin) return;
-    switch (e.data) {
-        case "g4a:form-builder-init":
-            if (formBuilderPort) {
-                formBuilderPort.removeEventListener("message", formBuilderMessageHandler);
-            }
-            formBuilderPort = e.ports[0];
-            console.log("Listening for messages on", formBuilderPort);
-            formBuilderPort.addEventListener("message", formBuilderMessageHandler);
-            formBuilderPort.start();
-            formBuilderPort.postMessage("g4a:form-builder-init-ack");
-            break;
-        default:
-            console.warn("Unrecognised message", e.data);
-    }
-});
-
 export function handleFormMutations(content) {
 
     for (let form of content.querySelectorAll("form")) {
@@ -84,21 +44,22 @@ export function handleFormSubmission(content) {
 
         form.addEventListener("submit", e => {
 
-            if (e.target.classList.contains("sleeper-service")) {
+            const { classList } = e.target;
+            if (classList.contains("sleeper-service")) {
 
                 e.preventDefault();
                 handleSleeperServiceFormSubmission(e.target);
 
             }
 
-            if (e.target.classList.contains("doc-server")) {
+            if (classList.contains("doc-server") || classList.contains("doc-server-for-user")) {
 
                 e.preventDefault();
                 handleDocServerFormSubmission(e.target);
 
             }
 
-            if (e.target.classList.contains("cog-initialize")) {
+            if (classList.contains("cog-initialize")) {
 
                 e.preventDefault();
                 handleCogInitialize(e.target);
@@ -130,19 +91,19 @@ async function handleCogInitialize(form) {
 
 async function handleDocServerFormSubmission(form) {
 
+    const forUser = form.classList.contains("doc-server-for-user");
     await runFormSubmission(form, async () => {
 
         const formData = new FormData(form);
-        window.x = formData;
         const id = formData.get("id");
-        const tenantId = sessionStorage.getItem("g4a:tenant");
+        const owner = forUser ? "me" : sessionStorage.getItem("g4a:tenant");
         if (id) {
 
-            await patchToSleeperService(sleeperServiceURL(`documents/${tenantId}/${id}`), formData);
+            await patchToSleeperService(sleeperServiceURL(`documents/${owner}/${id}`), formData);
 
         } else {
 
-            await postToSleeperService(sleeperServiceURL(`documents/${tenantId}`), formData);
+            await postToSleeperService(sleeperServiceURL(`documents/${owner}`), formData);
 
         }
 
