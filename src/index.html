@@ -5,6 +5,7 @@
 
     <meta charset="UTF-8">
     <title>Grants 4 all</title>
+    <script src="./js/data-dog.js"></script>
     <link rel="stylesheet" href="./css/colour.css">
     <link rel="stylesheet" href="./css/images.css">
     <link rel="stylesheet" href="./css/state.css">
@@ -103,7 +104,7 @@
                 <div class="errors" data-error-text-content="true"></div>
                 <template>
 
-                    <a class="grant" data-href="?_=/create-application/{id}">
+                    <a class="grant" data-href="?_=/create-application/{tenant}/{id}">
 
                         <h3 data-text-content="name"></h3>
 
@@ -237,6 +238,44 @@
 
                 </form>
 
+            </div>
+
+        </section>
+
+    </template>
+
+    <template id="create-application" data-params="tenant,id">
+
+        <nav></nav>
+        <section class="data-item" data-item-query="documents/public/{tenant}/{id}">
+
+            <h2>Start a new application</h2>
+            <div class="loading-item">Loading...</div>
+
+            <div class="output">
+
+                <form class="doc-server not-error" data-submit-next="?_=my-applications">
+
+                    <p>
+                        You are about to start a new application for the grant: <span data-text-content="name"></span>.
+                    </p>
+                    <p>
+                        When you click the button below, a copy of the empty grant form will be created and saved
+                        in a draft state. You can view the status of your applications in the <a
+                            href="?_=my-applications">My Applications</a> area.
+                    </p>
+
+                    <div class="controls">
+                        <button>Start a new application</button>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="errors">
+                We're very sorry but an error occurred trying to start this application.<br />
+                <br />
+                <span data-error-text-content="true"></span>.
             </div>
 
         </section>

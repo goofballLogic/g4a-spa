@@ -17,15 +17,32 @@ async function handleDataItemQuery(dataItem, params) {
     const { itemQuery } = dataItem.dataset;
     const itemQueryTemplate = urlTemplates.parse(itemQuery);
     const itemQueryUrl = itemQueryTemplate.expand(params);
-    const item = await querySleeperService(itemQueryUrl);
 
-    emplaceTextContent(dataItem, item);
-    emplaceCSSClasses(dataItem, item);
-    emplaceDateContent(dataItem, item);
-    emplaceHrefs(dataItem, item);
-    emplaceFormInputs(dataItem, item);
+    try {
 
-    dataItem.classList.add("loaded");
+        const item = await querySleeperService(itemQueryUrl);
+
+        emplaceTextContent(dataItem, item);
+        emplaceCSSClasses(dataItem, item);
+        emplaceDateContent(dataItem, item);
+        emplaceHrefs(dataItem, item);
+        emplaceFormInputs(dataItem, item);
+
+    } catch (err) {
+
+        dataItem.classList.add("error");
+        const errorContainers = dataItem.querySelectorAll("[data-error-text-content]");
+        for (let container of errorContainers) {
+
+            container.textContent = err.toString();
+
+        }
+
+    } finally {
+
+        dataItem.classList.add("loaded");
+
+    }
 
 }
 

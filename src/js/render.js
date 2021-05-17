@@ -30,9 +30,10 @@ export function render(container) {
         className = bits.join("__");
         template = document.querySelector(`template#${className}`);
         if (template) break;
-        pathParams.push(bits.pop());
+        pathParams.unshift(bits.pop());
 
     }
+    console.log(pathParams);
     const content = template ? template.content.cloneNode(true) : placeholder(className);
     if (className !== "home") injectNav(content);
     const params = {

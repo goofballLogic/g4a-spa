@@ -63,10 +63,14 @@ section.data-list.loaded .output, section.data-item.loaded .output {
     display: none;
 }
 
-section.data-list .errors {
+section.data-list .errors, section.data-item .errors {
     display: none;
 }
 
-section.data-list.error .errors {
-    display: initial;
+section.data-list.error .errors, section.data-item.error .errors {
+    display: block;
+}
+
+.error .not-error {
+    display: none;
 }

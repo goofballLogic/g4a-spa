@@ -235,3 +235,9 @@ div.errors {
     border-left-width: 3px;
     padding: 10px;
 }
+
+p {
+    max-width: 800px;
+    line-height: 1.5;
+    margin-top: 0;
+}

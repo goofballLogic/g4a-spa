@@ -4,7 +4,7 @@ import { sleeperServiceURL } from "./service-config.js";
 document.addEventListener("g4a.login", async e => {
 
     const account = e.detail?.account;
-    const err = e.detail?.err;
+    let err = e.detail?.err;
     if (!err) {
 
         const headers = new Headers();
