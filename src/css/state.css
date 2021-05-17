@@ -62,3 +62,11 @@ section.data-list.loaded .output, section.data-item.loaded .output {
 .hide {
     display: none;
 }
+
+section.data-list .errors {
+    display: none;
+}
+
+section.data-list.error .errors {
+    display: initial;
+}

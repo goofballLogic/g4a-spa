@@ -82,3 +82,11 @@ h3 {
     background-color: var(--yellow-green-fade);
     border-color: var(--yellow-green);
 }
+
+div.errors {
+    border-color: var(--fire-opal);
+}
+
+main:not(.home-area)>nav hr {
+    background-color: var(--may-green-fade);
+}

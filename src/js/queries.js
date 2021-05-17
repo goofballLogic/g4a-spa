@@ -66,24 +66,39 @@ async function handleDataListQuery(dataList) {
         return;
 
     }
-    const items = await querySleeperService(query);
-    if (!(items && items.length)) {
+    try {
+        const items = await querySleeperService(query);
 
-        dataList.classList.add("empty");
+        if (!(items && items.length)) {
 
-    } else {
-        for (let item of items) {
+            dataList.classList.add("empty");
 
-            const content = template.content.cloneNode(true);
-            emplaceTextContent(content, item);
-            emplaceHrefs(content, item);
-            output.appendChild(content);
+        } else {
+            for (let item of items) {
+
+                const content = template.content.cloneNode(true);
+                emplaceTextContent(content, item);
+                emplaceHrefs(content, item);
+                output.appendChild(content);
+
+            }
+
+        }
+    } catch (err) {
+
+        dataList.classList.add("error");
+        const errorContainers = dataList.querySelectorAll("[data-error-text-content]");
+        for (let container of errorContainers) {
+
+            container.textContent = err.toString();
 
         }
 
-    }
+    } finally {
 
-    dataList.classList.add("loaded");
+        dataList.classList.add("loaded");
+
+    }
 
 }
 

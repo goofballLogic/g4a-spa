@@ -116,6 +116,14 @@ main:not(.home-area)>nav a {
     text-decoration: none;
 }
 
+main:not(.home-area)>nav hr {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 0 10px 0;
+    border: none;
+    height: 1px;
+}
+
 h2 {
     margin-top: 10px;
     border-bottom: solid 0.1px silver;
@@ -220,4 +228,10 @@ form aside {
     min-width: 100px;
     border-width: 1px;
     border-style: solid;
+}
+
+div.errors {
+    border-left-style: solid;
+    border-left-width: 3px;
+    padding: 10px;
 }

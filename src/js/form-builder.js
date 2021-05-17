@@ -5,7 +5,8 @@ import { buildSleeperServiceURL } from "./queries.js";
 const version = "0.0.1";
 
 const formOptions = {
-    display: "wizard"
+    display: "wizard",
+    components: []
 };
 
 const builderOptions =
@@ -63,6 +64,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function initPreview(editor, docId, headers) {
 
+    console.log(formOptions);
     await Formio.createForm(editor, formOptions);
     document.querySelector("#controller button").addEventListener("click", async () => {
 

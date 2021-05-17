@@ -84,6 +84,37 @@
 
     </template>
 
+    <template id="browse-live">
+
+        <nav></nav>
+        <section>
+
+            <h2>Open grants</h2>
+            <section class="data-list administered-grants" data-query="documents?status=live">
+
+                <div class="output">
+
+                    Below you will find a list of grants which are open to new applications:<br />
+                    <br />
+
+                </div>
+                <div class="loading-list">Loading...</div>
+                <div class="empty-list">You don't have any grants yet.</div>
+                <div class="errors" data-error-text-content="true"></div>
+                <template>
+
+                    <a class="grant" data-href="?_=/create-application/{id}">
+
+                        <h3 data-text-content="name"></h3>
+
+                    </a>
+
+                </template>
+
+            </section>
+
+    </template>
+
     <template id="grant-admin">
 
         <nav>
@@ -96,6 +127,7 @@
                 <div class="output"></div>
                 <div class="loading-list">Loading...</div>
                 <div class="empty-list">You don't have any grants yet.</div>
+                <div class="errors" data-error-text-content="true"></div>
                 <template>
 
                     <a class="grant" data-href="?_=/view-grant/{id}">
@@ -193,7 +225,7 @@
                     <label>
 
                         <input type="radio" value="archived" name="status" />
-                        <span class="text">Archive</span>
+                        <span class="text">Archived</span>
 
                     </label>
                     <br />
@@ -255,9 +287,11 @@
         <nav>
 
             <a href="?">Home</a>
+            <hr />
             <a href="?_=grant-admin">Administer grants</a>
             <a href="?_=create-grant">Create a grant</a>
-
+            <hr />
+            <a href="?_=browse-live">Find a grant</a>
         </nav>
 
     </template>
