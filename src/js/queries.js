@@ -59,7 +59,8 @@ function emplaceFormInputs(content, item) {
 
             } else if (input.name in item) {
 
-                input.value = item[input.name];
+                if (input.dataset.overwriteValue !== "true")
+                    input.value = item[input.name];
 
             }
 

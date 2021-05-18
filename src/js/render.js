@@ -33,7 +33,6 @@ export function render(container) {
         pathParams.unshift(bits.pop());
 
     }
-    console.log(pathParams);
     const content = template ? template.content.cloneNode(true) : placeholder(className);
     if (className !== "home") injectNav(content);
     const params = {
