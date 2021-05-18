@@ -116,6 +116,35 @@
 
     </template>
 
+    <template id="applications">
+
+        <nav>
+        </nav>
+        <section>
+
+            <h2>Grant applications you have created</h2>
+            <section class="data-list administered-grants" data-query="documents/me?disposition=application">
+
+                <div class="output"></div>
+                <div class="loading-list">Loading...</div>
+                <div class="empty-list">You don't have any grants yet.</div>
+                <div class="errors" data-error-text-content="true"></div>
+                <template>
+
+                    <a class="grant" data-href="?_=/view-application/{id}">
+
+                        <h3 data-text-content="name"></h3>
+
+                    </a>
+
+                </template>
+
+            </section>
+
+        </section>
+
+    </template>
+
     <template id="grant-admin">
 
         <nav>
@@ -239,7 +268,7 @@
 
             <div class="output">
 
-                <form class="doc-server-for-user not-error" data-submit-next="?_=my-applications">
+                <form class="doc-server-for-user not-error" data-submit-next="?_=applications">
 
                     <p>
                         You are about to start a new application for the grant: <span data-text-content="name"></span>.
@@ -247,7 +276,7 @@
                     <p>
                         When you click the button below, a copy of the empty grant form will be created and saved
                         in a draft state. You can view the status of your applications in the <a
-                            href="?_=my-applications">My Applications</a> area.
+                            href="?_=applications">My Applications</a> area.
                     </p>
 
                     <input type="hidden" name="clone-id" data-value="id" />
@@ -317,10 +346,12 @@
 
             <a href="?">Home</a>
             <hr />
+            <a href="?_=applications">Applications</a>
+            <a href="?_=browse-live">Find a grant</a>
+            <hr />
             <a href="?_=grant-admin">Administer grants</a>
             <a href="?_=create-grant">Create a grant</a>
-            <hr />
-            <a href="?_=browse-live">Find a grant</a>
+
         </nav>
 
     </template>
