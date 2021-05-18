@@ -91,7 +91,7 @@
         <section>
 
             <h2>Open grants</h2>
-            <section class="data-list administered-grants" data-query="documents?status=live">
+            <section class="data-list administered-grants" data-query="documents?status=live&disposition=grant">
 
                 <div class="output">
 
@@ -123,7 +123,7 @@
         <section>
 
             <h2>Your grants</h2>
-            <section class="data-list administered-grants" data-query="documents/{tenant}">
+            <section class="data-list administered-grants" data-query="documents/{tenant}?disposition=grant">
 
                 <div class="output"></div>
                 <div class="loading-list">Loading...</div>
@@ -279,6 +279,7 @@
             <h2>Create a grant</h2>
             <form class="doc-server" data-submit-next="?_=grant-admin">
 
+                <input type="hidden" name="disposition" value="grant" />
                 <label>
 
                     <span class="text long">What name would you like to give your grant?</span>
