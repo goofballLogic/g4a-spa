@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Grants 4 all - Application form</title>
+    <script src="./js/data-dog.js"></script>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            position: relative;
+        }
+
+        main {
+            flex: 1;
+            padding: 20px;
+            max-width: 1000px;
+            margin-top: 100px;
+        }
+
+        #controller {
+            display: none;
+            align-items: flex-start;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            background-color: white;
+            padding: 10px;
+            box-shadow: 0 0 5px 5px #DDD;
+            width: 100vw;
+            left: 0;
+            background-color: #EEE;
+            flex-direction: row;
+        }
+
+        #controller button+button {
+            margin-left: 10px;
+        }
+
+        .loaded #controller {
+            display: flex;
+        }
+
+        #controller .buffer {
+            margin-right: 100px;
+            flex: 1;
+            display: flex;
+            justify-content: flex-start;
+        }
+
+        .btn-wizard-nav-submit {
+            display: none;
+        }
+    </style>
+    <link rel="stylesheet" href="./lib/bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./lib/formiojs/4.13.1/formio.full.min.css">
+    <script type="module" src="./js/form-builder.js"></script>
+
+</head>
+
+<body>
+
+    <nav id="controller">
+
+        <span class="buffer">
+            <button class="btn btn-warning cancel">Cancel and return</button>
+            <button class="btn btn-warning reset" type="reset">Reset to last saved</button>
+        </span>
+
+        <button class="btn btn-success save">Save and return</button>
+
+    </nav>
+    <main>
+
+        <section id="filler">
+        </section>
+
+    </main>
+
+</body>
+
+</html>

@@ -174,6 +174,36 @@
 
     </template>
 
+    <template id="view-application" data-params="id">
+
+        <nav></nav>
+        <section class="data-item" data-item-query="documents/me/{id}">
+
+            <div class="loading-item">Loading...</div>
+            <div class="output">
+
+                <h2>Application for <span data-text-content="name"></span></h2>
+                <div data-add-class="status" class="grant-status">
+
+                    <span class="text" data-text-content="status" data-defaults='{"status": "draft"}'></span>
+
+                </div>
+
+                <p>
+
+                    Created on <time data-value="created" data-text-date="created"></time> and last updated on <time
+                        data-value="updated" data-text-date="updated"></time><br />
+                    <br />
+                    <a data-href="../form-filler.html?id={id}">Application form</a><br />
+
+                </p>
+
+            </div>
+
+        </section>
+
+    </template>
+
     <template id="view-grant" data-params="id">
 
         <nav></nav>
