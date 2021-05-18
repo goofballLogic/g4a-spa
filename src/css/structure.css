@@ -228,6 +228,7 @@ form aside {
     min-width: 100px;
     border-width: 1px;
     border-style: solid;
+    margin-bottom: 20px;
 }
 
 div.errors {
