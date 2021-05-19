@@ -2,18 +2,23 @@ import { decorateHeaders } from "./auth-api.js";
 import { sleeperServiceURL } from "./service-config.js";
 import urlTemplates from "../lib/url-template.js";
 
-export function handleQueries(content, params) {
+export async function handleQueries(content, params) {
 
-    for (let dataList of content.querySelectorAll(".data-list"))
-        handleDataListQuery(dataList, params);
 
-    for (let dataItem of content.querySelectorAll(".data-item[data-item-query]"))
-        handleDataItemQuery(dataItem, params);
+    const dataItems = Array.from(content.querySelectorAll(".data-item[data-item-query]"));
+    const dataLists = Array.from(content.querySelectorAll(".data-list"));
+
+    for (let dataItem of dataItems)
+        await handleDataItemQuery(dataItem, params);
+
+    for (let dataList of dataLists)
+        await handleDataListQuery(dataList, params);
 
 }
 
 async function handleDataItemQuery(dataItem, params) {
 
+    console.log(1);
     const { itemQuery } = dataItem.dataset;
     const itemQueryTemplate = urlTemplates.parse(itemQuery);
     const itemQueryUrl = itemQueryTemplate.expand(params);
@@ -85,6 +90,7 @@ async function handleDataListQuery(dataList, params) {
     const queryTemplate = urlTemplates.parse(query);
     const queryUrl = queryTemplate.expand(params);
 
+    console.log(1234, Array.from(dataList.querySelectorAll("template")));
     const template = dataList.querySelector("template");
     if (!(template && template.content)) {
 
@@ -112,6 +118,7 @@ async function handleDataListQuery(dataList, params) {
                 const content = template.content.cloneNode(true);
                 emplaceTextContent(content, item);
                 emplaceHrefs(content, item);
+                emplaceCSSClasses(content, item);
                 output.appendChild(content);
 
             }
@@ -144,6 +151,7 @@ const dtformat = new Intl.DateTimeFormat([], {
 
 function emplaceCSSClasses(content, item) {
 
+    console.log(content);
     for (let csser of content.querySelectorAll("[data-add-class]")) {
 
         csser.classList.add(item[csser.dataset.addClass]);

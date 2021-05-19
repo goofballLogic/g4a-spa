@@ -15,17 +15,17 @@
     background-image: url("../img/create.jpg");
 }
 
-a.grant {
+a.grant, a.application {
     display: flex;
     align-items: center;
 }
 
-a.grant::before {
-    background-image: url("../img/document.svg");
+a.grant::before, a.application::before {
     background-size: contain;
     display: inline-block;
     width: 20px;
     height: 20px;
     content: " ";
     margin-right: 3px;
+    background-image: url("../img/document.svg");
 }

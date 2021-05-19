@@ -91,7 +91,7 @@
         <section>
 
             <h2>Open grants</h2>
-            <section class="data-list administered-grants" data-query="documents?status=live&disposition=grant">
+            <section class="data-list administered-grants" data-query="documents/public?disposition=grant">
 
                 <div class="output">
 
@@ -133,7 +133,10 @@
 
                     <a class="grant" data-href="?_=/view-application/{id}">
 
-                        <h3 data-text-content="name"></h3>
+                        <h3>
+                            <span data-text-content="name"></span>
+                            [<span data-text-content="status"></span>]
+                        </h3>
 
                     </a>
 
@@ -161,9 +164,12 @@
                     <div class="errors" data-error-text-content="true"></div>
                     <template>
 
-                        <a class="grant" data-href="?_=/view-application/{id}">
+                        <a data-add-class="disposition" data-href="?_=/view-application/{id}">
 
-                            <h3 data-text-content="name"></h3>
+                            <h3>
+                                <span data-text-content="name"></span>
+                                [<span data-text-content="status"></span>]
+                            </h3>
 
                         </a>
 
@@ -186,7 +192,7 @@
         <section>
 
             <h2>Your grants</h2>
-            <section class="data-list administered-grants" data-query="documents/{tenant}?disposition=grant">
+            <section class="data-list administered-grants" data-query="documents/{tid}?disposition=grant">
 
                 <div class="output"></div>
                 <div class="loading-list">Loading...</div>

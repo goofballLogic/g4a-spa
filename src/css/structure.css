@@ -165,11 +165,11 @@ h2 {
     margin-top: 0;
 }
 
-a.grant h3 {
+a.grant h3, a.application h3 {
     margin: 0;
 }
 
-a.grant {
+a.grant, a.application {
     margin-bottom: 10px;
 }
 
