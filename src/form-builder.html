@@ -6,25 +6,9 @@
     <meta charset="UTF-8">
     <title>Grants 4 all - Form builder</title>
     <script src="./js/data-dog.js"></script>
-    <style>
-        main {
-            padding: 20px;
-            max-width: 1200px;
-        }
-
-        #controller {
-            margin-top: 20px;
-            display: none;
-            align-items: flex-end;
-            flex-direction: column;
-        }
-
-        .loaded #controller {
-            display: flex;
-        }
-    </style>
     <link rel="stylesheet" href="./lib/bootstrap/4.6.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="./lib/formiojs/4.13.1/formio.full.min.css">
+    <link rel="stylesheet" href="./css/form-hosting.css">
     <script type="module" src="./js/form-builder.js"></script>
 
 </head>
@@ -34,7 +18,14 @@
         <section id="editor">
         </section>
         <section id="controller">
-            <button class="btn btn-success">Save and return</button>
+
+            <span class="buffer">
+
+                <button class="btn btn-warning cancel">Cancel and return</button>
+
+            </span>
+            <button class="btn btn-success save">Save and return</button>
+
         </section>
     </main>
 </body>

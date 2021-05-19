@@ -26,6 +26,7 @@ const builderOptions =
 
 let data = null;
 let dataString = null;
+let schemaString = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
 
@@ -88,8 +89,9 @@ async function initFiller(filler, docId) {
         const body = JSON.stringify({ data: form.data });
         const method = "PUT";
         const resp = await fetch(docURL, { method, headers, body });
-        if (resp.ok)
+        if (resp.ok) {
             history.back();
+        }
         else
             console.error(resp.status, resp.statusText);
 
@@ -111,10 +113,9 @@ async function initFiller(filler, docId) {
 
     function confirmDataLoss() {
 
-        console.log(JSON.stringify(form.data), dataString);
         return (JSON.stringify(form.data) === dataString)
             ||
-            confirm("This will discard any unsaved changes. Are you sure?");
+            confirm("This will discard your unsaved changes. Are you sure?");
 
     }
 
@@ -144,6 +145,7 @@ async function initEditor(editor, docId, headers) {
         formOptions,
         builderOptions
     );
+    schemaString = JSON.stringify(builder.schema);
 
     builder.on("saveComponent", () => {
 
@@ -151,7 +153,15 @@ async function initEditor(editor, docId, headers) {
 
     });
 
-    document.querySelector("#controller button").addEventListener("click", async () => {
+
+    document.querySelector("#controller .cancel").addEventListener("click", () => {
+
+        if (confirmDataLoss())
+            history.back();
+
+    });
+
+    document.querySelector("#controller .save").addEventListener("click", async () => {
 
         const data = JSON.stringify({
             version,
@@ -172,4 +182,12 @@ async function initEditor(editor, docId, headers) {
         }
 
     });
+
+    function confirmDataLoss() {
+
+        return (JSON.stringify(builder.schema) === schemaString)
+            ||
+            confirm("This will discard your unsaved changes. Are you sure?");
+
+    }
 }
