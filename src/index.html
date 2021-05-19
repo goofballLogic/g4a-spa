@@ -220,7 +220,7 @@
         <section class="data-item" data-item-query="documents/me/{id}">
 
             <div class="loading-item">Loading...</div>
-            <div class="output">
+            <div class="output" data-add-class="status">
 
                 <h2>Your application for <span data-text-content="name"></span></h2>
                 <div data-add-class="status" class="grant-status">
@@ -234,9 +234,22 @@
                     Created on <time data-value="created" data-text-date="created"></time> and last updated on <time
                         data-value="updated" data-text-date="updated"></time><br />
                     <br />
-                    <a data-href="../form-filler.html?id={id}">Application form</a><br />
+                    <a class="fill-application" data-href="../form-filler.html?id={id}">Application form</a><br />
 
                 </p>
+
+                <form class="doc-server" data-submit-next="?_=view-application/{id}">
+
+                    <h3>Submit your application</h3>
+                    <input type="hidden" name="id" />
+                    <input type="hidden" name="status" data-overwrite-value="true" value="submitted" />
+                    <p>Are you ready to submit your application? After you submit you won't be able to update the form
+                    </p>
+                    <div class="controls">
+                        <button>Submit</button>
+                    </div>
+
+                </form>
 
             </div>
 

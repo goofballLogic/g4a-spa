@@ -74,3 +74,7 @@ section.data-list.error .errors, section.data-item.error .errors {
 .error .not-error {
     display: none;
 }
+
+.view-application-area .submitted form, .view-application-area .submitted .fill-application {
+    display: none;
+}

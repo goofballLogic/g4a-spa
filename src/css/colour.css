@@ -83,6 +83,10 @@ h3 {
     border-color: var(--yellow-green);
 }
 
+.grant-status.submitted {
+    background-color: var(--yellow-green);
+}
+
 div.errors {
     border-color: var(--fire-opal);
 }
