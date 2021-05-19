@@ -145,6 +145,40 @@
 
     </template>
 
+    <template id="grant-applications" data-params="id">
+
+        <nav></nav>
+        <section class="data-item" data-item-query="documents/{tid}/{id}">
+
+            <div class="output">
+
+                <h2>Grant applications: <span data-text-content="name"></span></h2>
+                <section class="data-list" data-query="documents/{tid}/{id}/children">
+
+                    <div class="output"></div>
+                    <div class="loading-list">Loading...</div>
+                    <div class="empty-list">There are no applications yet.</div>
+                    <div class="errors" data-error-text-content="true"></div>
+                    <template>
+
+                        <a class="grant" data-href="?_=/view-application/{id}">
+
+                            <h3 data-text-content="name"></h3>
+
+                        </a>
+
+                    </template>
+
+                </section>
+
+            </div>
+            <div class="loading-item">Loading...</div>
+            <div class="errors" data-error-text-content="true"></div>
+
+        </section>
+
+    </template>
+
     <template id="grant-admin">
 
         <nav>
@@ -228,7 +262,10 @@
                     <br />
                     <a data-href="../form-preview.html?id={id}">Test the application form</a><br />
                     <br />
-                    <a data-href="?_=grant-status/{id}">Update status</a>
+                    <a data-href="?_=grant-status/{id}">Update status</a><br />
+                    <br />
+                    <a data-href="?_=grant-applications/{id}">View applications for this grant</a>
+
                 </p>
 
             </div>

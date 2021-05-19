@@ -5,7 +5,7 @@ import urlTemplates from "../lib/url-template.js";
 export function handleQueries(content, params) {
 
     for (let dataList of content.querySelectorAll(".data-list"))
-        handleDataListQuery(dataList);
+        handleDataListQuery(dataList, params);
 
     for (let dataItem of content.querySelectorAll(".data-item[data-item-query]"))
         handleDataItemQuery(dataItem, params);
@@ -78,10 +78,13 @@ function emplaceFormInputs(content, item) {
 
 }
 
-async function handleDataListQuery(dataList) {
+async function handleDataListQuery(dataList, params) {
 
     const { query } = dataList.dataset;
     if (!query) return;
+    const queryTemplate = urlTemplates.parse(query);
+    const queryUrl = queryTemplate.expand(params);
+
     const template = dataList.querySelector("template");
     if (!(template && template.content)) {
 
@@ -97,7 +100,7 @@ async function handleDataListQuery(dataList) {
 
     }
     try {
-        const items = await querySleeperService(query);
+        const items = await querySleeperService(queryUrl);
 
         if (!(items && items.length)) {
 
