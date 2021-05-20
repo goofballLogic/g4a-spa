@@ -12,11 +12,9 @@
     <link rel="stylesheet" href="./css/typography.css">
     <link rel="stylesheet" href="./css/structure.css">
     <script type="module" src="./js/login.js"></script>
-    <script type="module" src="./js/components/form-builder.js"></script>
     <script type="module">
         import { signIn, signOut } from "./js/auth.js";
         import { render } from "./js/render.js";
-        import { decorateHeaders } from "./js/auth-api.js";
 
         document.querySelector("#signIn").addEventListener("click", signIn);
         document.querySelector("#signOut").addEventListener("click", signOut);
@@ -78,6 +76,11 @@
             <a href="?_=/create-grant" class="tile create">
 
                 <span class="text">Create a grant</span>
+
+            </a>
+            <a data-href="/portal.html?ptid={tid}" class="tile portal" target="_blank">
+
+                <span class="text">Application portal</span>
 
             </a>
 

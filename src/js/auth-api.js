@@ -7,25 +7,34 @@ let tokenResponseCache = null;
 export async function decorateHeaders(headers) {
 
     const token = await ensureTokenAcquisition();
-    headers.append("Authorization", `Bearer ${token}`);
+    if (token)
+        headers.append("Authorization", `Bearer ${token}`);
 
 }
 
 async function ensureTokenAcquisition() {
 
     if (tokenResponseCache) {
+
         if (tokenResponseCache.expiresOn <= new Date())
             tokenResponseCache = null;
+
     }
     if (!tokenResponseCache) {
-        await msalInstance.handleRedirectPromise();
-        const [account] = msalInstance.getAllAccounts();
-        const resp = await msalInstance.acquireTokenSilent({
-            ...tokenRequest,
-            account
-        });
-        tokenResponseCache = resp;
+
+        if (msalInstance.getAllAccounts().length) {
+
+            await msalInstance.handleRedirectPromise();
+            const [account] = msalInstance.getAllAccounts();
+            const resp = await msalInstance.acquireTokenSilent({
+                ...tokenRequest,
+                account
+            });
+            tokenResponseCache = resp;
+
+        }
+
     }
-    return tokenResponseCache.accessToken;
+    return tokenResponseCache?.accessToken;
 
 }

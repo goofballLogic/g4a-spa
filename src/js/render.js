@@ -1,4 +1,5 @@
 import "../lib/azure-storage-blob.min.js";
+import { emplaceHrefs } from "./emplace.js";
 import { handleFormMutations, handleFormSubmission } from "./forms.js";
 import { handleQueries } from "./queries.js";
 
@@ -9,10 +10,12 @@ function placeholder(className) {
 }
 
 function injectNav(content) {
+
     const nav = document.querySelector("template#default_nav").content.cloneNode(true);
     const placeHolder = content.querySelector("nav");
     if (placeHolder)
         placeHolder.parentNode.replaceChild(nav, placeHolder);
+
 }
 
 export function render(container) {
@@ -35,9 +38,10 @@ export function render(container) {
     }
     const content = template ? template.content.cloneNode(true) : placeholder(className);
     if (className !== "home") injectNav(content);
-    const params = {
-        tid: sessionStorage.getItem("g4a:tenant")
-    };
+    const nav = content.querySelector("nav");
+
+    const params = Object.fromEntries(new URL(location.href).searchParams.entries());
+    params.tid = sessionStorage.getItem("g4a:tenant");
     if (template && template.dataset.params) {
 
         template.dataset.params.split(",").forEach((name, index) => {
@@ -47,6 +51,7 @@ export function render(container) {
         });
 
     }
+    if (nav) handleNav(nav, params);
     handleFormSubmission(content);
     handleQueries(content, params);
     handleFormMutations(content);
@@ -54,5 +59,11 @@ export function render(container) {
     container.innerHTML = "";
     container.appendChild(content);
     container.className = `${className}-area`;
+
+}
+
+function handleNav(nav, params) {
+
+    emplaceHrefs(nav, params);
 
 }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Portal loading...</title>
+    <script src="./js/data-dog.js"></script>
+    <script type="module" src="./js/portal.js"></script>
+    <script type="module">
+        import { render } from "./js/render.js";
+        const main = document.querySelector("main");
+        document.addEventListener("DOMContentLoaded", () => {
+
+            render(main);
+
+        });
+    </script>
+
+</head>
+
+<body>
+
+    <header>
+
+        <h1 data-text-content="displayName"></h1>
+
+    </header>
+    <template id="home">
+
+        <section class="data-list" data-query="public/documents/{ptid}?disposition=grant">
+
+            <div class="output"></div>
+            <div class="error" data-error-text-content="true">
+
+            </div>
+            <template>
+
+                <section data-add-class="id,tenant">
+
+                    <h2 data-text-content="name"></h2>
+                    <a data-href="?_=/create-application/{tenant}/{id}&ptid={ptid}">Apply here</a>
+
+                </section>
+
+            </template>
+
+        </section>
+
+    </template>
+    <template id="default_nav">
+
+    </template>
+    <main>
+
+    </main>
+
+</body>

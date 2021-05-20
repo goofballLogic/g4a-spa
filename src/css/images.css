@@ -15,6 +15,10 @@
     background-image: url("../img/create.jpg");
 }
 
+.tile.portal {
+    background-image: url("../img/portal.jpg");
+}
+
 a.grant, a.application {
     display: flex;
     align-items: center;
