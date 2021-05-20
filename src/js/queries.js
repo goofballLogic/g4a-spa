@@ -18,7 +18,6 @@ export async function handleQueries(content, params) {
 
 async function handleDataItemQuery(dataItem, params) {
 
-    console.log(1);
     const { itemQuery } = dataItem.dataset;
     const itemQueryTemplate = urlTemplates.parse(itemQuery);
     const itemQueryUrl = itemQueryTemplate.expand(params);
@@ -32,6 +31,7 @@ async function handleDataItemQuery(dataItem, params) {
         emplaceDateContent(dataItem, item);
         emplaceHrefs(dataItem, item);
         emplaceFormInputs(dataItem, item);
+        emplaceInvokations(dataItem, item);
 
     } catch (err) {
 
@@ -90,7 +90,6 @@ async function handleDataListQuery(dataList, params) {
     const queryTemplate = urlTemplates.parse(query);
     const queryUrl = queryTemplate.expand(params);
 
-    console.log(1234, Array.from(dataList.querySelectorAll("template")));
     const template = dataList.querySelector("template");
     if (!(template && template.content)) {
 
@@ -149,9 +148,50 @@ const dtformat = new Intl.DateTimeFormat([], {
     year: "numeric"
 });
 
+function emplaceInvokations(content, item) {
+
+    for (let invoker of content.querySelectorAll("[data-invoke]")) {
+
+        const func = invoker.dataset.invoke;
+        invokable[func](invoker, item);
+
+    }
+
+}
+
+const invokable = {
+
+    createApplicationOutput(element, item) {
+
+        if (item?.myChildren?.length) element.classList.add("applications-exist");
+
+    },
+
+    createApplicationMyChildren(element, item) {
+
+        const myChildren = item?.myChildren || [];
+        if (myChildren.length !== 1) {
+
+            element.innerHTML = `<ol>${myChildren
+                .map(applicationLink)
+                .map(x => `<li>${x}</li>`)}</ol>`;
+
+        } else {
+
+            element.innerHTML = applicationLink(myChildren[0]);
+
+        }
+
+    }
+
+};
+
+function applicationLink({ id, status }) {
+    return `<a href="?_=/view-application/${id}">Your ${status} application</a>`;
+}
+
 function emplaceCSSClasses(content, item) {
 
-    console.log(content);
     for (let csser of content.querySelectorAll("[data-add-class]")) {
 
         csser.classList.add(item[csser.dataset.addClass]);
@@ -228,12 +268,11 @@ function emplaceTextContent(content, item) {
 function access(data, path) {
 
     const bits = path.split(".");
-    console.log(data, bits);
     while (data && bits.length > 0) {
 
         const bit = bits.shift();
         if (bit in data) data = data[bit];
-        console.log(data);
+
     }
     return data ? { value: data } : null;
 

@@ -82,3 +82,15 @@ section.data-list.error .errors, section.data-item.error .errors {
 .view-grant-area .live .edit-content {
     display: none;
 }
+
+.create-application-area .applications-exist form {
+    display: none;
+}
+
+.create-application-area .when-applications-exist {
+    display: none;
+}
+
+.create-application-area .applications-exist .when-applications-exist {
+    display: block;
+}

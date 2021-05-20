@@ -350,12 +350,11 @@
     <template id="create-application" data-params="tenant,id">
 
         <nav></nav>
-        <section class="data-item" data-item-query="documents/public/{tenant}/{id}">
+        <section class="data-item" data-item-query="documents/public/{tenant}/{id}?include=my-children">
 
             <h2>Start a new application</h2>
             <div class="loading-item">Loading...</div>
-
-            <div class="output">
+            <div class="output" data-invoke="createApplicationOutput">
 
                 <form class="doc-server-for-user not-error" data-submit-next="?_=applications">
 
@@ -378,6 +377,15 @@
                     </div>
 
                 </form>
+
+                <div class="when-applications-exist">
+
+                    You already have an application for this grant<br />
+                    <br />
+                    <div data-invoke="createApplicationMyChildren">
+                    </div>
+
+                </div>
 
             </div>
             <div class="errors">
