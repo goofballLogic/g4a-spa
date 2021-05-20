@@ -204,26 +204,56 @@ function emplaceTextContent(content, item) {
     for (let textContenter of content.querySelectorAll("[data-text-content]")) {
 
         const textContentKey = textContenter.dataset.textContent;
-        const value = (textContentKey in item)
-            ? item[textContentKey] || ""
-            : defaultTextContentValue(textContenter, textContentKey)
-        textContenter.textContent = value;
+
+        const itemValue = access(item, textContentKey);
+        if (itemValue) {
+
+            textContenter.textContent = itemValue.value;
+
+        } else {
+
+            const defaultItemValue = accessDefaults(textContenter, textContentKey);
+            if (defaultItemValue) {
+
+                textContenter.textContent = defaultItemValue.value;
+
+            }
+
+        }
 
     }
 
 }
 
-function defaultTextContentValue(element, key) {
+function access(data, path) {
 
-    const { defaults } = element.dataset;
-    if (!defaults) return;
-    try {
+    const bits = path.split(".");
+    console.log(data, bits);
+    while (data && bits.length > 0) {
 
-        return JSON.parse(defaults)[key];
+        const bit = bits.shift();
+        if (bit in data) data = data[bit];
+        console.log(data);
+    }
+    return data ? { value: data } : null;
 
-    } catch (err) {
+}
 
-        console.warn(err);
+function accessDefaults(textContenter, textContentKey) {
+
+    const { defaults } = textContenter.dataset;
+    if (defaults) {
+
+        try {
+
+            const defaultItemValues = JSON.parse(defaults);
+            return access(defaultItemValues, textContentKey);
+
+        } catch (err) {
+
+            console.warn(err);
+
+        }
 
     }
 
