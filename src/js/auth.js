@@ -14,10 +14,13 @@ export function account() {
 let currentAccount = null;
 
 (async function () {
+
     try {
+
         await msalInstance.handleRedirectPromise();
         const [account] = msalInstance.getAllAccounts();
         if (account) {
+
             currentAccount = {
                 id: account.homeAccountId,
                 username: account.username,
@@ -27,22 +30,45 @@ let currentAccount = null;
             dispatchLoginEvent({
                 account: { ...currentAccount }
             });
+
         } else {
+
             currentAccount = null;
             document.dispatchEvent(new CustomEvent("login", {}));
+
         }
+
     } catch (err) {
-        document.dispatchEvent(new CustomEvent("login", { err }))
+
+        document.dispatchEvent(new CustomEvent("login", { err }));
+
     }
+
 }());
+
+
+export async function determineAuthenticationStatus() {
+
+    await msalInstance.handleRedirectPromise();
+    const accounts = msalInstance.getAllAccounts();
+    return {
+
+        isLoggedIn: accounts.length > 0,
+        account: accounts.length > 0 ? { ...accounts[0] } : null
+
+    };
+
+}
 
 export function signIn() {
 
     msalInstance.loginRedirect(loginRequest);
 }
 
-export function signOut() {
+export function signOut(targetUrl) {
 
-    msalInstance.logoutRedirect();
+    const options = {};
+    if (targetUrl) options.postLogoutRedirectUri = targetUrl;
+    msalInstance.logoutRedirect(options);
 
 }

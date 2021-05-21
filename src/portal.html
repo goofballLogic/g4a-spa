@@ -9,10 +9,26 @@
     <script type="module" src="./js/portal.js"></script>
     <script type="module">
         import { render } from "./js/render.js";
+        import { signOut } from "./js/auth.js";
         const main = document.querySelector("main");
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", async () => {
 
-            render(main);
+            await render(main);
+
+            let homeUrl = new URL(location.href);
+            homeUrl.searchParams.delete("_");
+            homeUrl = homeUrl.toString();
+
+            for (let signOutButton of main.querySelectorAll("button.sign-out")) {
+
+                signOutButton.addEventListener("click", () => signOut(homeUrl));
+
+            }
+            for (let homeLink of main.querySelectorAll("a.home-link")) {
+
+                homeLink.href = homeUrl;
+
+            }
 
         });
     </script>
@@ -48,9 +64,24 @@
         </section>
 
     </template>
-    <template id="default_nav">
+
+    <template id="create-application" class="secured">
+
+        <nav></nav>
 
     </template>
+
+    <template id="default_nav">
+
+        <nav>
+
+            <a class="home-link">Home</a>
+            <button class="sign-out">Sign out</button>
+
+        </nav>
+
+    </template>
+
     <main>
 
     </main>

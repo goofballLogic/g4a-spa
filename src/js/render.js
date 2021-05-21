@@ -3,6 +3,8 @@ import { emplaceHrefs } from "./emplace.js";
 import { handleFormMutations, handleFormSubmission } from "./forms.js";
 import { handleQueries } from "./queries.js";
 
+import { determineAuthenticationStatus, signIn } from "./auth.js";
+
 function placeholder(className) {
     const div = document.createElement("DIV");
     div.textContent = `Content for this path isn't availble. Check back soon for more options (RRP1_${className}).`;
@@ -18,7 +20,7 @@ function injectNav(content) {
 
 }
 
-export function render(container) {
+export async function render(container) {
 
     const url = new URL(location.href);
     const path = url.searchParams.get("_") || "/";
@@ -36,6 +38,20 @@ export function render(container) {
         pathParams.unshift(bits.pop());
 
     }
+
+    if (template && template.classList.contains("secured")) {
+
+        const authStatus = await determineAuthenticationStatus();
+        if (!authStatus.isLoggedIn) {
+
+            container.innerHTML = "loading...";
+            signIn();
+            return;
+
+        }
+
+    }
+
     const content = template ? template.content.cloneNode(true) : placeholder(className);
     if (className !== "home") injectNav(content);
     const nav = content.querySelector("nav");
