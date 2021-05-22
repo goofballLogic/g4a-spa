@@ -41,12 +41,12 @@ const dtformat = new Intl.DateTimeFormat([], {
     year: "numeric"
 });
 
-export function emplaceInvokations(content, item) {
+export function emplaceInvokations(content, item, params) {
 
     for (let invoker of content.querySelectorAll("[data-invoke]")) {
 
         const func = invoker.dataset.invoke;
-        invokable[func](invoker, item);
+        invokable[func](invoker, item, params);
 
     }
 
@@ -60,18 +60,18 @@ const invokable = {
 
     },
 
-    createApplicationMyChildren(element, item) {
+    createApplicationMyChildren(element, item, params) {
 
         const myChildren = item?.myChildren || [];
         if (myChildren.length !== 1) {
 
             element.innerHTML = `<ol>${myChildren
-                .map(applicationLink)
+                .map(x => applicationLink(x, params))
                 .map(x => `<li>${x}</li>`)}</ol>`;
 
         } else {
 
-            element.innerHTML = applicationLink(myChildren[0]);
+            element.innerHTML = applicationLink(myChildren[0], params);
 
         }
 
@@ -79,8 +79,12 @@ const invokable = {
 
 };
 
-function applicationLink({ id, status }) {
-    return `<a href="?_=/view-application/${id}">Your ${status} application</a>`;
+function applicationLink({ id, status }, params) {
+
+    let linkParams = `_=/view-application/${id}`;
+    if (params.portal_tid) linkParams += `&ptid=${params.portal_tid}`;
+    return `<a href="?${linkParams}">Your ${status} application</a>`;
+
 }
 
 export function emplaceCSSClasses(content, item) {
@@ -120,9 +124,11 @@ export function emplaceDateContent(content, item) {
 
 }
 
-export function emplaceHrefs(content, item) {
+export function emplaceHrefs(content, item, params) {
 
-    item = { ...commonParams, ...item };
+    console.log(params);
+    item = { ...commonParams, ...params, ...item };
+    console.log(item);
     for (let hrefer of content.querySelectorAll("[data-href]")) {
 
         const hrefTemplate = hrefer.dataset.href;

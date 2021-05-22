@@ -29,9 +29,9 @@ async function handleDataItemQuery(dataItem, params) {
         emplaceTextContent(dataItem, item);
         emplaceCSSClasses(dataItem, item);
         emplaceDateContent(dataItem, item);
-        emplaceHrefs(dataItem, item);
+        emplaceHrefs(dataItem, item, params);
         emplaceFormInputs(dataItem, item);
-        emplaceInvokations(dataItem, item);
+        emplaceInvokations(dataItem, item, params);
 
     } catch (err) {
 
@@ -84,8 +84,8 @@ async function handleDataListQuery(dataList, params) {
             for (let item of items) {
 
                 const content = template.content.cloneNode(true);
-                emplaceTextContent(content, item);
-                emplaceHrefs(content, item);
+                emplaceTextContent(content, item, params);
+                emplaceHrefs(content, item, params);
                 emplaceCSSClasses(content, item);
                 output.appendChild(content);
 

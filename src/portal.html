@@ -18,20 +18,15 @@
             let homeUrl = new URL(location.href);
             homeUrl.searchParams.delete("_");
             homeUrl = homeUrl.toString();
-
             for (let signOutButton of main.querySelectorAll("button.sign-out")) {
 
                 signOutButton.addEventListener("click", () => signOut(homeUrl));
 
             }
-            for (let homeLink of main.querySelectorAll("a.home-link")) {
-
-                homeLink.href = homeUrl;
-
-            }
 
         });
     </script>
+    <link href="./css/state.css" rel="stylesheet">
 
 </head>
 
@@ -44,7 +39,8 @@
     </header>
     <template id="home">
 
-        <section class="data-list" data-query="public/documents/{ptid}?disposition=grant">
+        <nav></nav>
+        <section class="data-list" data-query="public/documents/{portal_tid}?disposition=grant">
 
             <div class="output"></div>
             <div class="error" data-error-text-content="true">
@@ -65,9 +61,129 @@
 
     </template>
 
-    <template id="create-application" class="secured">
+    <template id="create-application" class="secured" data-params="tid,id">
 
         <nav></nav>
+        <section class="data-item" data-item-query="documents/public/{portal_tid}/{id}?include=my-children">
+
+            <h2>Start a new application</h2>
+            <div class="loading-item">Loading...</div>
+            <div class="output" data-invoke="createApplicationOutput">
+
+                <form class="doc-server-for-user not-error" data-submit-next="?_=/applications&ptid={portal_tid}">
+
+                    <p>
+                        You are about to start a new application for the grant: <span data-text-content="name"></span>.
+                    </p>
+                    <p>
+                        When you click the button below, a copy of the empty grant form will be created and saved
+                        in a draft state. You can view the status of your applications in the <a
+                            data-href="?_=/applications&ptid={portal_tid}">My Applications</a> area.
+                    </p>
+
+                    <input type="hidden" name="clone-id" data-value="id" />
+                    <input type="hidden" name="clone-tenant" data-value="tenant" />
+                    <input type="hidden" name="disposition" data-overwrite-value="true" value="application" />
+                    <input type="hidden" name="status" data-overwrite-value="true" value="draft" />
+
+                    <div class="controls">
+                        <button>Start a new application</button>
+                    </div>
+
+                </form>
+
+                <div class="when-applications-exist">
+
+                    You already have an application for this grant<br />
+                    <br />
+                    <div data-invoke="createApplicationMyChildren">
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="errors">
+                We're very sorry but an error occurred trying to start this application.<br />
+                <br />
+                <span data-error-text-content="true"></span>.
+            </div>
+
+        </section>
+
+    </template>
+
+    <template id="view-application" class="secured" data-params="id">
+
+        <nav></nav>
+        <section class="data-item" data-item-query="documents/me/{id}">
+
+            <div class="loading-item">Loading...</div>
+            <div class="output" data-add-class="status">
+
+                <h2>Your application for <span data-text-content="name"></span></h2>
+                <div data-add-class="status" class="grant-status">
+
+                    <span class="text" data-text-content="status" data-defaults='{"status": "draft"}'></span>
+
+                </div>
+
+                <p>
+
+                    Created on <time data-value="created" data-text-date="created"></time> and last updated on <time
+                        data-value="updated" data-text-date="updated"></time><br />
+                    <br />
+                    <a class="fill-application" data-href="../form-filler.html?id={id}">Application form</a><br />
+
+                </p>
+
+                <form class="doc-server" data-submit-next="?_=view-application/{id}">
+
+                    <h3>Submit your application</h3>
+                    <input type="hidden" name="id" />
+                    <input type="hidden" name="status" data-overwrite-value="true" value="submitted" />
+                    <p>Are you ready to submit your application? After you submit you won't be able to update the form
+                    </p>
+                    <div class="controls">
+                        <button>Submit</button>
+                    </div>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </template>
+
+    <template id="applications">
+
+        <nav>
+        </nav>
+        <section>
+
+            <h2>Your grant applications</h2>
+            <section class="data-list administered-grants" data-query="documents/me?disposition=application">
+
+                <div class="output"></div>
+                <div class="loading-list">Loading...</div>
+                <div class="empty-list">You don't have any grants yet.</div>
+                <div class="errors" data-error-text-content="true"></div>
+                <template>
+
+                    <a class="grant" data-href="?_=/view-application/{id}&ptid={portal_tid}">
+
+                        <h3>
+                            <span data-text-content="name"></span>
+                            [<span data-text-content="status"></span>]
+                        </h3>
+
+                    </a>
+
+                </template>
+
+            </section>
+
+        </section>
 
     </template>
 
@@ -75,8 +191,14 @@
 
         <nav>
 
-            <a class="home-link">Home</a>
-            <button class="sign-out">Sign out</button>
+            <a class="home-link" data-href="?ptid={portal_tid}">Home</a>
+            <div class="only-logged-in">
+
+                <a data-href="?ptid={portal_tid}&_=/applications">My applications</a>
+                You are logged in as <span data-text-content="account_name"></span>
+                <button class="sign-out">Sign out</button>
+
+            </div>
 
         </nav>
 

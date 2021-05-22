@@ -6,10 +6,6 @@ body:not(.logged-in) .account-welcome {
     visibility: hidden;
 }
 
-body:not(.logged-in) .home-area nav {
-    display: none;
-}
-
 body.logged-in #signIn {
     display: none;
 }
@@ -93,4 +89,8 @@ section.data-list.error .errors, section.data-item.error .errors {
 
 .create-application-area .applications-exist .when-applications-exist {
     display: block;
+}
+
+body:not(.logged-in) .only-logged-in {
+    display: none;
 }

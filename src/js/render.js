@@ -1,9 +1,9 @@
 import "../lib/azure-storage-blob.min.js";
-import { emplaceHrefs } from "./emplace.js";
+import { emplaceHrefs, emplaceTextContent } from "./emplace.js";
 import { handleFormMutations, handleFormSubmission } from "./forms.js";
 import { handleQueries } from "./queries.js";
 
-import { determineAuthenticationStatus, signIn } from "./auth.js";
+import { account, determineAuthenticationStatus, signIn } from "./auth.js";
 
 function placeholder(className) {
     const div = document.createElement("DIV");
@@ -13,10 +13,12 @@ function placeholder(className) {
 
 function injectNav(content) {
 
-    const nav = document.querySelector("template#default_nav").content.cloneNode(true);
-    const placeHolder = content.querySelector("nav");
-    if (placeHolder)
-        placeHolder.parentNode.replaceChild(nav, placeHolder);
+    const navPlaceHolder = content.querySelector("nav");
+    console.log(navPlaceHolder);
+    if (navPlaceHolder && navPlaceHolder.dataset.overwriteValue !== "true") {
+        const nav = document.querySelector("template#default_nav").content.cloneNode(true);
+        navPlaceHolder.parentNode.replaceChild(nav, navPlaceHolder);
+    }
 
 }
 
@@ -39,12 +41,16 @@ export async function render(container) {
 
     }
 
+    const authStatus = await determineAuthenticationStatus();
+    if (authStatus.isLoggedIn) {
+
+        document.body.classList.add("logged-in");
+
+    }
     if (template && template.classList.contains("secured")) {
 
-        const authStatus = await determineAuthenticationStatus();
         if (!authStatus.isLoggedIn) {
 
-            container.innerHTML = "loading...";
             signIn();
             return;
 
@@ -53,10 +59,26 @@ export async function render(container) {
     }
 
     const content = template ? template.content.cloneNode(true) : placeholder(className);
-    if (className !== "home") injectNav(content);
-    const nav = content.querySelector("nav");
+    injectNav(content);
 
-    const params = Object.fromEntries(new URL(location.href).searchParams.entries());
+    const query = Object.fromEntries(new URL(location.href).searchParams.entries());
+    const params = {};
+    if (query.ptid) {
+
+        params.portal_tid = query.ptid;
+
+    }
+    if (authStatus.isLoggedIn) {
+
+        const claims = (authStatus.account?.idTokenClaims) || { "username": "unknown" };
+        const name = claims["given_name"] && `${claims["given_name"]} ${claims["family_name"]}`;
+        const email = claims.emails?.length && claims.emails[0];
+        params.account_name = (name && email)
+            ? `${name} (${email})`
+            : name || email || claims.username;
+
+
+    }
     params.tid = sessionStorage.getItem("g4a:tenant");
     if (template && template.dataset.params) {
 
@@ -67,6 +89,10 @@ export async function render(container) {
         });
 
     }
+
+    console.log(params);
+
+    const nav = content.querySelector("nav");
     if (nav) handleNav(nav, params);
     handleFormSubmission(content);
     handleQueries(content, params);
@@ -81,5 +107,6 @@ export async function render(container) {
 function handleNav(nav, params) {
 
     emplaceHrefs(nav, params);
+    emplaceTextContent(nav, params);
 
 }
