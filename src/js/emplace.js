@@ -67,7 +67,8 @@ const invokable = {
 
             element.innerHTML = `<ol>${myChildren
                 .map(x => applicationLink(x, params))
-                .map(x => `<li>${x}</li>`)}</ol>`;
+                .map(x => `<li>${x}</li>`)
+                .join()}</ol>`;
 
         } else {
 
