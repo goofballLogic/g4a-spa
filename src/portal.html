@@ -6,11 +6,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Portal loading...</title>
+    <style>
+        body {
+            padding-bottom: 50px;
+        }
+    </style>
     <script src="./js/data-dog.js"></script>
     <script type="module" src="./js/portal.js"></script>
     <script type="module">
         import { render } from "./js/render.js";
-        import { signOut } from "./js/auth.js";
+        import { signOut, signIn } from "./js/auth.js";
         const main = document.querySelector("main");
         document.addEventListener("DOMContentLoaded", async () => {
 
@@ -22,6 +27,11 @@
             for (let signOutButton of document.querySelectorAll("button.sign-out")) {
 
                 signOutButton.addEventListener("click", () => signOut(homeUrl));
+
+            }
+            for (let signInButton of document.querySelectorAll("button.sign-in")) {
+
+                signInButton.addEventListener("click", () => signIn());
 
             }
 
@@ -44,6 +54,9 @@
                 You are logged in as <span data-text-content="account_name"></span>
             </span>
             <button class="sign-out btn btn-warning">Sign out</button>
+        </div>
+        <div class="only-logged-out text-md-right">
+            <button class="sign-in btn btn-primary">Sign in</button>
         </div>
 
     </header>
@@ -157,7 +170,7 @@
 
                                 Your application for <span data-text-content="name"></span>
 
-                                <div data-add-class="status" class="grant-status">
+                                <div data-add-class="status" class="grant-status float-md-right">
                                     <span class="text" data-text-content="status"
                                         data-defaults='{"status": "draft"}'></span>
                                 </div>

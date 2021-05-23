@@ -98,3 +98,7 @@ section.data-list.error .errors, section.data-item.error .errors {
 body:not(.logged-in) .only-logged-in {
     display: none;
 }
+
+body.logged-in .only-logged-out {
+    display: none;
+}
