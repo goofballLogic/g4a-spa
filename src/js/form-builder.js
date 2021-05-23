@@ -65,14 +65,23 @@ document.addEventListener("DOMContentLoaded", async () => {
     const editor = document.querySelector("#editor");
     const previewer = document.querySelector("#preview");
     const filler = document.querySelector("#filler");
+    const reader = document.querySelector("#reader");
 
     if (editor) await initEditor(editor, docId, headers);
     if (previewer) await initPreview(previewer, docId, headers);
     if (filler) await initFiller(filler, docId, headers);
+    if (reader) await initReader(reader, docId, headers);
 
     document.body.classList.add("loaded");
 
 });
+
+async function initReader(reader) {
+
+    const form = await Formio.createForm(reader, formOptions, { readOnly: true, renderMode: "html" });
+    form.submission = { data };
+
+}
 
 async function initFiller(filler, docId) {
 

@@ -166,32 +166,33 @@
                     <article data-add-class="status,parentId" class="card mt-4">
 
                         <div class="card-body">
+
                             <h3>
 
                                 Your application for <span data-text-content="name"></span>
-
                                 <div data-add-class="status" class="grant-status float-md-right">
                                     <span class="text" data-text-content="status"
                                         data-defaults='{"status": "draft"}'></span>
                                 </div>
+
                             </h3>
-
-
+                            <a data-href="../form-reader.html?id={id}&tid={account_tid}">View your application</a>
                             <div>
 
                                 Created on <time data-value="created" data-text-date="created"></time> and last updated
                                 on <time data-value="updated" data-text-date="updated"></time>
-                            </div>
 
+                            </div>
                             <div class="fill-application">
+
                                 <br />
                                 <a class="btn btn-success"
                                     data-href="../form-filler.html?id={id}&tid={account_tid}">Fill in the application
                                     form</a> to complete your application.
                                 <br />
                                 <br />
-                            </div>
 
+                            </div>
                             <form class="doc-server-for-user"
                                 data-submit-next="?_=view-application/{id}&ptid={portal_tid}">
 
