@@ -1,0 +1,13 @@
+.grant-status.submitted {
+    background-color: var(--success);
+    color: white;
+}
+
+.grant-status.draft {
+    background-color: var(--info);
+    color: white;
+}
+
+h3 .grant-status {
+    font-size: 0.8em;
+}

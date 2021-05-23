@@ -28,12 +28,14 @@ let data = null;
 let dataString = null;
 let schemaString = null;
 
+const url = new URL(location.href);
+const docId = url.searchParams.get("id");
+if (!docId) history.back();
+const tenantSegment = url.searchParams.get("tid") || "{tenant}";
+
 document.addEventListener("DOMContentLoaded", async () => {
 
-    const docId = new URL(location.href).searchParams.get("id");
-    if (!docId) history.back();
-
-    const docURL = await buildSleeperServiceURL(`documents/{tenant}/${docId}?include=content,application`);
+    const docURL = await buildSleeperServiceURL(`documents/${tenantSegment}/${docId}?include=content,application`);
 
     const headers = new Headers({ "content-type": "application/json" });
     await decorateHeaders(headers);
@@ -83,7 +85,7 @@ async function initFiller(filler, docId) {
     form.on("change", x => persistChanges(docId, x.data));
     document.querySelector("#controller .save").addEventListener("click", async () => {
 
-        const docURL = await buildSleeperServiceURL(`documents/{tenant}/${docId}/parts/application`);
+        const docURL = await buildSleeperServiceURL(`documents/${tenantSegment}/${docId}/parts/application`);
         const headers = new Headers({ "content-type": "application/json" });
         await decorateHeaders(headers);
         const body = JSON.stringify({ data: form.data });
@@ -167,7 +169,7 @@ async function initEditor(editor, docId, headers) {
             version,
             schema: builder.schema
         });
-        const contentURL = await buildSleeperServiceURL(`documents/{tenant}/${docId}/content`);
+        const contentURL = await buildSleeperServiceURL(`documents/${tenantSegment}/${docId}/content`);
 
         const resp = await fetch(contentURL, {
             headers,

@@ -1,7 +1,10 @@
 import { decorateHeaders } from "./auth-api.js";
 import { sleeperServiceURL } from "./service-config.js";
 import urlTemplates from "../lib/url-template.js";
-import { emplaceCSSClasses, emplaceDateContent, emplaceFormInputs, emplaceHrefs, emplaceInvokations, emplaceTextContent } from "./emplace.js";
+import {
+    emplaceCSSClasses, emplaceDateContent, emplaceFormInputs,
+    emplaceHrefs, emplaceInvokations, emplaceTextContent
+} from "./emplace.js";
 
 export async function handleQueries(content, params) {
 
@@ -26,12 +29,7 @@ async function handleDataItemQuery(dataItem, params) {
 
         const item = await querySleeperService(itemQueryUrl);
 
-        emplaceTextContent(dataItem, item);
-        emplaceCSSClasses(dataItem, item);
-        emplaceDateContent(dataItem, item);
-        emplaceHrefs(dataItem, item, params);
-        emplaceFormInputs(dataItem, item);
-        emplaceInvokations(dataItem, item, params);
+        emplaceItem(dataItem, item, params);
 
     } catch (err) {
 
@@ -48,6 +46,17 @@ async function handleDataItemQuery(dataItem, params) {
         dataItem.classList.add("loaded");
 
     }
+
+}
+
+function emplaceItem(dataItem, item, params) {
+
+    emplaceTextContent(dataItem, item);
+    emplaceCSSClasses(dataItem, item);
+    emplaceDateContent(dataItem, item);
+    emplaceHrefs(dataItem, item, params);
+    emplaceFormInputs(dataItem, item);
+    emplaceInvokations(dataItem, item, params);
 
 }
 
@@ -81,12 +90,18 @@ async function handleDataListQuery(dataList, params) {
 
         } else {
 
+            const linked = items.findIndex(i => i?.id === location.hash.substring(1));
+            if (linked > -1) {
+                const linkedItem = items[linked];
+                console.log(linkedItem);
+                items.splice(linked, 1);
+                items.unshift(linkedItem);
+            }
+
             for (let item of items) {
 
                 const content = template.content.cloneNode(true);
-                emplaceTextContent(content, item, params);
-                emplaceHrefs(content, item, params);
-                emplaceCSSClasses(content, item);
+                emplaceItem(content, item, params);
                 output.appendChild(content);
 
             }

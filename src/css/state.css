@@ -75,6 +75,10 @@ section.data-list.error .errors, section.data-item.error .errors {
     display: none;
 }
 
+.applications-area .submitted form, .applications-area .submitted .fill-application {
+    display: none;
+}
+
 .view-grant-area .live .edit-content {
     display: none;
 }

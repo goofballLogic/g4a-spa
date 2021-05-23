@@ -126,9 +126,7 @@ export function emplaceDateContent(content, item) {
 
 export function emplaceHrefs(content, item, params) {
 
-    console.log(params);
     item = { ...commonParams, ...params, ...item };
-    console.log(item);
     for (let hrefer of content.querySelectorAll("[data-href]")) {
 
         const hrefTemplate = hrefer.dataset.href;
@@ -178,7 +176,7 @@ function access(data, path) {
     while (data && bits.length > 0) {
 
         const bit = bits.shift();
-        if (bit in data) data = data[bit];
+        data = data[bit];
 
     }
     return data ? { value: data } : null;

@@ -3,18 +3,19 @@ import { emplaceHrefs, emplaceTextContent } from "./emplace.js";
 import { handleFormMutations, handleFormSubmission } from "./forms.js";
 import { handleQueries } from "./queries.js";
 
-import { account, determineAuthenticationStatus, signIn } from "./auth.js";
+import { determineAuthenticationStatus, signIn } from "./auth.js";
 
 function placeholder(className) {
+
     const div = document.createElement("DIV");
     div.textContent = `Content for this path isn't availble. Check back soon for more options (RRP1_${className}).`;
     return div;
+
 }
 
 function injectNav(content) {
 
     const navPlaceHolder = content.querySelector("nav");
-    console.log(navPlaceHolder);
     if (navPlaceHolder && navPlaceHolder.dataset.overwriteValue !== "true") {
         const nav = document.querySelector("template#default_nav").content.cloneNode(true);
         navPlaceHolder.parentNode.replaceChild(nav, navPlaceHolder);
@@ -27,7 +28,7 @@ export async function render(container) {
     const url = new URL(location.href);
     const path = url.searchParams.get("_") || "/";
     let className = (path && path !== "/") ? path : "home";
-    if (container.className == className) return;
+    if (container.classList.contains(className)) return;
     const bits = className.split("/");
     if (!bits[0]) bits.shift();
     let template;
@@ -61,6 +62,24 @@ export async function render(container) {
     const content = template ? template.content.cloneNode(true) : placeholder(className);
     injectNav(content);
 
+    const params = buildParams(authStatus, template, pathParams);
+
+    if (authStatus.isLoggedIn)
+        reemplaceAccountNames(params);
+
+    const nav = content.querySelector("nav");
+    if (nav) handleNav(nav, params);
+    handleFormSubmission(content);
+    handleQueries(content, params);
+    handleFormMutations(content);
+
+    container.innerHTML = "";
+    container.appendChild(content);
+    container.classList.add(`${className}-area`);
+
+}
+
+function buildParams(authStatus, template, pathParams) {
     const query = Object.fromEntries(new URL(location.href).searchParams.entries());
     const params = {};
     if (query.ptid) {
@@ -76,6 +95,7 @@ export async function render(container) {
         params.account_name = (name && email)
             ? `${name} (${email})`
             : name || email || claims.username;
+        params.account_tid = claims.oid;
 
 
     }
@@ -89,18 +109,16 @@ export async function render(container) {
         });
 
     }
+    return params;
+}
 
-    console.log(params);
+function reemplaceAccountNames(params) {
 
-    const nav = content.querySelector("nav");
-    if (nav) handleNav(nav, params);
-    handleFormSubmission(content);
-    handleQueries(content, params);
-    handleFormMutations(content);
+    for (let accountNamer of document.querySelectorAll("[data-text-content='account_name']")) {
 
-    container.innerHTML = "";
-    container.appendChild(content);
-    container.className = `${className}-area`;
+        emplaceTextContent(accountNamer.parentElement, params);
+
+    }
 
 }
 

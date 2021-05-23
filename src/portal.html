@@ -4,6 +4,7 @@
 <head>
 
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Portal loading...</title>
     <script src="./js/data-dog.js"></script>
     <script type="module" src="./js/portal.js"></script>
@@ -18,7 +19,7 @@
             let homeUrl = new URL(location.href);
             homeUrl.searchParams.delete("_");
             homeUrl = homeUrl.toString();
-            for (let signOutButton of main.querySelectorAll("button.sign-out")) {
+            for (let signOutButton of document.querySelectorAll("button.sign-out")) {
 
                 signOutButton.addEventListener("click", () => signOut(homeUrl));
 
@@ -26,38 +27,61 @@
 
         });
     </script>
+    <link href="./lib/bootstrap/4.6.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/portal-structure.css" rel="stylesheet">
+    <link href="./css/portal-colour.css" rel="stylesheet">
     <link href="./css/state.css" rel="stylesheet">
 
 </head>
 
-<body>
+<body class="p-md-3">
 
-    <header>
+    <header class="container p-3 bg-light rounded">
 
         <h1 data-text-content="displayName"></h1>
+        <div class="only-logged-in text-md-right">
+            <span class="mr-2">
+                You are logged in as <span data-text-content="account_name"></span>
+            </span>
+            <button class="sign-out btn btn-warning">Sign out</button>
+        </div>
 
     </header>
     <template id="home">
 
         <nav></nav>
-        <section class="data-list" data-query="public/documents/{portal_tid}?disposition=grant">
+        <div class="data-list" data-query="public/documents/{portal_tid}?disposition=grant">
 
-            <div class="output"></div>
+            <div class="output row">
+
+                <h3 class="mb-3 col-12">We currently offer the following grants</h3>
+
+            </div>
             <div class="error" data-error-text-content="true">
 
             </div>
             <template>
 
-                <section data-add-class="id,tenant">
+                <div data-add-class="id,tenant" class="mb-2 col-md-4">
 
-                    <h2 data-text-content="name"></h2>
-                    <a data-href="?_=/create-application/{tenant}/{id}&ptid={ptid}">Apply here</a>
+                    <div class="card">
 
-                </section>
+                        <div class="card-body">
+
+                            <h4 data-text-content="name"></h4>
+                            <a class="btn btn-primary"
+                                data-href="?_=/create-application/{tenant}/{id}&ptid={ptid}">Apply
+                                here</a>
+
+                        </div>
+
+                    </div>
+
+                </div>
 
             </template>
 
-        </section>
+        </div>
 
     </template>
 
@@ -87,19 +111,18 @@
                     <input type="hidden" name="status" data-overwrite-value="true" value="draft" />
 
                     <div class="controls">
-                        <button>Start a new application</button>
+                        <button class="btn btn-primary">Start a new application</button>
                     </div>
 
                 </form>
 
                 <div class="when-applications-exist">
 
-                    You already have an application for this grant<br />
-                    <br />
-                    <div data-invoke="createApplicationMyChildren">
-                    </div>
-
+                    You already have an application for this grant which you can view here: <a
+                        data-href="?_=/applications&ptid={portal_tid}">My applications</a>
                 </div>
+
+            </div>
 
             </div>
             <div class="errors">
@@ -112,57 +135,14 @@
 
     </template>
 
-    <template id="view-application" class="secured" data-params="id">
-
-        <nav></nav>
-        <section class="data-item" data-item-query="documents/me/{id}">
-
-            <div class="loading-item">Loading...</div>
-            <div class="output" data-add-class="status">
-
-                <h2>Your application for <span data-text-content="name"></span></h2>
-                <div data-add-class="status" class="grant-status">
-
-                    <span class="text" data-text-content="status" data-defaults='{"status": "draft"}'></span>
-
-                </div>
-
-                <p>
-
-                    Created on <time data-value="created" data-text-date="created"></time> and last updated on <time
-                        data-value="updated" data-text-date="updated"></time><br />
-                    <br />
-                    <a class="fill-application" data-href="../form-filler.html?id={id}">Application form</a><br />
-
-                </p>
-
-                <form class="doc-server" data-submit-next="?_=view-application/{id}">
-
-                    <h3>Submit your application</h3>
-                    <input type="hidden" name="id" />
-                    <input type="hidden" name="status" data-overwrite-value="true" value="submitted" />
-                    <p>Are you ready to submit your application? After you submit you won't be able to update the form
-                    </p>
-                    <div class="controls">
-                        <button>Submit</button>
-                    </div>
-
-                </form>
-
-            </div>
-
-        </section>
-
-    </template>
-
     <template id="applications">
 
-        <nav>
+        <nav class="row" asdf=2>
         </nav>
         <section>
 
             <h2>Your grant applications</h2>
-            <section class="data-list administered-grants" data-query="documents/me?disposition=application">
+            <section class="data-list" data-query="documents/me?disposition=application">
 
                 <div class="output"></div>
                 <div class="loading-list">Loading...</div>
@@ -170,14 +150,52 @@
                 <div class="errors" data-error-text-content="true"></div>
                 <template>
 
-                    <a class="grant" data-href="?_=/view-application/{id}&ptid={portal_tid}">
+                    <article data-add-class="status,parentId" class="card mt-4">
 
-                        <h3>
-                            <span data-text-content="name"></span>
-                            [<span data-text-content="status"></span>]
-                        </h3>
+                        <div class="card-body">
+                            <h3>
 
-                    </a>
+                                Your application for <span data-text-content="name"></span>
+
+                                <div data-add-class="status" class="grant-status">
+                                    <span class="text" data-text-content="status"
+                                        data-defaults='{"status": "draft"}'></span>
+                                </div>
+                            </h3>
+
+
+                            <div>
+
+                                Created on <time data-value="created" data-text-date="created"></time> and last updated
+                                on <time data-value="updated" data-text-date="updated"></time>
+                            </div>
+
+                            <div class="fill-application">
+                                <br />
+                                <a class="btn btn-success"
+                                    data-href="../form-filler.html?id={id}&tid={account_tid}">Fill in the application
+                                    form</a> to complete your application.
+                                <br />
+                                <br />
+                            </div>
+
+                            <form class="doc-server-for-user"
+                                data-submit-next="?_=view-application/{id}&ptid={portal_tid}">
+
+                                <input type="hidden" name="id" />
+                                <input type="hidden" name="status" data-overwrite-value="true" value="submitted" />
+                                <p>Are you ready to submit your application? After you submit you won't be able to
+                                    update the form
+                                </p>
+                                <div class="controls">
+                                    <button class="btn btn-danger">Submit</button>
+                                </div>
+
+                            </form>
+
+                        </div>
+
+                    </article>
 
                 </template>
 
@@ -189,22 +207,16 @@
 
     <template id="default_nav">
 
-        <nav>
+        <nav class="mb-3">
 
-            <a class="home-link" data-href="?ptid={portal_tid}">Home</a>
-            <div class="only-logged-in">
-
-                <a data-href="?ptid={portal_tid}&_=/applications">My applications</a>
-                You are logged in as <span data-text-content="account_name"></span>
-                <button class="sign-out">Sign out</button>
-
-            </div>
+            <a class="home-link mr-3" data-href="?ptid={portal_tid}">Home</a>
+            <a class="only-logged-in" data-href="?ptid={portal_tid}&_=/applications">My applications</a>
 
         </nav>
 
     </template>
 
-    <main>
+    <main class="container mt-3">
 
     </main>
 

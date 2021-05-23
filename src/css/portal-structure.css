@@ -1,0 +1,11 @@
+.grant-status {
+    padding: 5px 10px;
+    border-radius: 3px;
+    display: inline-block;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+}
+
+.applications-area .item+.item {
+    margin-top: 10px;
+}
