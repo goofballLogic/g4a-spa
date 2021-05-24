@@ -43,7 +43,7 @@ const dtformat = new Intl.DateTimeFormat([], {
 
 export function emplaceInvokations(content, item, params) {
 
-    for (let invoker of content.querySelectorAll("[data-invoke]")) {
+    for (const invoker of content.querySelectorAll("[data-invoke]")) {
 
         const func = invoker.dataset.invoke;
         invokable[func](invoker, item, params);
@@ -53,6 +53,47 @@ export function emplaceInvokations(content, item, params) {
 }
 
 const invokable = {
+
+    buildWorkflowStatusForm(element, item) {
+
+        console.log(element);
+        const { workflow, status } = item;
+        if (!workflow) return "An error occurred (R1_BWFSF)";
+        const states = workflow.workflow;
+        const currentState = status
+            ? states.find(x => x.id === status)
+            : states.find(x => x.default);
+        if (!currentState) return "An error occurred (R2_BWFSF)";
+
+        const transitions = Array.isArray(currentState.transitions)
+            ? currentState.transitions
+            : currentState.transitions
+                ? [currentState.transitions]
+                : [];
+        const targetStates = transitions.map(x => ({ ...x, ...states.find(y => y.id === x.id) }));
+
+        element.innerHTML = `
+            <div>Current status: <span class="grant-status ${currentState.id}">${currentState.status}</div>
+            <h3>Change the state</h3>
+            ${targetStates.map(transition => `
+
+                <label>
+
+                    <input type="radio" name="status" value="${transition.id}">
+                    <span class="text">${transition.status}</span>
+                    <aside>${transition.description}</aside>
+
+                </label>
+
+
+            `).join("<br />")}
+        `;
+        console.log(targetStates);
+
+        console.log(element);
+        console.log(item);
+
+    },
 
     createApplicationOutput(element, item) {
 

@@ -159,9 +159,55 @@
 
     <template id="workflow-admin">
 
+        <nav></nav>
+        <section>
+
+            <h2>Workflows</h2>
+
+            <section class="data-list" data-query="documents/workflows/{tid}?disposition=grant">
+
+                <div class="output">
+                    <h3>Grant workflows</h3>
+                </div>
+                <div class="loading-list">Loading...</div>
+                <div class="empty-list">No workflows found!</div>
+                <div class="errors" data-error-text-content="true"></div>
+                <template>
+
+                    <a class="grant" data-href="?_=/view-workflow/{id}">
+
+                        <h3 data-text-content="name"></h3>
+
+                    </a>
+
+                </template>
+
+            </section>
+
+
+            <section class="data-list" data-query="documents/workflows/{tid}?disposition=application">
+
+                <div class="output">
+                    <h3>Application workflows</h3>
+                </div>
+                <div class="loading-list">Loading...</div>
+                <div class="empty-list">No workflows found!</div>
+                <div class="errors" data-error-text-content="true"></div>
+                <template>
+
+                    <a class="grant" data-href="?_=/view-workflow/{id}">
+
+                        <h3 data-text-content="name"></h3>
+
+                    </a>
+
+                </template>
+
+            </section>
+
+        </section>
 
     </template>
-
 
     <template id="view-grant" data-params="id">
 
@@ -202,39 +248,18 @@
     <template id="grant-status" data-params="id">
 
         <nav></nav>
-        <section class="data-item" data-item-query="documents/{tid}/{id}">
+        <section class="data-item" data-item-query="documents/{tid}/{id}?include=workflow">
 
             <div class="loading-item">Loading...</div>
             <div class="output">
 
                 <h2 data-text-content="name"></h2>
+
+                <div class="errors" data-error-text-content="true"></div>
                 <form class="doc-server" data-submit-next="?_=view-grant/{id}">
 
+                    <div data-invoke="buildWorkflowStatusForm"></div>
                     <input type="hidden" name="id" data-value="id" />
-                    <label>
-
-                        <input type="radio" value="draft" name="status" />
-                        <span class="text">Draft</span>
-
-                    </label>
-                    <label>
-
-                        <input type="radio" value="live" name="status" />
-                        <span class="text">Open for applications</span>
-
-                    </label>
-                    <label>
-
-                        <input type="radio" value="closed" name="status" />
-                        <span class="text">Closed to applications</span>
-
-                    </label>
-                    <label>
-
-                        <input type="radio" value="archived" name="status" />
-                        <span class="text">Archived</span>
-
-                    </label>
                     <br />
                     <div>
 

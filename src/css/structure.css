@@ -206,6 +206,11 @@ form label .text.long {
     margin-bottom: 10px;
 }
 
+form label aside {
+    max-width: 600px;
+    display: inline-block;
+}
+
 form input[type=text] {
     width: 300px;
 }
