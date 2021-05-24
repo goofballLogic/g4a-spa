@@ -6,7 +6,7 @@
     "@graph": [
         {
             "@type": "Workflow",
-            "@id": "g4a:workfows/default-grant",
+            "@id": "g4a:workflows/default-grant",
             "disposition": "grant",
             "name": "grant-default",
             "workflow": [
@@ -51,7 +51,7 @@
                         },
                         {
                             "id": "archived",
-                            "description": "This will remove the grant from your list of administered grants"
+                            "description": "WARNING: This will remove the grant from your list of administered grants"
                         }
                     ]
                 },
@@ -75,7 +75,7 @@
                     "transitions": [
                         {
                             "id": "submitted",
-                            "description": "If you submit your grant it will be closed to further modifications"
+                            "description": "WARNING: If you submit your grant it will be closed to further modifications"
                         }
                     ]
                 },

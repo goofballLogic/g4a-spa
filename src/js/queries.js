@@ -92,12 +92,12 @@ async function handleDataListQuery(dataList, params) {
 
             const linked = items.findIndex(i => i?.id === location.hash.substring(1));
             if (linked > -1) {
+
                 const linkedItem = items[linked];
-                console.log(linkedItem);
                 items.splice(linked, 1);
                 items.unshift(linkedItem);
-            }
 
+            }
             for (let item of items) {
 
                 const content = template.content.cloneNode(true);

@@ -56,7 +56,6 @@ const invokable = {
 
     buildWorkflowStatusForm(element, item) {
 
-        console.log(element);
         const { workflow, status } = item;
         if (!workflow) return "An error occurred (R1_BWFSF)";
         const states = workflow.workflow;
@@ -88,10 +87,6 @@ const invokable = {
 
             `).join("<br />")}
         `;
-        console.log(targetStates);
-
-        console.log(element);
-        console.log(item);
 
     },
 
