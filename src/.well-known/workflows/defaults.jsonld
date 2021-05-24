@@ -1,0 +1,98 @@
+{
+    "@context": {
+        "g4a": "https://tangentvision.com/g4a/",
+        "@vocab": "https://tangentvision.com/g4a/vocab#"
+    },
+    "@graph": [
+        {
+            "@type": "Workflow",
+            "@id": "g4a:workfows/default-grant",
+            "disposition": "grant",
+            "name": "grant-default",
+            "workflow": [
+                {
+                    "default": true,
+                    "id": "draft",
+                    "status": "Draft",
+                    "readwrite": true,
+                    "transitions": [
+                        {
+                            "id": "open"
+                        }
+                    ]
+                },
+                {
+                    "id": "open",
+                    "status": "Live",
+                    "public": true,
+                    "transitions": [
+                        {
+                            "id": "closed"
+                        },
+                        {
+                            "id": "draft"
+                        }
+                    ]
+                },
+                {
+                    "id": "closed",
+                    "status": "Closed",
+                    "transitions": [
+                        {
+                            "id": "archived"
+                        },
+                        {
+                            "id": "open"
+                        }
+                    ]
+                },
+                {
+                    "id": "archived",
+                    "status": "Archived"
+                }
+            ]
+        },
+        {
+            "@type": "Workflow",
+            "@id": "g4a:workflows/default-application",
+            "disposition": "application",
+            "name": "application-default",
+            "workflow": [
+                {
+                    "default": true,
+                    "id": "draft",
+                    "status": "Draft",
+                    "readwrite": true,
+                    "transitions": [
+                        {
+                            "id": "submitted"
+                        }
+                    ]
+                },
+                {
+                    "id": "submitted",
+                    "status": "Submitted",
+                    "transitions": [
+                        {
+                            "id": "cancelled"
+                        },
+                        {
+                            "id": "approved"
+                        },
+                        {
+                            "id": "denied"
+                        }
+                    ]
+                },
+                {
+                    "id": "cancelled",
+                    "status": "Cancelled"
+                },
+                {
+                    "id": "denied",
+                    "status": "Declined"
+                }
+            ]
+        }
+    ]
+}

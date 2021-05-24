@@ -16,6 +16,7 @@ document.addEventListener("g4a.login", async e => {
 
         }
         const user = await fetched.json();
+        console.log(user);
         sessionStorage.setItem("g4a:tenant", user.defaultTenantId);
 
     }
