@@ -69,9 +69,9 @@ export async function render(container) {
 
     const nav = content.querySelector("nav");
     if (nav) handleNav(nav, params);
-    handleFormSubmission(content);
-    handleQueries(content, params);
+    await handleQueries(content, params);
     handleFormMutations(content);
+    handleFormSubmission(content);
 
     container.innerHTML = "";
     container.appendChild(content);
