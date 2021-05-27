@@ -162,7 +162,7 @@ class WorkflowEditor extends HTMLElement {
             case "grant":
                 return "Writeable (can the application form still be modified?)";
             case "application":
-                return "Writeable (can the application can still be modified by the applicant?)";
+                return "Writeable (can the application be modified by the applicant?)";
             default:
                 return "Writeable (can the item still be modified?)";
         }
@@ -183,29 +183,35 @@ class WorkflowEditor extends HTMLElement {
 
         return `
             <section class="transitions">
-                <h4>Transitions</h4>
-                ${status.transitions
-                ? `<ol>${status.transitions.map(t => this.renderTransition(t)).join("\n")}</ol>`
-                : "None"}
+                ${status.transitions.length
+                ? `
+                    <h4>Transitions</h4>
+                    <ol>${status.transitions.map(t => this.renderTransition(t)).join("\n")}</ol>
+                `
+                : ""}
             </section>
         `;
 
     }
 
-    renderTransition({ id, description }) {
+    renderTransition({ id, action, description }) {
 
-        const status = this.#states.find(s => s.id === id) || {};
         return `
             <li>
                 <label>
-                    To: ${this.renderStatusSelect(id)}
+                    Action:
+                    <input type="text" name="action" value="${action || ""}" />
+                </label>
+                <label>
+                    transitions to: ${this.renderStatusSelect(id)}
                 </label>
                 <label>
                     Description:
-                    <input type="text" name="description" value="${description.replace("\"", "\\\"")}" />
+                    <input type="text" class="description" name="description" value="${description.replace("\"", "\\\"")}" />
                 </label>
             </li>
-        `
+        `;
+
     }
 
     renderStatusSelect(selectedId) {

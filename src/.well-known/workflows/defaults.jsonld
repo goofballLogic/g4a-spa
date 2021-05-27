@@ -18,10 +18,12 @@
                     "transitions": [
                         {
                             "id": "live",
+                            "action": "Open",
                             "description": "Make the grant open for applications"
                         },
                         {
                             "id": "archived",
+                            "action": "Archive",
                             "description": "Discard this grant"
                         }
                     ]
@@ -33,6 +35,7 @@
                     "transitions": [
                         {
                             "id": "closed",
+                            "action": "Close",
                             "description": "Close the grant to new applications"
                         }
                     ]
@@ -43,14 +46,17 @@
                     "transitions": [
                         {
                             "id": "draft",
+                            "action": "Back to Draft",
                             "description": "Put this grant back in draft mode where it can be edited"
                         },
                         {
                             "id": "live",
+                            "action": "Re-open",
                             "description": "Re-open this grant to new applications"
                         },
                         {
                             "id": "archived",
+                            "action": "Archive",
                             "description": "WARNING: This will remove the grant from your list of administered grants"
                         }
                     ]
@@ -75,7 +81,8 @@
                     "transitions": [
                         {
                             "id": "submitted",
-                            "description": "WARNING: If you submit your grant it will be closed to further modifications"
+                            "action": "Submit",
+                            "description": "Submit this application (you won't be able to modify once it is submitted)"
                         }
                     ]
                 },
@@ -85,14 +92,17 @@
                     "transitions": [
                         {
                             "id": "cancelled",
+                            "action": "Cancel",
                             "description": "Cancel this application and remove it from consideration"
                         },
                         {
                             "id": "approved",
+                            "action": "Approve",
                             "description": "Approve this application for funding"
                         },
                         {
                             "id": "denied",
+                            "action": "Decline",
                             "description": "Decline this application for funding"
                         }
                     ]
@@ -111,10 +121,12 @@
                     "transitions": [
                         {
                             "id": "rejected",
-                            "description": "Reject the offered grant"
+                            "action": "Decline",
+                            "description": "Decline the offered grant"
                         },
                         {
                             "id": "accepted",
+                            "action": "Accept",
                             "description": "Accept the offered grant"
                         }
                     ]

@@ -126,7 +126,7 @@ workflow-editor .main .text .transitions {
     padding: 10px;
 }
 
-workflow-editor .main .text .transitions input {
+workflow-editor .main .text .transitions .description {
     min-width: 300px;
 }
 
