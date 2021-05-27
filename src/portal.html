@@ -13,6 +13,7 @@
     </style>
     <script src="./js/data-dog.js"></script>
     <script type="module" src="./js/portal.js"></script>
+    <script type="module" src="./js/components/transition-controls.js"></script>
     <script type="module">
         import { render } from "./js/render.js";
         import { signOut, signIn } from "./js/auth.js";
@@ -163,7 +164,7 @@
                 <div class="errors" data-error-text-content="true"></div>
                 <template>
 
-                    <article data-add-class="status,parentId" class="card mt-4">
+                    <article data-add-class="parentId" class="card mt-4">
 
                         <div class="card-body">
 
@@ -193,7 +194,7 @@
                                 <br />
 
                             </div>
-                            <form class="doc-server-for-user" data-submit-next="?_=applications/{id}&ptid={portal_tid}">
+                            <!-- <form class="doc-server-for-user" data-submit-next="?_=applications/{id}&ptid={portal_tid}">
 
                                 <input type="hidden" name="id" />
                                 <input type="hidden" name="status" data-overwrite-value="true" value="submitted" />
@@ -203,6 +204,15 @@
                                 <div class="controls">
                                     <button class="btn btn-danger">Submit</button>
                                 </div>
+
+                            </form> -->
+
+
+                            <form class="doc-server-for-user" data-submit-next="?_=applications/{id}&ptid={portal_tid}">
+
+                                <input type="hidden" name="id" />
+                                <transition-controls data-set-attr-key="transitions"
+                                    data-set-attr-value="transitions" />
 
                             </form>
 

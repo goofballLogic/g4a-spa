@@ -6,10 +6,12 @@ class WorkflowEditor extends HTMLElement {
     #states;
 
     constructor() {
+
         super();
         this.ensureStyleSheet();
         this.parseAttributes();
         this.render();
+
     }
 
     ensureStyleSheet() {
@@ -130,16 +132,22 @@ class WorkflowEditor extends HTMLElement {
                 <summary>${status.status}</summary>
                 <label>
                     <input type="checkbox" name="default" value="true" ${status.default ? "checked" : ""} />
-                    ${this.describeDefault()}
+                    Default (This is the starting state)
                 </label>
                 <label>
                     <input type="checkbox" name="readwrite" value="true" ${status.readwrite ? "checked" : ""} />
                     ${this.describeWriteable()}
                 </label>
-                <label>
-                    <input type="checkbox" name="public" value="true" ${status.public ? "checked" : ""} />
-                    ${this.describePublic()}
-                </label>
+                ${(this.#workflow?.disposition === "grant") ? `
+                    <label>
+                        <input type="checkbox" name="public" value="true" ${status.public ? "checked" : ""} />
+                        Discoverable (this grant appears in the portal)
+                    </label>
+                    <label>
+                        <input type="checkbox" name="cloneable" value="true" ${status.cloneable ? "checked" : ""} />
+                        Open (people can create applications for this grant)
+                    </label>
+                ` : ""}
                 <label>
                     Name: <input type="text" name="status" value="${status.status}" />
                 </label>
@@ -149,34 +157,18 @@ class WorkflowEditor extends HTMLElement {
 
     }
 
-    describeDefault() {
-
-        return `Is the Default (initial) state`;
-
-    }
-
     describeWriteable() {
 
         switch (this.#workflow?.disposition) {
 
             case "grant":
-                return "Writeable (can the application form still be modified?)";
+                return "Writeable (the application form still be modified)";
             case "application":
-                return "Writeable (can the application be modified by the applicant?)";
+                return "Writeable (the application be modified by the applicant)";
             default:
-                return "Writeable (can the item still be modified?)";
+                return "Writeable (the item still be modified)";
         }
 
-    }
-
-    describePublic() {
-
-        switch (this.#workflow?.disposition) {
-            case "grant":
-                return "Open (can people submit applications?)";
-            default:
-                return "Public (can be viewed by people other than the author?)";
-        }
     }
 
     renderTransitions(status) {
@@ -194,7 +186,7 @@ class WorkflowEditor extends HTMLElement {
 
     }
 
-    renderTransition({ id, action, description }) {
+    renderTransition({ id, action, description, cloneable }) {
 
         return `
             <li>
@@ -205,10 +197,18 @@ class WorkflowEditor extends HTMLElement {
                 <label>
                     transitions to: ${this.renderStatusSelect(id)}
                 </label>
+                ${(this.#workflow?.disposition === "application") ? `
+                    <label>
+                        and moves to workflow:
+                        <input type="text" placeholder="(none)" value="${cloneable ? cloneable["target-workflow"] : ""}" />
+                    </label>
+                ` : ""}
                 <label>
                     Description:
                     <input type="text" class="description" name="description" value="${description.replace("\"", "\\\"")}" />
                 </label>
+
+
             </li>
         `;
 
@@ -217,8 +217,10 @@ class WorkflowEditor extends HTMLElement {
     renderStatusSelect(selectedId) {
 
         return `
-            <select>
-            ${this.#states.map(s => `<option value=${s.id} ${s.id === selectedId ? "selected" : ""}>${s.status}</option>`)}
+            <select >
+            ${this.#states.map(s => `
+                <option value=${s.id} ${s.id === selectedId ? "selected" : ""}>${s.status}</option>
+            `).join("")}
             </select>
         `;
 

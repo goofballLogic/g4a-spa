@@ -8,7 +8,7 @@
             "@type": "Workflow",
             "@id": "g4a:workflows/default-grant",
             "disposition": "grant",
-            "name": "grant-default",
+            "name": "Default grant workflow",
             "workflow": [
                 {
                     "default": true,
@@ -38,7 +38,10 @@
                             "action": "Close",
                             "description": "Close the grant to new applications"
                         }
-                    ]
+                    ],
+                    "cloneable": {
+                        "target-workflow": "default-application"
+                    }
                 },
                 {
                     "id": "closed",
@@ -71,7 +74,7 @@
             "@type": "Workflow",
             "@id": "g4a:workflows/default-application",
             "disposition": "application",
-            "name": "application-default",
+            "name": "Default application workflow",
             "workflow": [
                 {
                     "default": true,
@@ -82,28 +85,54 @@
                         {
                             "id": "submitted",
                             "action": "Submit",
-                            "description": "Submit this application (you won't be able to modify once it is submitted)"
+                            "description": "Submit this application (you won't be able to modify once it is submitted)",
+                            "cloneable": {
+                                "return": "parent-tenant",
+                                "target-workflow": "default-decision"
+                            }
+                        },
+                        {
+                            "id": "cancelled",
+                            "action": "Cancel",
+                            "description": "Cancel this application"
                         }
                     ]
                 },
                 {
                     "id": "submitted",
+                    "status": "Submitted"
+                },
+                {
+                    "id": "cancelled",
+                    "status": "Cancelled"
+                }
+            ]
+        },
+        {
+            "@type": "Workflow",
+            "@id": "g4a:workflows/default-decision",
+            "disposition": "application",
+            "name": "Default decision workflow",
+            "workflow": [
+                {
+                    "default": true,
+                    "id": "submitted",
                     "status": "Submitted",
                     "transitions": [
+                        {
+                            "id": "approved",
+                            "action": "Approve",
+                            "description": "Approve this application and offer funding"
+                        },
+                        {
+                            "id": "rejected",
+                            "action": "Decline",
+                            "description": "Decline this application"
+                        },
                         {
                             "id": "cancelled",
                             "action": "Cancel",
                             "description": "Cancel this application and remove it from consideration"
-                        },
-                        {
-                            "id": "approved",
-                            "action": "Approve",
-                            "description": "Approve this application for funding"
-                        },
-                        {
-                            "id": "denied",
-                            "action": "Decline",
-                            "description": "Decline this application for funding"
                         }
                     ]
                 },
@@ -112,15 +141,15 @@
                     "status": "Cancelled"
                 },
                 {
-                    "id": "denied",
-                    "status": "Declined"
+                    "id": "rejected",
+                    "status": "Application declined"
                 },
                 {
                     "id": "approved",
                     "status": "Approved",
                     "transitions": [
                         {
-                            "id": "rejected",
+                            "id": "declined",
                             "action": "Decline",
                             "description": "Decline the offered grant"
                         },
@@ -132,8 +161,8 @@
                     ]
                 },
                 {
-                    "id": "rejected",
-                    "status": "Rejected"
+                    "id": "declined",
+                    "status": "Offer declined"
                 },
                 {
                     "id": "accepted",
