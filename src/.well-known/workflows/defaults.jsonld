@@ -104,6 +104,28 @@
                 {
                     "id": "denied",
                     "status": "Declined"
+                },
+                {
+                    "id": "approved",
+                    "status": "Approved",
+                    "transitions": [
+                        {
+                            "id": "rejected",
+                            "description": "Reject the offered grant"
+                        },
+                        {
+                            "id": "accepted",
+                            "description": "Accept the offered grant"
+                        }
+                    ]
+                },
+                {
+                    "id": "rejected",
+                    "status": "Rejected"
+                },
+                {
+                    "id": "accepted",
+                    "status": "Accepted"
                 }
             ]
         }

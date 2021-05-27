@@ -181,6 +181,33 @@ export function emplaceHrefs(content, item, params) {
 
 }
 
+export function emplaceIfs(content, item) {
+
+    for (const ifer of content.querySelectorAll("[data-if-key]")) {
+
+        const { ifKey, ifValue } = ifer.dataset;
+        const itemValue = access(item, ifKey);
+        const result = (itemValue && itemValue.value === ifValue) ? "true" : "false";
+        ifer.classList.add(result);
+
+    }
+
+}
+
+export function emplaceSetAttrs(content, item) {
+
+    for (const setAttrer of content.querySelectorAll("[data-set-attr-key]")) {
+
+        const { setAttrKey, setAttrValue } = setAttrer.dataset;
+        const itemValue = access(item, setAttrValue);
+        let value = itemValue ? itemValue.value : null;
+        if (value && typeof (itemValue) !== "string") value = JSON.stringify(value);
+        setAttrer.setAttribute(setAttrKey, value);
+
+    }
+
+}
+
 export function emplaceTextContent(content, item) {
 
     for (let textContenter of content.querySelectorAll("[data-text-content]")) {
@@ -209,7 +236,7 @@ export function emplaceTextContent(content, item) {
 
 function access(data, path) {
 
-    const bits = path.split(".");
+    const bits = (path || "").split(".");
     while (data && bits.length > 0) {
 
         const bit = bits.shift();

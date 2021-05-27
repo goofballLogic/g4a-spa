@@ -3,7 +3,8 @@ import { sleeperServiceURL } from "./service-config.js";
 import urlTemplates from "../lib/url-template.js";
 import {
     emplaceCSSClasses, emplaceDateContent, emplaceFormInputs,
-    emplaceHrefs, emplaceInvokations, emplaceTextContent
+    emplaceHrefs, emplaceInvokations, emplaceTextContent,
+    emplaceIfs, emplaceSetAttrs
 } from "./emplace.js";
 
 export async function handleQueries(content, params) {
@@ -57,6 +58,8 @@ function emplaceItem(dataItem, item, params) {
     emplaceHrefs(dataItem, item, params);
     emplaceFormInputs(dataItem, item);
     emplaceInvokations(dataItem, item, params);
+    emplaceIfs(dataItem, item, params);
+    emplaceSetAttrs(dataItem, item, params);
 
 }
 

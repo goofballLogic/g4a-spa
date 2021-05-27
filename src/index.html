@@ -12,12 +12,14 @@
     <link rel="stylesheet" href="./css/typography.css">
     <link rel="stylesheet" href="./css/structure.css">
     <script type="module" src="./js/login.js"></script>
+    <script type="module" src="./js/components/workflow-editor.js"></script>
+    <link rel="stylesheet" href="./js/components/workflow-editor.css" id="workflow-editor-styles">
     <script type="module">
         import { signIn, signOut } from "./js/auth.js";
         import { render } from "./js/render.js";
 
         document.querySelector("#signIn").addEventListener("click", signIn);
-        document.querySelector("#signOut").addEventListener("click", signOut);
+        document.querySelector("#signOut").addEventListener("click", () => signOut());
         const main = document.querySelector("main");
         document.addEventListener("DOMContentLoaded", () => render(main));
     </script>
@@ -209,6 +211,34 @@
 
     </template>
 
+    <template id="view-workflow" data-params="id">
+
+        <nav></nav>
+        <section class="data-item" data-item-query="documents/workflows/{tid}/{id}?include=workflow">
+
+            <div class="loading-item">Loading...</div>
+
+            <div class="output" data-add-class="status">
+
+                <h2>
+                    <span class="conditional" data-if-key="disposition" data-if-value="application">Application</span>
+                    <span class="conditional" data-if-key="disposition" data-if-value="grant">Grant</span>
+                    Workflow:
+                    <span data-text-content="name"></span>
+                </h2>
+
+                Created on <time data-value="created" data-text-date="created"></time> and last updated on <time
+                    data-value="updated" data-text-date="updated"></time><br />
+                <br />
+                <workflow-editor data-set-attr-key="workflow" data-set-attr-value="workflow"></workflow-editor>
+
+            </div>
+            <div class="errors" data-error-text-content="true"></div>
+
+        </section>
+
+    </template>
+
     <template id="view-grant" data-params="id">
 
         <nav></nav>
@@ -321,9 +351,6 @@
         <nav>
 
             <a href="?">Home</a>
-            <!-- <hr />
-            <a href="?_=applications">Applications</a>
-            <a href="?_=browse-live">Find a grant</a> -->
             <hr />
             <a href="?_=grant-admin">Administer grants</a>
             <a href="?_=create-grant">Create a grant</a>

@@ -55,7 +55,7 @@ form aside {
     background-color: var(--yellow-green-fade);
 }
 
-input {
+input, select {
     border-color: var(--davys-grey-fade);
 }
 
