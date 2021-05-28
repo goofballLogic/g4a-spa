@@ -52,7 +52,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             Object.assign(formOptions, schema);
 
         }
-
         data = json.item?.application?.data || { "name": "Andrew" };
 
     } catch (err) {
@@ -141,11 +140,7 @@ function persistChanges(docId, data) {
 async function initPreview(editor, docId, headers) {
 
     await Formio.createForm(editor, formOptions);
-    document.querySelector("#controller button").addEventListener("click", async () => {
-
-        history.back();
-
-    });
+    document.querySelector("#controller button").addEventListener("click", () => history.back());
 
 }
 

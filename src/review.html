@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Grants 4 all - Review</title>
+    <script src="./js/data-dog.js"></script>
+    <link rel="stylesheet" href="./lib/bootstrap/4.6.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./lib/formiojs/4.13.1/formio.full.min.css">
+    <link rel="stylesheet" href="./css/form-hosting.css">
+    <link rel="stylesheet" href="./css/reviewing.css">
+    <script type="module" src="./js/form-builder.js"></script>
+    <script type="module" src="./js/reviewing.js"></script>
+    <script src="//cdn.quilljs.com/1.0.0/quill.min.js"></script>
+    <link href="//cdn.quilljs.com/1.0.0/quill.snow.css" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <nav id="controller">
+
+        <span class="buffer">
+            <button class="btn btn-warning cancel">Cancel and return</button>
+            <button class="btn btn-warning reset" type="reset">Reset to last saved</button>
+        </span>
+
+        <button class="btn btn-success save">Save and return</button>
+
+    </nav>
+    <main>
+
+        <div class="row">
+
+            <div class="editor-container col-xl px-xl-5 pb-5">
+
+                <h3>Review</h3>
+                <div class="pt-xl-1">
+
+                    <div class="editor"></div>
+
+                </div>
+
+            </div>
+            <div class="col-xl px-xl-5">
+
+                <h3>Application</h3>
+                <section id="reader">
+                </section>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+
+</html>

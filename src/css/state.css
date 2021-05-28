@@ -110,3 +110,7 @@ body.logged-in .only-logged-out {
 .conditional.true {
     display: initial;
 }
+
+.view-application-area .reviewing.show {
+    display: block;
+}

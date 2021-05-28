@@ -1,0 +1,23 @@
+main {
+    max-width: 2000px;
+}
+
+body:not(.loaded) main {
+    display: none;
+}
+
+@media (min-width: 1200px) {
+    .editor-container {
+        position: sticky;
+        top: 80px;
+        align-self: flex-start;
+    }
+}
+
+.ql-editor {
+    min-height: 250px;
+}
+
+.ql-container.ql-snow .ql-editor {
+    font-size: 1rem;
+}

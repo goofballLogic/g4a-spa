@@ -116,6 +116,7 @@
             "workflow": [
                 {
                     "default": true,
+                    "readwrite": true,
                     "id": "submitted",
                     "status": "Submitted",
                     "transitions": [

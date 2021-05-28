@@ -192,6 +192,11 @@
                     <span class="text" data-text-content="status" data-defaults='{"status": "draft"}'></span>
 
                 </div>
+                <p class="reviewing" data-if-key="readwrite" data-if-value="true" data-if-class="show">
+
+                    Review this application here: <a data-href="/review.html?id={id}">Reviewing</a>
+
+                </p>
                 <form class="doc-server-for-user" data-submit-next="?_=view-application/{id}">
 
                     <input type="hidden" name="id" />

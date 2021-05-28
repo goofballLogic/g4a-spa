@@ -188,9 +188,9 @@ export function emplaceIfs(content, item) {
         const { ifKey, ifValue, ifClass } = ifer.dataset;
         const itemValue = access(item, ifKey);
         const result = (itemValue && itemValue.value.toString() === ifValue)
-            ? ifClass || "true"
-            : ifClass ? "" : "false";
-        ifer.classList.add(result);
+            ? (ifClass || "true")
+            : (ifClass ? null : "false");
+        if (result) ifer.classList.add(result);
 
     }
 
