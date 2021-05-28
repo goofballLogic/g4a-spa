@@ -9,3 +9,15 @@
 .applications-area .item+.item {
     margin-top: 10px;
 }
+
+article {
+    margin-top: 60px;
+}
+
+body {
+    padding: 30px 30px 200px 30px;
+}
+
+.fill-application.false {
+    display: none;
+}

@@ -86,8 +86,8 @@
                             "id": "submitted",
                             "action": "Submit",
                             "description": "Submit this application (you won't be able to modify once it is submitted)",
-                            "cloneable": {
-                                "return": "parent-tenant",
+                            "clone": {
+                                "target-owner": "parent",
                                 "target-workflow": "default-decision"
                             }
                         },
@@ -111,7 +111,7 @@
         {
             "@type": "Workflow",
             "@id": "g4a:workflows/default-decision",
-            "disposition": "application",
+            "disposition": "submitted-application",
             "name": "Default decision workflow",
             "workflow": [
                 {

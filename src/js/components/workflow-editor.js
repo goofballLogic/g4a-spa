@@ -113,7 +113,7 @@ class WorkflowEditor extends HTMLElement {
             ).concat(
                 this.#states
                     .map(s => s.transitions
-                        .map(t => `${s.id}->>${t.id}: ${wrap(t.description)}`)
+                        .map(t => `${s.id}->>${t.id}: ${wrap(`${t.action}: ${t.description}`)}`)
                         .join("\n")
                     ).join("\n")
             ).join("\n");
@@ -186,29 +186,33 @@ class WorkflowEditor extends HTMLElement {
 
     }
 
-    renderTransition({ id, action, description, cloneable }) {
+    renderTransition({ id, action, description, clone }) {
 
         return `
             <li>
+                <label>
+                    Description:
+                    <input type="text" class="description" name="description" value="${description.replace("\"", "\\\"")}" />
+                </label>
                 <label>
                     Action:
                     <input type="text" name="action" value="${action || ""}" />
                 </label>
                 <label>
-                    transitions to: ${this.renderStatusSelect(id)}
+                    transitions to the ${this.renderStatusSelect(id)} state
                 </label>
                 ${(this.#workflow?.disposition === "application") ? `
                     <label>
-                        and moves to workflow:
-                        <input type="text" placeholder="(none)" value="${cloneable ? cloneable["target-workflow"] : ""}" />
+                        and adds the application to the <select name="targetOwner">
+                            <option>-</option>
+                            <option value="same" ${clone && clone["target-owner"] !== "parent" ? "selected" : ""}>applicant's</option>
+                            <option value="parent" ${clone && clone["target-owner"] === "parent" ? "selected" : ""}>grant manager's</option>
+                        </select>
+                    </label>
+                    <label>workflow:
+                        <input type="text" name="targetWorkflow" placeholder="(none)" value="${clone ? clone["target-workflow"] : ""}" />
                     </label>
                 ` : ""}
-                <label>
-                    Description:
-                    <input type="text" class="description" name="description" value="${description.replace("\"", "\\\"")}" />
-                </label>
-
-
             </li>
         `;
 

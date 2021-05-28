@@ -45,7 +45,7 @@
 
 </head>
 
-<body class="p-md-3">
+<body>
 
     <header class="container p-3 bg-light rounded">
 
@@ -164,7 +164,7 @@
                 <div class="errors" data-error-text-content="true"></div>
                 <template>
 
-                    <article data-add-class="parentId" class="card mt-4">
+                    <article data-add-class="parentId" class="card">
 
                         <div class="card-body">
 
@@ -184,7 +184,7 @@
                                 on <time data-value="updated" data-text-date="updated"></time>
 
                             </div>
-                            <div class="fill-application">
+                            <div class="fill-application" data-add-class="readwrite">
 
                                 <br />
                                 <a class="btn btn-success"
@@ -194,25 +194,12 @@
                                 <br />
 
                             </div>
-                            <!-- <form class="doc-server-for-user" data-submit-next="?_=applications/{id}&ptid={portal_tid}">
-
-                                <input type="hidden" name="id" />
-                                <input type="hidden" name="status" data-overwrite-value="true" value="submitted" />
-                                <p>Are you ready to submit your application? After you submit you won't be able to
-                                    update the form
-                                </p>
-                                <div class="controls">
-                                    <button class="btn btn-danger">Submit</button>
-                                </div>
-
-                            </form> -->
-
-
                             <form class="doc-server-for-user" data-submit-next="?_=applications/{id}&ptid={portal_tid}">
 
                                 <input type="hidden" name="id" />
-                                <transition-controls data-set-attr-key="transitions"
-                                    data-set-attr-value="transitions" />
+                                <input type="hidden" name="status" data-add-class="id" />
+                                <transition-controls data-set-attr-key="transitions" data-set-attr-value="transitions"
+                                    outputParentSelector="[name=status]" />
 
                             </form>
 

@@ -131,7 +131,7 @@ export function emplaceCSSClasses(content, item) {
         (csser.dataset.addClass ? csser.dataset.addClass.split(",") : [])
             .map(x => x.trim())
             .filter(x => x)
-            .map(x => item[x])
+            .map(x => item[x]?.toString())
             .filter(x => x)
             .forEach(x => csser.classList.add(x));
 
@@ -187,7 +187,7 @@ export function emplaceIfs(content, item) {
 
         const { ifKey, ifValue } = ifer.dataset;
         const itemValue = access(item, ifKey);
-        const result = (itemValue && itemValue.value === ifValue) ? "true" : "false";
+        const result = (itemValue && itemValue.value.toString() === ifValue) ? "true" : "false";
         ifer.classList.add(result);
 
     }
@@ -243,7 +243,7 @@ function access(data, path) {
         data = data[bit];
 
     }
-    return data ? { value: data } : null;
+    return (data === undefined || data === null) ? null : { value: data };
 
 }
 

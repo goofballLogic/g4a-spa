@@ -17,9 +17,9 @@ class TransitionControls extends HTMLElement {
 
         this.addEventListener("click", e => {
 
-            if (e.target.tagName !== "BUTTON") return;
-            if (!e.target.classList.contains("value-emitter")) return;
-            console.log(e.target);
+            console.log(this.#outputControl);
+            if (!e.target.dataset.status) return;
+            if (this.#outputControl) this.#outputControl.value = e.target.dataset.status;
 
         });
 
@@ -50,7 +50,13 @@ class TransitionControls extends HTMLElement {
         this.#outputControl = null;
         try {
 
-            this.#outputControl = document.querySelector(this.getAttribute("outputSelector"));
+            const outputSelector = this.getAttribute("outputSelector");
+            const outputParentSelector = this.getAttribute("outputParentSelector");
+            this.#outputControl = outputSelector
+                ? document.querySelector(outputSelector)
+                : outputParentSelector
+                    ? this.parentElement.querySelector(outputParentSelector)
+                    : null;
 
             const raw = this.getAttribute("transitions");
             this.#transitions = JSON.parse(raw);
@@ -81,8 +87,10 @@ class TransitionControls extends HTMLElement {
 
         return `
             <div class="${t.id}">
-                <div>${t.description || "Change"}:</div>
-                <button class="value-emitter ${t.id}">${t.action}</button>
+
+                <button class="${t.id}" data-status="${t.id}">${t.action}</button>
+                <div>${t.description || ""}</div>
+
             </div>
         `;
 

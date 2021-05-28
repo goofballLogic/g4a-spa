@@ -12,6 +12,7 @@ transition-controls button {
     border-color: #007bff;
     border: 1px solid transparent;
     transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    margin-bottom: 20px;
 }
 
 transition-controls button:hover {
@@ -19,12 +20,25 @@ transition-controls button:hover {
     border-color: #0062cc;
 }
 
-button.submitted {
+transition-controls button.submitted {
     background-color: #dc3545;
     border-color: #dc3545;
 }
 
-button.submitted:hover {
+transition-controls button.submitted:hover {
     background-color: #c82333;
     border-color: #bd2130;
+}
+
+transition-controls {
+    display: flex;
+}
+
+transition-controls>* {
+    flex: 1;
+    padding: 20px;
+    border-radius: 5px;
+    background-color: #EEE;
+    border: solid 0.1px silver;
+    margin: 0 20px 20px 0;
 }
