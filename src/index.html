@@ -186,11 +186,30 @@
 
             </section>
 
-
             <section class="data-list" data-query="documents/workflows/{tid}?disposition=application">
 
                 <div class="output">
                     <h3>Application workflows</h3>
+                </div>
+                <div class="loading-list">Loading...</div>
+                <div class="empty-list">No workflows found!</div>
+                <div class="errors" data-error-text-content="true"></div>
+                <template>
+
+                    <a class="grant" data-href="?_=/view-workflow/{id}">
+
+                        <h3 data-text-content="name"></h3>
+
+                    </a>
+
+                </template>
+
+            </section>
+
+            <section class="data-list" data-query="documents/workflows/{tid}?disposition=submitted-application">
+
+                <div class="output">
+                    <h3>Decision workflows</h3>
                 </div>
                 <div class="loading-list">Loading...</div>
                 <div class="empty-list">No workflows found!</div>
@@ -258,6 +277,12 @@
 
                     Created on <time data-value="created" data-text-date="created"></time> and last updated on <time
                         data-value="updated" data-text-date="updated"></time><br />
+                    This grant is
+                    <span data-if-key="public" data-if-value="true" data-if-class="hide">PRIVATE (not listed)</span>
+                    <span class="hide" data-if-key="public" data-if-value="false" data-if-class="show">PUBLIC</span>
+                    <span class="hide" data-if-key="readwrite" data-if-value="true" data-if-class="show">and can't be
+                        modified</span>
+                    <br />
                     <br />
                     <a class="edit-content" data-href="../form-builder.html?id={id}">Edit application template</a><br />
                     <br />
