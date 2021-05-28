@@ -14,6 +14,8 @@
     <script type="module" src="./js/login.js"></script>
     <script type="module" src="./js/components/workflow-editor.js"></script>
     <link rel="stylesheet" href="./js/components/workflow-editor.css" id="workflow-editor-styles">
+    <script type="module" src="./js/components/transition-controls.js"></script>
+    <link rel="stylesheet" id="transition-controls-styles" href="./js/components/transition-controls.css">
     <script type="module">
         import { signIn, signOut } from "./js/auth.js";
         import { render } from "./js/render.js";
@@ -159,6 +161,47 @@
             </div>
             <div class="loading-item">Loading...</div>
             <div class="errors" data-error-text-content="true"></div>
+
+        </section>
+
+    </template>
+
+    <template id="view-application" data-params="id">
+
+        <nav></nav>
+        <section class="data-item" data-item-query="documents/{tid}/{id}?include=transitions">
+
+            <div class="loading-item">Loading...</div>
+            <div class="output">
+
+                <h2 data-text-content="name"></h2>
+
+                <p>
+
+                    Created on <time data-value="created" data-text-date="created"></time> and last updated on <time
+                        data-value="updated" data-text-date="updated"></time><br />
+                    <br />
+                    This application was submitted by
+                    <span data-text-content="createdByUser.givenName"></span>
+                    <span data-text-content="createdByUser.surname"></span>
+                    (<span data-text-content="createdByUser.email"></span>)
+
+                </p>
+                <div data-add-class="status" class="grant-status">
+
+                    <span class="text" data-text-content="status" data-defaults='{"status": "draft"}'></span>
+
+                </div>
+                <form class="doc-server-for-user" data-submit-next="?_=view-application/{id}">
+
+                    <input type="hidden" name="id" />
+                    <input type="hidden" name="status" data-add-class="id" />
+                    <transition-controls data-set-attr-key="transitions" data-set-attr-value="transitions"
+                        outputParentSelector="[name=status]" />
+
+                </form>
+
+            </div>
 
         </section>
 
