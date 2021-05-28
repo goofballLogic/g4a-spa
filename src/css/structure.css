@@ -165,12 +165,14 @@ h2 {
     margin-top: 0;
 }
 
-a.grant h3, a.application h3 {
-    margin: 0;
+a.grant, a.application, a.submitted-application {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-a.grant, a.application {
-    margin-bottom: 10px;
+a.grant h3, a.application h3, a.submitted-application h3 {
+    margin: 0;
 }
 
 fieldset>* {

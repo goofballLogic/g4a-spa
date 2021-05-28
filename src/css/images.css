@@ -19,12 +19,7 @@
     background-image: url("../img/portal.jpg");
 }
 
-a.grant, a.application {
-    display: flex;
-    align-items: center;
-}
-
-a.grant::before, a.application::before {
+a.grant::before, a.application::before, a.submitted-application::before {
     background-size: contain;
     display: inline-block;
     width: 20px;

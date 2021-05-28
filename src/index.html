@@ -97,8 +97,42 @@
 
             <div class="output">
 
-                <h2>Grant applications: <span data-text-content="name"></span></h2>
-                <section class="data-list" data-query="documents/{tid}/{id}/children">
+                <h2>Submitted applications: <span data-text-content="name"></span></h2>
+                <section class="data-list" data-query="documents/{tid}/{id}/grandchildren">
+
+                    <div class="output"></div>
+                    <div class="loading-list">Loading...</div>
+                    <div class="empty-list">There are no applications yet.</div>
+                    <div class="errors" data-error-text-content="true"></div>
+                    <template>
+
+                        <a data-add-class="disposition" data-href="?_=/view-application/{id}">
+
+                            <h3>
+                                <span data-text-content="createdByUser.givenName"></span>
+                                <span data-text-content="createdByUser.surname"></span>
+                                (<span data-text-content="createdByUser.email"></span>)
+                                -
+                                <span data-text-content="status"></span>
+                            </h3>
+
+                        </a>
+
+                    </template>
+
+                </section>
+
+            </div>
+            <div class="loading-item">Loading...</div>
+            <div class="errors" data-error-text-content="true"></div>
+
+        </section>
+        <section class="data-item" data-item-query="documents/{tid}/{id}">
+
+            <div class="output">
+
+                <h2>Applications still being prepared: <span data-text-content="name"></span></h2>
+                <section class="data-list" data-query="documents/{tid}/{id}/children?readwrite=true">
 
                     <div class="output"></div>
                     <div class="loading-list">Loading...</div>
