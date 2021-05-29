@@ -40,5 +40,8 @@ transition-controls>* {
     border-radius: 5px;
     background-color: #EEE;
     border: solid 0.1px silver;
-    margin: 0 20px 20px 0;
+}
+
+transition-controls>*+* {
+    margin-left: 20px;
 }
