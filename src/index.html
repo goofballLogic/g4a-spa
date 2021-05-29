@@ -16,6 +16,10 @@
     <link rel="stylesheet" href="./js/components/workflow-editor.css" id="workflow-editor-styles">
     <script type="module" src="./js/components/transition-controls.js"></script>
     <link rel="stylesheet" id="transition-controls-styles" href="./js/components/transition-controls.css">
+    <script type="module" src="./js/components/review-list.js"></script>
+    <link rel="stylesheet" id="review-list-styles" href="./js/components/review-list.css">
+    <script src="//cdn.quilljs.com/1.0.0/quill.min.js"></script>
+
     <script type="module">
         import { signIn, signOut } from "./js/auth.js";
         import { render } from "./js/render.js";
@@ -169,7 +173,7 @@
     <template id="view-application" data-params="id">
 
         <nav></nav>
-        <section class="data-item" data-item-query="documents/{tid}/{id}?include=transitions">
+        <section class="data-item" data-item-query="documents/{tid}/{id}?include=transitions,review*">
 
             <div class="loading-item">Loading...</div>
             <div class="output">
@@ -192,15 +196,29 @@
                     <span class="text" data-text-content="status" data-defaults='{"status": "draft"}'></span>
 
                 </div>
+                <h3>Reviewing</h3>
                 <p class="reviewing" data-if-key="readwrite" data-if-value="true" data-if-class="show">
 
                     Review this application here: <a data-href="/review.html?id={id}">Reviewing</a>
 
                 </p>
+                <details>
+
+                    <summary>Reviews</summary>
+                    <review-list data-set-attr-key="reviews" data-set-attr-value="review"></review-list>
+
+                </details>
+                <br />
                 <form class="doc-server-for-user" data-submit-next="?_=view-application/{id}">
 
                     <input type="hidden" name="id" />
                     <input type="hidden" name="status" data-add-class="id" />
+                    <h3>Progress this application</h3>
+                    <label>
+                        Record a reason for next steps:
+                        <input type="text" data-invoke="setNameToReasonByStatus" required /><br />
+                    </label>
+                    <br />
                     <transition-controls data-set-attr-key="transitions" data-set-attr-value="transitions"
                         outputParentSelector="[name=status]" />
 

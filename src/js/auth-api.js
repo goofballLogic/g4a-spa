@@ -24,13 +24,20 @@ async function ensureTokenAcquisition() {
 
         if (msalInstance.getAllAccounts().length) {
 
+
             await msalInstance.handleRedirectPromise();
             const [account] = msalInstance.getAllAccounts();
-            const resp = await msalInstance.acquireTokenSilent({
-                ...tokenRequest,
-                account
-            });
-            tokenResponseCache = resp;
+            const accountTokenRequest = { ...tokenRequest, account };
+            try {
+
+                const resp = await msalInstance.acquireTokenSilent(accountTokenRequest);
+                tokenResponseCache = resp;
+
+            } catch (err) {
+
+                await msalInstance.acquireTokenRedirect(accountTokenRequest);
+
+            }
 
         }
 

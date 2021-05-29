@@ -33,26 +33,32 @@ export function emplaceFormInputs(content, item) {
 
 }
 
-
-const dtformat = new Intl.DateTimeFormat([], {
-    weekday: "long",
-    day: "numeric",
-    month: "long",
-    year: "numeric"
-});
-
 export function emplaceInvokations(content, item, params) {
 
     for (const invoker of content.querySelectorAll("[data-invoke]")) {
 
         const func = invoker.dataset.invoke;
-        invokable[func](invoker, item, params);
+        try {
+
+            invokable[func](invoker, item, params);
+
+        } catch (err) {
+
+            setTimeout(() => { throw new Error(`${func}: ${err.message}`); });
+
+        }
 
     }
 
 }
 
 const invokable = {
+
+    setNameToReasonByStatus(element, item) {
+
+        element.setAttribute("name", `${item.status}_reason`);
+
+    },
 
     buildWorkflowStatusForm(element, item) {
 
@@ -139,6 +145,13 @@ export function emplaceCSSClasses(content, item) {
 
 }
 
+
+const dtformat = new Intl.DateTimeFormat([], {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+    year: "numeric"
+});
 export function emplaceDateContent(content, item) {
 
     for (let dater of content.querySelectorAll("[data-text-date]")) {
