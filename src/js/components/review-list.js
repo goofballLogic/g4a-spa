@@ -48,11 +48,15 @@ class ReviewList extends HTMLElement {
         try {
 
             const raw = this.getAttribute("reviews");
-            this.#reviews = JSON.parse(raw);
-            if (!Array.isArray(this.#reviews)) {
+            if (raw) {
 
-                this.#reviews = [];
-                throw new Error(`Invalid reviews: ${JSON.stringify(raw)}`);
+                this.#reviews = JSON.parse(raw);
+                if (!Array.isArray(this.#reviews)) {
+
+                    this.#reviews = [];
+                    throw new Error(`Invalid reviews: ${JSON.stringify(raw)}`);
+
+                }
 
             }
 

@@ -52,14 +52,22 @@ async function handleDataItemQuery(dataItem, params) {
 
 function emplaceItem(dataItem, item, params) {
 
-    emplaceTextContent(dataItem, item);
-    emplaceCSSClasses(dataItem, item);
-    emplaceDateContent(dataItem, item);
-    emplaceHrefs(dataItem, item, params);
-    emplaceFormInputs(dataItem, item);
-    emplaceInvokations(dataItem, item, params);
-    emplaceIfs(dataItem, item, params);
-    emplaceSetAttrs(dataItem, item, params);
+    try {
+
+        emplaceTextContent(dataItem, item);
+        emplaceCSSClasses(dataItem, item);
+        emplaceDateContent(dataItem, item);
+        emplaceHrefs(dataItem, item, params);
+        emplaceFormInputs(dataItem, item);
+        emplaceInvokations(dataItem, item, params);
+        emplaceIfs(dataItem, item, params);
+        emplaceSetAttrs(dataItem, item, params);
+
+    } catch (err) {
+
+        console.error(err);
+
+    }
 
 }
 

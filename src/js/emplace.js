@@ -18,7 +18,11 @@ export function emplaceFormInputs(content, item) {
                 if (input.dataset.overwriteValue !== "true") {
 
                     const value = access(item, input.name);
-                    input.value = value.value;
+                    if (value) {
+
+                        input.value = value.value;
+
+                    }
 
                 }
 
