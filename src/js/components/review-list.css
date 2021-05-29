@@ -611,6 +611,9 @@ review-list article {
     border-radius: 5px;
     background-color: #EEE;
     border: solid 0.1px silver;
+}
+
+review-list>article, review-list>div {
     margin: 10px;
 }
 

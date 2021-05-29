@@ -70,7 +70,7 @@ class ReviewList extends HTMLElement {
             ? this.#reviews
                 .map(x => this.renderReview(x))
                 .join("\n")
-            : "(none)";
+            : "<div>(none)</div>";
 
     }
 
