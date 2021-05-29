@@ -5,17 +5,22 @@ export function emplaceFormInputs(content, item) {
 
     for (let input of content.querySelectorAll("input")) {
 
-        if ((input.type === "text" || input.type === "hidden")) {
+        if (input.type === "text" || input.type === "hidden" || input.type === "date") {
 
             const { value: valueKey } = input.dataset;
             if (valueKey) {
 
-                if (valueKey in item) input.value = item[valueKey];
+                const value = access(item, valueKey);
+                if (value) input.value = value.value;
 
-            } else if (input.name in item) {
+            } else {
 
-                if (input.dataset.overwriteValue !== "true")
-                    input.value = item[input.name];
+                if (input.dataset.overwriteValue !== "true") {
+
+                    const value = access(item, input.name);
+                    input.value = value.value;
+
+                }
 
             }
 

@@ -77,7 +77,7 @@
             "name": "Default application workflow",
             "values": {
                 "metadata": {
-                    "parent.expiryDate": "expiryDate"
+                    "parent.submissionDeadline": "submissionDeadline"
                 }
             },
             "workflow": [

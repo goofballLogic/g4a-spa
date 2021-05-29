@@ -24,7 +24,7 @@ header aside {
     padding: 10px;
 }
 
-button, input[type=text], select {
+button, input[type=text], input[type=date], select {
     padding: 10px;
     border-radius: 3px;
     min-width: 150px;

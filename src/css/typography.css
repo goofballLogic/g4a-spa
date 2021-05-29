@@ -1,4 +1,4 @@
-html, body {
+html, body, input[type="date"] {
     font-family: Arial;
     font-size: 10pt;
 }
