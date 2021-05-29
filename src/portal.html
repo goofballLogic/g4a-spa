@@ -157,7 +157,7 @@
         <section>
 
             <h2>Your grant applications</h2>
-            <section class="data-list" data-query="documents/me?disposition=application&include=transitions">
+            <section class="data-list" data-query="documents/me?disposition=application&include=transitions,values">
 
                 <div class="output"></div>
                 <div class="loading-list">Loading...</div>
@@ -178,19 +178,32 @@
                                 </div>
 
                             </h3>
-                            <a data-href="../form-reader.html?id={id}&tid={account_tid}">View your application</a>
-                            <div>
+
+
+
+                            <p>
 
                                 Created on <time data-value="created" data-text-date="created"></time> and last updated
                                 on <time data-value="updated" data-text-date="updated"></time>
+                                <br />
+                                <span class="show-if-true" data-add-class="readwrite">
+                                    <span data-if-key="values.submissionDeadline" class="show-if-true">
+                                        N.B. the deadline for submissions is <strong><time
+                                                data-value="values.submissionDeadline"
+                                                data-text-date="values.submissionDeadline"></time></strong>
+                                    </span>
+                                </span>
 
-                            </div>
+                            </p>
+
+                            <a data-href="../form-reader.html?id={id}&tid={account_tid}">View your application</a>
+
                             <div class="fill-application" data-add-class="readwrite">
 
                                 <br />
                                 <a class="btn btn-success"
-                                    data-href="../form-filler.html?id={id}&tid={account_tid}">Fill in the application
-                                    form</a> to complete your application.
+                                    data-href="../form-filler.html?id={id}&tid={account_tid}">Fill in the
+                                    application form</a> to complete your application.
                                 <br />
                                 <br />
 

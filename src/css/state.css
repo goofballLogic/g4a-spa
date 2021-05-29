@@ -59,6 +59,14 @@ section.data-list.loaded .output, section.data-item.loaded .output {
     display: none;
 }
 
+.show-if-true:not(.true) {
+    display: none;
+}
+
+.show-if-false:not(.false) {
+    display: none;
+}
+
 section.data-list .errors, section.data-item .errors {
     display: none;
 }

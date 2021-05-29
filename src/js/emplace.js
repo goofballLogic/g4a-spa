@@ -162,11 +162,11 @@ export function emplaceDateContent(content, item) {
     for (let dater of content.querySelectorAll("[data-text-date]")) {
 
         const dateField = dater.dataset.textDate;
-        const dateValue = item[dateField];
+        const dateValue = access(item, dateField);
         if (!dateValue) continue;
         try {
 
-            const parsed = new Date(dateValue);
+            const parsed = new Date(dateValue.value);
             dater.textContent = dtformat.format(parsed);
 
         } catch (err) {
@@ -204,8 +204,9 @@ export function emplaceIfs(content, item) {
     for (const ifer of content.querySelectorAll("[data-if-key]")) {
 
         const { ifKey, ifValue, ifClass } = ifer.dataset;
+        const hasIfValue = ifValue in ifer.dataset;
         const itemValue = access(item, ifKey);
-        const result = (itemValue && itemValue.value.toString() === ifValue)
+        const result = (itemValue && (!hasIfValue || (itemValue.value.toString() === ifValue)))
             ? (ifClass || "true")
             : (ifClass ? null : "false");
         if (result) ifer.classList.add(result);
