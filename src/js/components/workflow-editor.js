@@ -63,6 +63,11 @@ class WorkflowEditor extends HTMLElement {
 
             this.innerHTML = `
                 <div class="temp"></div>
+                <section>
+                    ${this.#workflow.values
+                    ? `This workflow calculates some values: ${JSON.stringify(this.#workflow.values)}<br /><br />`
+                    : ""}
+                </section>
                 <section class="switcher">
                     <label>
                         <input type="radio" checked name="workflow-editor-mode" value="graph" />

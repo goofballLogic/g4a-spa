@@ -75,6 +75,11 @@
             "@id": "g4a:workflows/default-application",
             "disposition": "application",
             "name": "Default application workflow",
+            "values": {
+                "metadata": {
+                    "parent.expiryDate": "expiryDate"
+                }
+            },
             "workflow": [
                 {
                     "default": true,
