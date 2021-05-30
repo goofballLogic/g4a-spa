@@ -69,6 +69,13 @@ const invokable = {
 
     },
 
+    onlyIfTransitions(element, item) {
+
+        if (!(item?.transitions?.length))
+            element.remove();
+
+    },
+
     buildWorkflowStatusForm(element, item) {
 
         const { workflow, status } = item;
