@@ -49,6 +49,15 @@ main:not(.home-area)>nav a {
 
 main:not(.home-area)>nav a:hover {
     background-color: var(--yellow-green);
+    color: white !important;
+}
+
+a.back {
+    border: solid 1px var(--may-green);
+}
+
+a.back:hover {
+    background-color: var(--yellow-green-fade);
 }
 
 form aside {

@@ -108,7 +108,7 @@ main.home-area>:not(nav) {
     padding: 40px;
 }
 
-main:not(.home-area)>nav a {
+main:not(.home-area)>nav a, a.back {
     padding: 10px 20px;
     margin: 0 0 10px 0;
     display: inline-block;
@@ -248,4 +248,8 @@ p {
     max-width: 800px;
     line-height: 1.5;
     margin-top: 0;
+}
+
+a.back {
+    flo-at: right;
 }
