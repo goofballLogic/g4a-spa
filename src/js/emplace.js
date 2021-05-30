@@ -114,7 +114,8 @@ const invokable = {
 
     createApplicationOutput(element, item) {
 
-        if (item?.myChildren?.length) element.classList.add("applications-exist");
+        if (item?.myChildren?.some(({ status }) => status !== "cancelled"))
+            element.classList.add("applications-pending");
 
     },
 

@@ -91,15 +91,15 @@ section.data-list.error .errors, section.data-item.error .errors {
     display: none;
 }
 
-.create-application-area .applications-exist form {
+.create-application-area .applications-pending form {
     display: none;
 }
 
-.create-application-area .when-applications-exist {
+.create-application-area .when-applications-pending {
     display: none;
 }
 
-.create-application-area .applications-exist .when-applications-exist {
+.create-application-area .applications-pending .when-applications-pending {
     display: block;
 }
 
