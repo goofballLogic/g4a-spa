@@ -157,7 +157,8 @@
         <section>
 
             <h2>Your grant applications</h2>
-            <section class="data-list" data-query="documents/me?disposition=application&include=transitions,values">
+            <section class="data-list"
+                data-query="documents/me?disposition=application&include=transitions,values&parentTenant={tid}">
 
                 <div class="output"></div>
                 <div class="loading-list">Loading...</div>
