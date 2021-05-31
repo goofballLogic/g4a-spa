@@ -124,7 +124,7 @@
                     <input type="hidden" name="clone-tenant" data-value="tenant" />
                     <input type="hidden" name="disposition" data-overwrite-value="true" value="application" />
                     <input type="hidden" name="status" data-overwrite-value="true" value="draft" />
-
+                    <input type="hidden" name="tenant" />
                     <div class="controls">
                         <button class="btn btn-primary">Start a new application</button>
                     </div>
@@ -159,7 +159,7 @@
 
             <h2>Your grant applications</h2>
             <section class="data-list"
-                data-query="documents/me?disposition=application&include=transitions,values&parentTenant={portal_tid}">
+                data-query="documents/users/me?disposition=application&include=transitions,values&parentTenant={portal_tid}">
 
                 <div class="output"></div>
                 <div class="loading-list">Loading...</div>
@@ -212,6 +212,7 @@
 
                                 <input type="hidden" name="id" />
                                 <input type="hidden" name="status" data-add-class="id" />
+                                <input type="hidden" name="tenant" />
                                 <transition-controls data-set-attr-key="transitions" data-set-attr-value="transitions"
                                     outputParentSelector="[name=status]" />
 

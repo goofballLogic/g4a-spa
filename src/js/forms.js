@@ -38,7 +38,7 @@ export function handleFormMutations(content) {
 
 }
 
-export function handleFormSubmission(content) {
+export function handleFormSubmission(content, params) {
 
     for (let form of content.querySelectorAll("form")) {
 
@@ -52,10 +52,11 @@ export function handleFormSubmission(content) {
 
             }
 
-            if (classList.contains("doc-server") || classList.contains("doc-server-for-user")) {
+            if (classList.contains("doc-server") || classList.contains("doc-server-for-user") || classList.contains("doc-server-for-portal")) {
 
                 e.preventDefault();
-                handleDocServerFormSubmission(e.target);
+                const docServerOwner = ownerForDocServer(e.target, params);
+                handleDocServerFormSubmission(docServerOwner, e.target);
 
             }
 
@@ -67,6 +68,16 @@ export function handleFormSubmission(content) {
         });
 
     }
+
+}
+
+function ownerForDocServer(form, params) {
+
+    if (form.classList.contains("doc-server-for-user"))
+        return "users/me";
+    if (form.classList.contains("doc-server-for-portal"))
+        return params.portal_tid;
+    return sessionStorage.getItem("g4a:tenant");
 
 }
 
@@ -89,14 +100,13 @@ async function handleCogInitialize(form) {
 
 }
 
-async function handleDocServerFormSubmission(form) {
+async function handleDocServerFormSubmission(owner, form) {
 
-    const forUser = form.classList.contains("doc-server-for-user");
     await runFormSubmission(form, async () => {
 
         const formData = new FormData(form);
         const id = formData.get("id");
-        const owner = forUser ? "me" : sessionStorage.getItem("g4a:tenant");
+
         if (id) {
 
             await patchToSleeperService(sleeperServiceURL(`documents/${owner}/${id}`), formData);

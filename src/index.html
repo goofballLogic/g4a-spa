@@ -5,6 +5,7 @@
 
     <meta charset="UTF-8">
     <title>Grants 4 all</title>
+
     <script src="./js/data-dog.js"></script>
     <link rel="stylesheet" href="./css/colour.css">
     <link rel="stylesheet" href="./css/images.css">
@@ -212,8 +213,7 @@
 
                 </details>
                 <br />
-                <form class="doc-server-for-user" data-submit-next="?_=view-application/{id}"
-                    data-invoke="onlyIfTransitions">
+                <form class="doc-server" data-submit-next="?_=view-application/{id}" data-invoke="onlyIfTransitions">
 
                     <input type="hidden" name="id" />
                     <input type="hidden" name="status" data-add-class="id" />
@@ -376,7 +376,7 @@
                     <span class="text" data-text-content="status" data-defaults='{"status": "draft"}'></span>
 
                 </div>
-                <form class="doc-server-for-user">
+                <form class="doc-server">
 
                     <input type="hidden" name="id" />
                     <label>

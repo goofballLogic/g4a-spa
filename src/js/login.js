@@ -31,7 +31,8 @@ document.addEventListener("g4a.login", async e => {
         let accountName = "";
         if (account) {
             bodyClassList.add("logged-in");
-            accountName = account.givenName ? `${account.givenName} ${account.familyName}` : account.username
+            console.log(account);
+            accountName = account.givenName ? `${account.givenName} ${account.familyName} (${account.username})` : account.username
         } else {
             bodyClassList.add("logged-out");
         }

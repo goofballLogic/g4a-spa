@@ -71,7 +71,7 @@ export async function render(container) {
     if (nav) handleNav(nav, params);
     await handleQueries(content, params);
     handleFormMutations(content);
-    handleFormSubmission(content);
+    handleFormSubmission(content, params);
 
     container.innerHTML = "";
     container.appendChild(content);
