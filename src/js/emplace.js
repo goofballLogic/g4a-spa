@@ -228,7 +228,8 @@ export function emplaceIfs(content, item) {
 
             } else {
 
-                ifer.classList.add(ifClass ? "" : "false");
+                if (!ifClass)
+                    ifer.classList.add("false");
 
             }
 
