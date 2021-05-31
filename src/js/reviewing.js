@@ -10,6 +10,16 @@ const tenantSegment = url.searchParams.get("tid") || "{tenant}";
 let data;
 let originalDataString;
 
+function modal(content) {
+
+    const dialog = document.createElement("DIALOG");
+    dialog.innerHTML = content;
+    dialog.addEventListener("close", () => dialog.remove());
+    document.body.appendChild(dialog);
+    dialog.showModal();
+
+}
+
 document.addEventListener("DOMContentLoaded", async () => {
 
     const editor = document.querySelector(".editor");
@@ -67,8 +77,35 @@ document.addEventListener("DOMContentLoaded", async () => {
         if (resp.ok) {
             history.back();
         }
-        else
-            console.error(resp.status, resp.statusText);
+        else {
+
+            try {
+
+                const text = await resp.text();
+                console.error(resp.status, resp.statusText, text);
+                modal(`
+                    <form method="dialog">
+                        <h3>A problem occurred while saving</h3>
+
+                        ${text}<br />
+                        <br />
+
+                        <code>${resp.status} ${resp.statusText}</code><br />
+                        <br />
+                        <button class="btn btn-primary">OK</button>
+
+                    </form>
+                `);
+
+            } catch (_) {
+
+                console.error(resp.status, resp.statusText);
+                modal(`${resp.status} ${resp.statusText}`);
+
+            }
+
+
+        }
 
     });
 

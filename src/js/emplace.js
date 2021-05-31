@@ -216,12 +216,23 @@ export function emplaceIfs(content, item) {
     for (const ifer of content.querySelectorAll("[data-if-key]")) {
 
         const { ifKey, ifValue, ifClass } = ifer.dataset;
-        const hasIfValue = ifValue in ifer.dataset;
+        const hasIfValue = "ifValue" in ifer.dataset;
+
         const itemValue = access(item, ifKey);
-        const result = (itemValue && (!hasIfValue || (itemValue.value.toString() === ifValue)))
-            ? (ifClass || "true")
-            : (ifClass ? null : "false");
-        if (result) ifer.classList.add(result);
+        if (itemValue) {
+
+            const outcome = !hasIfValue || (itemValue.value.toString() === ifValue);
+            if (outcome) {
+
+                ifer.classList.add(ifClass || "true");
+
+            } else {
+
+                ifer.classList.add(ifClass ? "" : "false");
+
+            }
+
+        }
 
     }
 
