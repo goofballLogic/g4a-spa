@@ -85,11 +85,19 @@ class TransitionControls extends HTMLElement {
 
     renderTransition(t) {
 
+
         return `
             <div class="${t.id}">
 
-                <button class="${t.id}" data-status="${t.id}">${t.action}</button>
-                <div>${t.description || ""}</div>
+                ${t.failedConstraints
+                ? `<div>You can't ${t.action} just now.
+                    <br />
+                    If this grant has a submission deadline, it may have expired, or the administrator may not have specified it yet.
+                    </div>`
+                : `
+                    <button ${t.failedConstraints ? "disabled" : ""} class="${t.id}" data-status="${t.id}">${t.action}</button>
+                    <div>${t.description || ""}</div>
+                `}
 
             </div>
         `;
