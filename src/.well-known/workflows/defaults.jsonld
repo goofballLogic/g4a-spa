@@ -94,6 +94,9 @@
                             "clone": {
                                 "target-owner": "parent",
                                 "target-workflow": "default-decision"
+                            },
+                            "constraint": {
+                                "nowIsBefore": "submissionDeadline"
                             }
                         },
                         {
