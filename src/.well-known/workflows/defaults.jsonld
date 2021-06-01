@@ -96,7 +96,7 @@
                                 "target-workflow": "default-decision"
                             },
                             "constraint": {
-                                "nowIsBefore": "submissionDeadline"
+                                "nowIsBefore": "values.submissionDeadline"
                             }
                         },
                         {
