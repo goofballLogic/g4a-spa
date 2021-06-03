@@ -20,14 +20,25 @@ transition-controls button:hover {
     border-color: #0062cc;
 }
 
-transition-controls button.submitted {
+transition-controls button.cancelled {
     background-color: #dc3545;
     border-color: #dc3545;
 }
 
-transition-controls button.submitted:hover {
+transition-controls button.cancelled:hover {
     background-color: #c82333;
     border-color: #bd2130;
+}
+
+transition-controls button.submitted {
+    color: black;
+    background-color: #ffc107;
+    border-color: #ffc107;
+}
+
+transition-controls button.submitted:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
 }
 
 transition-controls {
@@ -58,4 +69,8 @@ transition-controls>.invalid::before {
     background-color: #FFFE;
     justify-content: center;
     border-radius: 5px;
+}
+
+transition-controls .constrained {
+    margin-top: 10px;
 }
