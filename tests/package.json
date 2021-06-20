@@ -1,0 +1,13 @@
+{
+    "scripts": {
+        "cypress:open": "cypress open",
+        "test": "cypress run --spec **/*.feature"
+    },
+    "devDependencies": {
+        "cypress": "^7.5.0",
+        "cypress-cucumber-preprocessor": "^4.1.2"
+    },
+    "cypress-cucumber-preprocessor": {
+        "nonGlobalStepDefinitions": false
+    }
+}

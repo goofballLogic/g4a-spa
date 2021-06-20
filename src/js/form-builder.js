@@ -33,6 +33,8 @@ const docId = url.searchParams.get("id");
 if (!docId) history.back();
 const tenantSegment = url.searchParams.get("tid") || "{tenant}";
 
+console.log(tenantSegment);
+
 document.addEventListener("DOMContentLoaded", async () => {
 
     const docURL = await buildSleeperServiceURL(`documents/${tenantSegment}/${docId}?include=content,application`);
@@ -174,7 +176,6 @@ async function initEditor(editor, docId, headers) {
             schema: builder.schema
         });
         const contentURL = await buildSleeperServiceURL(`documents/${tenantSegment}/${docId}/content`);
-
         const resp = await fetch(contentURL, {
             headers,
             method: "PUT",
