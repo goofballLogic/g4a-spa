@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v2
 
     - name: Test server
-      run |
+      run: |
         start-http-server
     - name: Cypress run
       uses: cypress-io/github-action@v2
