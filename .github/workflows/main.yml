@@ -16,7 +16,8 @@ jobs:
 
     - name: Test server
       run: |
-        start-http-server
+        python3 -m http.server 8080 src
+
     - name: Cypress run
       uses: cypress-io/github-action@v2
       with:
