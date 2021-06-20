@@ -18,7 +18,7 @@ jobs:
         npm install
     - name: Run
       run: |
-        cd ../tests
+        cd ./tests
         npm test
   build:
     runs-on: ubuntu-latest
